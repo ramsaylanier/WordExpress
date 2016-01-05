@@ -1,0 +1,140 @@
+// $Base
+// -------------------------------------//
+// General base styles for type
+//
+// $typl8-custom-font               [<"Custom-Font-Name">[, <fallback>]]
+// $typl8-font-size                 112.5% converts to an 18px base
+// $typl8-font-base                 converts % base value to a px value (16 * (112.5/100) = 18)
+// $typl8-font-family               non-font-face stack
+
+$typl8-serif-boolean: true !default;
+$typl8-custom-font: false !default;
+$typl8-font-family: if($typl8-serif-boolean, serif, sans-serif) !default;
+$typl8-font-weight: normal !default;
+$typl8-line-height: 1.65 !default;
+$typl8-font-size: 112.5 !default;
+$typl8-font-base: 16 * ($typl8-font-size/100) !default;
+$typl8-measure: $typl8-font-base * $typl8-line-height !default;
+$typl8-prefixes: -webkit-, -moz-, -ms-, '' !default;
+
+
+// $Paragraphs
+// -------------------------------------//
+// Controls paragraphs vertical whitespace
+// for subsequent paragraphs.
+//
+// $typl8-paragraph-spacing             [<'false'> | <'true'>]
+
+$typl8-paragraph-spacing: false !default;
+$typl8-indent-val: 1.5em !default;
+
+
+// $Small-Print
+// -------------------------------------//
+
+$typl8-small-print-size: 65% !default;
+
+
+// $Base-Colors
+// -------------------------------------//
+
+$typl8-heading-color: #222 !default;
+$typl8-copy-color: #444 !default;
+
+
+// $Ampersands
+// -------------------------------------//
+
+$typl8-amp-fontface: Ampersand !default;
+$typl8-amp-fontfamily: Verdana, sans-serif !default;
+$typl8-amp-src: local('Georgia'), local('Garamond'), local('Palatino'), local('Book Antiqua') !default;
+$typl8-amp-fallback: local('Georgia') !default;
+
+
+// $Icon-Font-Helper
+// -------------------------------------//
+// Link single or multiple icon font sets. Requires Compass
+//
+// single icon font             $typl8-icon-fonts: (icon-name);
+// multiple icon fonts          $typl8-icon-fonts: (icon-name1, icon-name2, icon-name3);
+
+$typl8-icon-fonts: null !default;
+
+
+// $Typescale
+// -------------------------------------//
+// Greek heading names and scale using base font-size
+//
+// typl8-tera                    117 = 18 × 6.5
+// typl8-giga                     90 = 18 × 5
+// typl8-mega                     72 = 18 × 4
+// typl8-alpha                    60 = 18 × 3.3333
+// typl8-beta                     48 = 18 × 2.6667
+// typl8-gamma                    36 = 18 × 2
+// typl8-delta                    24 = 18 × 1.3333
+// typl8-epsilon                  21 = 18 × 1.1667
+// typl8-zeta                     18 = 18 × 1
+
+$typl8-scale: (
+  typl8-tera: 117,
+  typl8-giga: 90,
+  typl8-mega: 72,
+  typl8-alpha: 60,
+  typl8-beta: 48,
+  typl8-gamma: 36,
+  typl8-delta: 24,
+  typl8-epsilon: 21,
+  typl8-zeta: 18,
+) !default;
+
+$typl8-headings: (
+  h1: typl8-mega,
+  h2: typl8-alpha,
+  h3: typl8-beta,
+  h4: typl8-gamma,
+  h5: typl8-delta,
+  h6: typl8-zeta
+) !default;
+
+
+// $Typescale Unit
+// -------------------------------------//
+
+$typl8-typescale-unit: rem !default;
+
+
+// $Pull-Quotes
+// -------------------------------------//
+
+$typl8-pull-quote-fontsize: 4em !default;
+$typl8-pull-quote-opacity: 0.5 !default;
+$typl8-pull-quote-color: #dc976e !default;
+
+
+// $Citations
+// -------------------------------------//
+
+$typl8-cite-display: block !default;
+$typl8-cite-align: right !default;
+$typl8-cite-font-size: inherit !default;
+
+
+// $Small-Caps
+// -------------------------------------//
+
+$typl8-smcps-color: gray !default;
+$typl8-smcps-weight: 600 !default;
+
+
+// $DropCap
+// -------------------------------------//
+
+$typl8-dropcap-float-position: left !default;
+$typl8-dropcap-font-size: 4em !default;
+$typl8-dropcap-font-family: inherit !default;
+$typl8-dropcap-txt-indent: 0 !default;
+$typl8-dropcap-margin: 10px 10px 0 0 !default;
+$typl8-dropcap-padding: 0 20px !default;
+$typl8-dropcap-color: inherit !default;
+$typl8-dropcap-line-height: 1 !default;
+$typl8-dropcap-bg: transparent !default;

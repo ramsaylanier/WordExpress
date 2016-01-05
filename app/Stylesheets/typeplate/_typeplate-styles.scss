@@ -1,0 +1,106 @@
+// $Global
+// -------------------------------------//
+
+html {
+  @if $typl8-custom-font {
+    font: $typl8-font-weight #{$typl8-font-size + "%"}/#{$typl8-line-height} $typl8-custom-font, $typl8-font-family;
+  } @else {
+    font: $typl8-font-weight #{$typl8-font-size + "%"}/#{$typl8-line-height} $typl8-font-family;
+  }
+}
+
+body {
+  @extend %typl8-breakword;
+  // @include typl8-hyphens(auto);
+  color: $typl8-copy-color;
+}
+
+h1,h2,h3,h4,h5,h6{
+  font-family: $serif;
+}
+
+
+// $Headings
+// http://codepen.io/grayghostvisuals/pen/IKsbw
+// -------------------------------------//
+
+@include typl8-headings;
+@include typl8-headings-style;
+
+
+// $Parargraphs
+// -------------------------------------//
+
+p {
+  margin: auto auto $typl8-indent-val;
+  @if $typl8-paragraph-spacing == true {
+    & + p {
+      text-indent: $typl8-indent-val;
+      margin-top: -$typl8-indent-val;
+    }
+  }
+}
+
+// $Blockquotes
+// -------------------------------------//
+
+blockquote {
+  + figcaption cite {
+    @extend %typl8-cite;
+  }
+}
+
+
+// $Legal Text
+// -------------------------------------//
+
+small {
+  font-size: $typl8-small-print-size;
+}
+
+
+// $Hyphenation
+// -------------------------------------//
+// @notes
+// http://meyerweb.com/eric/thoughts/2012/12/17/where-to-avoid-css-hyphenation
+
+input,
+abbr,
+acronym,
+blockquote,
+code,
+kbd,
+q,
+samp,
+var {
+  @include typl8-hyphens(none);
+}
+
+
+// $Codeblocks
+// -------------------------------------//
+
+pre {
+  @include typl8-white-space(pre);
+
+  code {
+    @extend %typl8-normal-wrap;
+    @include typl8-white-space(pre-wrap);
+  }
+}
+
+code {
+  @include typl8-white-space(pre);
+  font-family: monospace;
+}
+
+
+// $Smallcaps
+// -------------------------------------//
+
+abbr {
+  @include typl8-smallcaps($typl8-smcps-color, $typl8-smcps-weight);
+  &[title]:hover {
+    cursor: help;
+  }
+}

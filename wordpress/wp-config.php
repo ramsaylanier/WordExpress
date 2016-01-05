@@ -18,7 +18,7 @@ define('DB_CHARSET', 'utf8');
 define('DB_COLLATE', '');
 
 $environments = array(
-	'development' => 'intelsat.dev',
+	'development' => 'wordpressexpress.dev',
 );
 
 include 'wp-config.environments.php';
@@ -33,14 +33,14 @@ include 'wp-config.environments.php';
  *
  * @since 2.6.0
  */
- define('AUTH_KEY',         '2PihA;H&$-R(;Z;PT!gD?ym`VH`$h~1-%l%>LB}xCK8M|h~N_3v~Q|<=@i$#@H6.');
- define('SECURE_AUTH_KEY',  'owt{7vqtB-rNb[6C]Q_}bbU;hT~PN,M7k~t:%83eCLJIAYu*KCm,0.@{|1#89SPT');
- define('LOGGED_IN_KEY',    'X(!S32;pUxsNM#S;#&H=B)YMUMZK|/_ew%zvsz@7?vN.@XZMPRD2YL:i-Z#h&`Of');
- define('NONCE_KEY',        'J6@bx|B],)_ o@Z_E&v/tUiDavcGjw|C?-e^%U^+H;|lp-fQ]V}kB-I}Aw-w_~6g');
- define('AUTH_SALT',        'La8ZTe>@{|@BRpc!DlEz.tHpZi4O3 G4O-^OP>xJ{Qb[IjR#V7_)T8pi9[7>s(<w');
- define('SECURE_AUTH_SALT', ':&(x hO;Th<U!#:2zh2y9@-Z4`Gz$=K~^Z@m}ak vVUtC0`Wi4{+X(-56W !r[z%');
- define('LOGGED_IN_SALT',   '+>p5R2%b.*QEv_dRiDuGf!Zj}M)^*+%(=FN5i8|>I+/vN;aid>,Pr.Lq+UxLjCv2');
- define('NONCE_SALT',       'L|{{dWVN5(R/,o`QQy1Z(3R}) z*8Le{()a,T2BA!8x$:|gv@%:7lb!``_4Z*?=$');
+ define('AUTH_KEY',         '|^1FO-^0b,Cb9bghg}[d7:Z^-%p&K^|)kZNl:%sON^)hJOyA.,PiSM,|sfhr8t~+');
+ define('SECURE_AUTH_KEY',  '!_LKzW%-&I%5sqfp7Cit]O9`0nW.C4=?MHzkp>sqi8.-<F K^I 9Kxx)/7#!CLKg');
+ define('LOGGED_IN_KEY',    '`>xl+d8Z>=1vj~jn.@InC5JrJr^imJ&bBDNGw ARK&Gq*CsH o.X][.`[#dMoR/u');
+ define('NONCE_KEY',        '@EqZS/H{[;)C2fyVqJCV`8+:88*>J_oH+aVH`7~1+J^4;Tic9|~|gZwwXO}8~`03');
+ define('AUTH_SALT',        'WF*);cQ_)!o%U-w)i/i0e#~%#JR7;I-y0pH ~V?fq|dHO=zLw+XR1mBS <=>J_qi');
+ define('SECURE_AUTH_SALT', '(:UQ(LB78|L<y{wJvV5LuKdL@3T^E0-|CW&7|,vt-DSb=YXQ,Be+ZmO%.>Mw]{:%');
+ define('LOGGED_IN_SALT',   'I^nu,IT+Ao{^w8T?)Rd`9m758X2S0b)DU2Z0uM-i119=7Us$2O[]++QKve+OwfEK');
+ define('NONCE_SALT',       '}NW>p+4.Ta,d}S@@|E!OB7 |Ka2* %3K-}TEYNMn4P00r>|n?1Nf07uH/p-TliK<');
 
 /**#@-*/
 

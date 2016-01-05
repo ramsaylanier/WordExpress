@@ -1,0 +1,64 @@
+// $Ampersands
+// -------------------------------------//
+// Call your custom ampersand on any element.
+//
+// @markup                  <h6 class="ampersand">Dewey Cheat 'em & Howe</h6>
+// @example                 .ampersand { @extend %typl8-amp-placeholder; }
+
+%typl8-amp-placeholder {
+  @include typl8-ampersand($typl8-amp-fontface, $typl8-amp-fontfamily);
+}
+
+
+// $Blockquote
+// -------------------------------------//
+// Style your blockquote citations
+//
+// @example                     .citation { @extend %typl8-cite; }
+
+%typl8-cite {
+  @include typl8-cite-style($typl8-cite-display, $typl8-cite-align, $typl8-cite-font-size);
+}
+
+
+// $Wordwrap
+// -------------------------------------//
+// Control word wrapping and breaks in your text.
+//
+// 'normal'                     Lines may only break at normal word break points.
+// 'break-word'                 Unbreakable words may be broken at arbitrary points.
+//
+// @example                     article { @extend %typl8-breakword; }
+
+%typl8-breakword {
+  word-wrap: break-word;
+}
+
+%typl8-normal-wrap {
+  word-wrap: normal;
+}
+
+%typl8-inherit-wrap {
+  word-wrap: auto;
+}
+
+
+// $OpenType
+// -------------------------------------//
+// Control OpenType feature settings where desired.
+//
+// @use
+// smallcaps                body { @extend %typl8-ot--smcp; }
+// text figures             body { @extend %typl8-ot--onum; }
+
+%typl8-ot--smcp {
+  @each $prefix in $typl8-prefixes {
+    #{$prefix}font-feature-settings: "smcp";
+  }
+}
+
+%typl8-ot--onum {
+  @each $prefix in $typl8-prefixes {
+    #{$prefix}font-feature-settings: 'onum';
+  }
+}

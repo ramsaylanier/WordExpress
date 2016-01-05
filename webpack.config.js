@@ -15,6 +15,51 @@ module.exports = {
     filename: '[name].js',
     publicPath: '/'
   },
+  module: {
+    loaders: [
+      {
+        test: /\.jsx?$/,
+        loader: 'babel',
+        exclude: /node_modules|lib/,
+        query: {
+          presets: ['react', 'es2015', 'stage-0'],
+          cacheDirectory: true,
+          plugins: [
+            './build/babelRelayPlugin',
+            'transform-react-display-name',
+            'transform-runtime',
+            'transform-decorators-legacy',
+            ['react-transform', {
+              'transforms': [{
+                'transform': 'react-transform-hmr',
+                'imports': ['react'],
+                // this is important for Webpack HMR:
+                'locals': ['module']
+              }, {
+                'transform': 'react-transform-catch-errors',
+                // the second import is the React component to render error
+                // (it can be a local path too, like './src/ErrorReporter')
+                'imports': ['react', 'redbox-react']
+              }]
+            }]
+          ]
+        },
+      },
+      {
+        test: /\.json?$/,
+        loader: 'json'
+      },
+      {
+        test: /\.css$/,
+        loader: 'style!css?modules&localIdentName=[name]---[local]---[hash:base64:5]'
+      },
+      {
+        test: /\.scss$/,
+        loader: 'style-loader!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]!sass-loader',
+        exclude: /node_modules|lib/,
+      },
+    ],
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: 'app/index.tpl.html',
@@ -28,17 +73,7 @@ module.exports = {
       'process.env.NODE_ENV': JSON.stringify('development')
     })
   ],
-  module: {
-    loaders: [{
-      test: /\.js?$/,
-      exclude: /node_modules/,
-      loader: 'babel'
-    }, {
-      test: /\.json?$/,
-      loader: 'json'
-    }, {
-      test: /\.css$/,
-      loader: 'style!css?modules&localIdentName=[name]---[local]---[hash:base64:5]'
-    }]
+  node: {
+    fs: 'empty'
   }
 };

@@ -1,0 +1,17 @@
+@import "vars";
+
+.red-background{
+  background-color: $red;
+}
+
+.dark-background{
+  background-color: $dark;
+}
+
+.red-border{
+  border-color: darken($red, 10%);
+}
+
+.dark-border{
+  border-color: darken($dark, 10%);
+}

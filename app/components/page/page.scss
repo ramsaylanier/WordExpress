@@ -1,0 +1,54 @@
+@import "../../Stylesheets/vars";
+
+.base{
+	position: relative;
+	min-height: 100vh;
+	background-color: darken(white, 10%);
+	background-size: cover;
+	background-position: center center;
+	padding-top: $headerHeight;
+	opacity: 0;
+	transition: opacity 300ms ease-out;
+
+	&.with_overlay{
+		background-color: blue;
+	}
+}
+
+.content{
+	padding: 2rem 0rem;
+
+	@media #{$mobile}{
+		padding: 2rem .5rem 4rem .5rem;
+	}
+}
+
+.header{
+	position: relative;
+	background-color: white;
+	padding: 2rem 0rem;
+
+	.link{
+		color: $primary;
+	}
+}
+
+
+.title{
+	position: relative;
+	color: $dark;
+	font-weight: 700;
+	font-size: 2rem;
+	padding: 1rem 0rem;
+	margin-bottom: 0rem;
+}
+
+.overlay{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	background-color: fade-out($dark, .1);
+}

@@ -1,0 +1,28 @@
+$serif: 'Lora', Helvetica, serif;
+$sansSerif: 'Source Sans Pro', Helvetica, sans-serif;
+
+$headerHeight: 40px;
+
+$primary: #F26425;
+$secondary: #39A2D6;
+$tertiary: #E71D36;
+$quaternary: #8C3B6C;
+$green: #2E294E;
+$red: #E71D36;
+$dark: #240425;
+$lightGrey: #f3f3f3;
+$borderGrey: #e0e0e0;
+$twitter: #55acee;
+
+
+// Breakpoints
+// ------------------------- Source: http://blog.scur.pl/2012/06/variable-media-queries-less-css/
+$highdensity: 		"only screen and (-webkit-min-device-pixel-ratio: 1.5)",
+              		"only screen and (min--moz-device-pixel-ratio: 1.5)",
+              		"only screen and (-o-min-device-pixel-ratio: 3/2)",
+              		"only screen and (min-device-pixel-ratio: 1.5)";
+$mobile:      		"only screen and (max-width: 568px)";
+$mobile-landscape: 	"only screen and (min-device-width: 320px) and (max-device-width: 640px) and (orientation: landscape)";
+$tablet:      		"only screen and (min-width: 569px) and (max-width: 980px)";
+$desktop:     		"only screen and (min-width: 981px) and (max-width: 1200px)";
+$desktop-xl:  		"only screen and (min-width: 1201px)";

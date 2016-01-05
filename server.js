@@ -2,19 +2,41 @@
 import path from 'path';
 import express from 'express';
 import webpack from 'webpack';
+import WebpackDevServer from 'webpack-dev-server';
 import webpackMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import config from './webpack.config.js';
+import {graphql} from 'graphql';
+import graphqlHTTP from 'express-graphql';
+import Schema from './data/schema';
+import mysql from 'mysql';
+
+let app;
 
 const isDeveloping = process.env.NODE_ENV !== 'production';
-const port = isDeveloping ? 3000 : process.env.PORT;
-const app = express();
+const APP_PORT = isDeveloping ? 3000 : process.env.PORT;
+const GRAPHQL_PORT = 8080;
+
+const graphQLServer = express();
+
+graphQLServer.use('/', graphqlHTTP({
+  graphiql: true,
+  pretty: true,
+  schema: Schema,
+}));
+
+graphQLServer.listen(GRAPHQL_PORT, () => console.log(
+  `GraphQL Server is now running on http://localhost:${GRAPHQL_PORT}`
+));
 
 if (isDeveloping) {
+
   const compiler = webpack(config);
-  const middleware = webpackMiddleware(compiler, {
-    publicPath: config.output.publicPath,
+
+  app = new WebpackDevServer(compiler, {
     contentBase: 'src',
+    proxy: {'/graphql': `http://localhost:${GRAPHQL_PORT}`},
+    publicPath: config.output.publicPath,
     stats: {
       colors: true,
       hash: false,
@@ -25,12 +47,8 @@ if (isDeveloping) {
     }
   });
 
-  app.use(middleware);
   app.use(webpackHotMiddleware(compiler));
-  app.get('*', function response(req, res) {
-    res.write(middleware.fileSystem.readFileSync(path.join(__dirname, 'dist/index.html')));
-    res.end();
-  });
+
 } else {
   app.use(express.static(__dirname + '/dist'));
   app.get('*', function response(req, res) {
@@ -38,9 +56,6 @@ if (isDeveloping) {
   });
 }
 
-app.listen(port, '0.0.0.0', function onStart(err) {
-  if (err) {
-    console.log(err);
-  }
-  console.info('==> 🌎 Listening on port %s. Open up http://0.0.0.0:%s/ in your browser.', port, port);
+app.listen(APP_PORT, () => {
+  console.log(`App is now running on http://localhost:${APP_PORT}`);
 });

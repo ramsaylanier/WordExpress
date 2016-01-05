@@ -1,0 +1,284 @@
+// $Typescale
+// -------------------------------------//
+
+@mixin typl8-typescale($scale, $base, $value, $measure:"") {
+  @if $value == rem {
+    font-size: $scale * 1px;
+    // font-size: typl8-context-calc($scale, $base, $value);
+  } @else if $value == em {
+    font-size: typl8-context-calc($scale, $base, $value);
+  } @else {
+    font-size: $scale * 1px;
+  }
+
+  @if $measure != "" {
+    @if $value == rem {
+      // margin-bottom: typl8-measure-margin($scale, $measure, $value: px);
+      margin-bottom: typl8-measure-margin($scale, $measure, $value);
+    } @else if $value == em {
+      margin-bottom: typl8-measure-margin($scale, $measure, $value: em);
+    } @else {
+      margin-bottom: typl8-measure-margin($scale, $measure, $value: px);
+    }
+  }
+}
+
+
+// $Headings
+// https://github.com/typeplate/starter-kit/issues/27
+// -------------------------------------//
+// Props to Harry Roberts for this trick.
+//
+// @notes
+// optimizeLegibility           Enables ligatures and kerning
+// single line height           Fixes large spaces when a heading wraps two lines
+
+%typl8-hN {
+  text-rendering: optimizeLegibility;
+  line-height: 1;
+  margin-top: 0;
+  color: $typl8-heading-color;
+}
+
+@mixin typl8-headings() {
+  @each $name, $size in $typl8-scale {
+    .#{$name} {
+      @extend %typl8-hN;
+      @include typl8-typescale(
+        $size,
+        $typl8-font-base,
+        $typl8-typescale-unit,
+        $typl8-measure
+      );
+    }
+  }
+}
+
+@mixin typl8-headings-style() {
+  @each $h, $size in $typl8-headings {
+    #{$h} {
+      @extend .#{$size};
+    }
+  }
+}
+
+
+// $Hypens
+// -------------------------------------//
+// @notes
+// http://caniuse.com/#search=hyphens
+// http://trentwalton.com/2011/09/07/css-hyphenation
+//
+// @values              [ none | manual | auto ]
+
+@mixin typl8-hyphens($val) {
+  @each $prefix in $typl8-prefixes {
+    #{$prefix}hyphens: $val;
+  }
+}
+
+
+// $Smallcaps
+// -------------------------------------//
+// @notes
+// http://caniuse.com/#search=font-variant
+// http://blog.hypsometry.com/articles/true-small-capitals-with-font-face
+// 'font-variant' depends on the font family in use.
+// Some font-families don't support small caps
+// or don't provide them with their Webfont.
+
+@mixin typl8-smallcaps($color, $font-weight) {
+  @each $prefix in $typl8-prefixes {
+    #{$prefix}font-variant: small-caps;
+  }
+  font-weight: $font-weight;
+  text-transform: lowercase;
+  color: $color;
+}
+
+
+// $Fontsize-Adjust
+// -------------------------------------//
+// @notes
+// firefox 17+ only (as of Feb. 2013)
+// correct x-height for fallback fonts.
+// requires secret formula yet to be discovered.
+
+@mixin typl8-font-size-adjust($adjust-value) {
+  font-size-adjust: $adjust-value;
+}
+
+
+// $Ampersand
+// -------------------------------------//
+
+@mixin typl8-ampersand($typl8-amp-fontfamily...) {
+  font-family: $typl8-amp-fontfamily;
+}
+
+
+// $Blockquote
+// -------------------------------------//
+// "-" is your citation flourish.
+//
+// I always say important things because I'm so smart
+//                           - Super Important Person
+//
+// @example                 .your-class-name { @include typl8-blockquote("-"); }
+
+@mixin typl8-blockquote($citation-flourish) {
+  p {
+    &:last-of-type {
+      margin-bottom: -#{$typl8-line-height/2}em;
+    }
+  }
+
+  + figcaption {
+    @extend %typl8-cite;
+
+    &:before {
+      content: $citation-flourish;
+    }
+  }
+}
+
+@mixin typl8-cite-style($display, $text-align, $font-size) {
+  display: $display;
+  font-size: $font-size;
+  text-align: $text-align;
+}
+
+
+// $Pull-Quotes
+// -------------------------------------//
+
+@mixin typl8-pull-quotes($fontsize, $opacity, $color) {
+  position: relative;
+  padding: typl8-context-calc($fontsize, $fontsize, em);
+
+  &:before,
+  &:after {
+    height: typl8-context-calc($fontsize, $fontsize, em);
+    opacity: $opacity;
+    position: absolute;
+    font-size: $fontsize;
+    color: $color;
+  }
+
+  &:before {
+    content: '“';
+    top:  0;
+    left: 0;
+  }
+
+  &:after {
+    content: '”';
+    bottom: 0;
+    right: 0;
+  }
+}
+
+
+// $Dropcap
+// -------------------------------------//
+// Add styling to intro paragraphs using a dropcap
+//
+// @markup              <p class="typl8-drop-cap">Lorem ipsum dolor sit amet</p>
+// @example             .dropcap { @include typl8-dropcap; }
+
+@mixin typl8-dropcap(
+  $float-position,
+  $font-size,
+  $font-family,
+  $txt-indent,
+  $margin,
+  $padding,
+  $color,
+  $line-height,
+  $bg
+  ) {
+  &:first-letter {
+    float: $float-position;
+    margin: $margin;
+    padding: $padding;
+    font-size: $font-size;
+    font-family: $font-family;
+    line-height: $line-height;
+    text-indent: $txt-indent;
+    background: $bg;
+    color: $color;
+  }
+}
+
+
+// $Code
+// -------------------------------------//
+
+@mixin typl8-white-space($wrap-space) {
+  @if $wrap-space == 'pre-wrap' {
+    white-space: #{-moz-}$wrap-space;
+    white-space: $wrap-space;
+  } @else {
+    white-space: $wrap-space;
+  }
+}
+
+
+// $Definition-Lists
+// -------------------------------------//
+// @notes
+// http://lea.verou.me/2012/02/flexible-multiline-definition-lists-with-2-lines-of-css
+// http://lea.verou.me/2012/02/flexible-multiline-definition-lists-with-2-lines-of-css
+
+@mixin typl8-definition-list-style($style) {
+  @if $style == lining {
+    dt,
+    dd {
+      display: inline;
+      margin: 0;
+    }
+
+    dt,
+    dd {
+      & + dt {
+        &:before {
+          content: "\A";
+          white-space: pre;
+        }
+      }
+    }
+
+    dd {
+      & + dd {
+        &:before {
+          content: ", ";
+        }
+      }
+      &:before {
+          content: ": ";
+          margin-left: -0.2rem; //removes extra space between the dt and the colon
+      }
+    }
+  }
+
+  @if $style == dictionary-style {
+    dt {
+      display: inline;
+      counter-reset: definitions;
+      & + dt {
+        &:before {
+          content: ", ";
+          margin-left: -0.2rem; // removes extra space between the dt and the comma
+        }
+      }
+    }
+
+    dd {
+      display: block;
+      counter-increment: definitions;
+      &:before {
+        content: counter(definitions, decimal) ". ";
+      }
+    }
+  }
+}

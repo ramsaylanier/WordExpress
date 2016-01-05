@@ -1,0 +1,16 @@
+interface Node {
+  id: ID!
+}
+
+type Post implements Node {
+  id: ID!
+  post_title: String
+  post_content: String
+  post_status: String
+  post_type: String
+}
+
+type Query {
+  node(id: ID!): Node
+  pages(post_title: String): Post
+}
