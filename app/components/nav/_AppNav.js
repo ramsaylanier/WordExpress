@@ -4,17 +4,34 @@ import styles from './navs.scss';
 import {NavList, NavItem} from './navs.js';
 
 const AppNav = React.createClass({
+
+	componentDidMount(){
+
+	},
+
 	render(){
+
+		const { items } = this.props.viewer.menus;
+
 		return(
 			<NavList type="primary">
-				<NavItem>
-					<Link to='/' className={styles.link}>
-					</Link>
-					<NavList type="subnav">
-						<NavItem type="link" href="/dashboard">Dashboard</NavItem>
-						<NavItem type="link" href="/profile">Profile</NavItem>
-					</NavList>
-				</NavItem>
+				{items.map( item => {
+					const { children } = item;
+					return(
+						<NavItem>
+							<Link to={item.navitem.post_name} className={styles.link}>{item.navitem.post_title}</Link>
+							{children.length > 0 &&
+								<NavList type="subnav">
+									{children.map( child => {
+										return(
+											<NavItem type="link" href="{child.navitem.post_name}">{child.navitem.post_title}</NavItem>
+										)
+									})}
+								</NavList>
+							}
+						</NavItem>
+					)
+				})}
 			</NavList>
 		)
 	}

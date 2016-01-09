@@ -1,12 +1,14 @@
-@import '../../Stylesheets/vars';
-
 .base{
+  composes: dark_background from "../../styles/colors.scss";
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: $headerHeight;
-  background-color: $dark;
+  height: 4rem;
+}
+
+.wrapper{
+  composes: main from "../../styles/wrapper.scss";
 }
 
 .brand{

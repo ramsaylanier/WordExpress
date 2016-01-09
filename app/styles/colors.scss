@@ -4,8 +4,12 @@
   background-color: $red;
 }
 
-.dark-background{
+.dark_background{
   background-color: $dark;
+}
+
+.faded_dark_backgroud{
+	background-color: fade-out($dark, .1);
 }
 
 .red-border{
@@ -14,4 +18,12 @@
 
 .dark-border{
   border-color: darken($dark, 10%);
+}
+
+.primary{
+  color: $primary;
+}
+
+.dark{
+  color: $dark;
 }

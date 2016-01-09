@@ -1,37 +1,55 @@
 import React from 'react';
-import {graphql} from 'graphql';
+import { render } from 'react-dom';
+import Relay from 'react-relay';
+import { Link } from 'react-router';
+import { Page, PageContent } from '../Page/page.js';
 
-import PageAnimations from './PageAnimations.js';
-import { AnimateItem, resetCounts } from '../../animations.js'
+//styles
 
-import styles from './page.scss';
-import wrapperStyles from '../../Stylesheets/wrapper.scss';
-
-
-// Write your package code here!
 const WordpressPage = React.createClass({
 
-	setInitialState(){
-		return{
-			page: ''
-		}
-	},
-
-	componentDidMount(){
-		let animation = this.props.animation || PageAnimations.animateIn;
-		AnimateItem(this._page, PageAnimations.animateIn);
-	},
-
 	render(){
-		let className = this.props.className;
-		let children = this.props.children;
+		const {post_title, post_type } = this.props.viewer.pages.edges[0].node;
 
-		return(
-			<div ref={ (c) => this._page = c } className={styles.base + ' ' + className}>
-				<h1>Test</h1>
-			</div>
+		return (
+			<Page>
+				<PageContent>
+						<h1>{post_title}</h1>
+						<p>{post_type}</p>
+
+						<Link to="/test">Test</Link>
+				</PageContent>
+			</Page>
 		)
 	}
 });
 
-export default WordpressPage;
+export default Relay.createContainer(WordpressPage, {
+
+	initialVariables: {
+		page: null,
+		limit: 1
+	},
+
+	prepareVariables({page}){
+		return{
+			page: page,
+			limit: 1
+		}
+	},
+
+  fragments: {
+    viewer: () => Relay.QL`
+      fragment on User {
+        pages(post_title: $page, first: $limit){
+					edges{
+						node{
+							post_title
+							post_type
+						}
+					}
+				}
+      }
+    `,
+  },
+});

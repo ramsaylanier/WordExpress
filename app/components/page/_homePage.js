@@ -1,33 +1,50 @@
 import React from 'react';
 import { render } from 'react-dom';
-
-//components
+import Relay from 'react-relay';
 import { Link } from 'react-router';
-import { Page, PageContent } from '../Page/page.js';
+import { Page, PageContent, PageHero } from '../Page/page.js';
 
-//styles
-import wrapperStlyes from '../../Stylesheets/wrapper.scss';
-
-const HomePage = React.createClass({
-
-	componentDidMount(){
-
-	},
+class HomePage extends React.Component{
 
 	render(){
 
-		let wrapperClassName = wrapperStlyes.form__white;
+		const {post_title, post_type } = this.props.viewer.pages.edges[0].node;
 
 		return (
 			<Page>
 				<PageContent>
-					<div className={wrapperClassName}>
-						<h1>HomePage</h1>
-					</div>
+					<PageHero>
+						<h1>{post_title}</h1>
+						<p>{post_type}</p>
+					</PageHero>
+
+					<Link to="/test">Test</Link>
 				</PageContent>
 			</Page>
 		)
 	}
-});
+}
 
-export default HomePage;
+export default Relay.createContainer(HomePage, {
+
+	initialVariables: {
+		postTitle: "Homepage",
+		limit: 1
+	},
+
+  fragments: {
+    viewer: () => Relay.QL`
+      fragment on User {
+        pages(post_title: $postTitle, first: $limit){
+					edges{
+						node{
+							id
+							post_title
+							post_type
+						}
+					}
+				}
+      }
+    `,
+  },
+});

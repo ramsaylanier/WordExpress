@@ -3,6 +3,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   devtool: 'eval-source-map',
@@ -55,12 +56,15 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        loader: 'style-loader!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]!sass-loader',
+        loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]!sass'),
         exclude: /node_modules|lib/,
       },
     ],
   },
   plugins: [
+    new ExtractTextPlugin('app.css', {
+      allChunks: true
+    }),
     new HtmlWebpackPlugin({
       template: 'app/index.tpl.html',
       inject: 'body',

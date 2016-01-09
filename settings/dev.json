@@ -1,8 +1,8 @@
 {
   "ENV":"Dev",
-  "wp-prefix": "wp_",
+  "wp_prefix": "wp_",
   "database": {
-    "name": "wpexpress_dev",
+    "name": "censeo_dev",
     "username": "root",
     "password": "",
     "host": "127.0.0.1"

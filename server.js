@@ -34,6 +34,8 @@ if (isDeveloping) {
   const compiler = webpack(config);
 
   app = new WebpackDevServer(compiler, {
+    hot: true,
+    historyApiFallback: true,
     contentBase: 'src',
     proxy: {'/graphql': `http://localhost:${GRAPHQL_PORT}`},
     publicPath: config.output.publicPath,

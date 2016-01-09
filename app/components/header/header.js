@@ -1,33 +1,30 @@
 import React from 'react';
+import Relay from 'react-relay'
 import { Link } from 'react-router';
 import AppNav from '../nav/_AppNav.js';
-import styles from './header.scss';
-import wrapperStyles from '../../Stylesheets/wrapper.scss';
 
-export default class Header extends React.Component{
+import CSSModules from 'react-css-modules';
+import styles from './header.scss';
+
+@CSSModules(styles, {allowMultiple: true})
+class Header extends React.Component{
 
 	componentDidMount(){
 
 	}
 
-	componentDidUpdate(prevProps){
-		if (prevProps.title !== this.props.title){
-				this._animateTitleIn();
-		}
-	}
-
 	render(){
 		let logoLink = '/';
-		let className = styles.base;
-		let wrapperClassName = wrapperStyles.flex;
+
+		const { viewer } = this.props;
 
 		return (
-			<header className={className}>
-				<div className={wrapperClassName}>
-					<Link to={logoLink} className={styles.brand}>Home</Link>
+			<header styleName="base">
+				<div className={styles.wrapper}>
+					<Link to={logoLink} styleName="brand">Home</Link>
 					<span ref="title" className={styles.title}>{this.props.title}</span>
 
-					<AppNav actions={this.props.actions}/>
+					<AppNav viewer={viewer}/>
 
 					{this.props.children}
 				</div>
@@ -48,3 +45,36 @@ export default class Header extends React.Component{
 		})
 	}
 }
+
+export default Relay.createContainer(Header, {
+
+	initialVariables: {
+		numOfMenuItems: 10,
+		numOfMetaItems: 10
+	},
+
+
+  fragments: {
+		viewer: () => Relay.QL`
+			fragment on User {
+				menus {
+		      items {
+		        navitem {
+		          id
+		          post_title
+		          post_name
+		        }
+		        children {
+		          id
+		          linkedId
+		          navitem {
+		            post_title
+		            post_name
+		          }
+		        }
+		      }
+				}
+			}
+    `,
+  },
+});

@@ -1,12 +1,10 @@
-@import "../../Stylesheets/vars";
-
 .base{
 	position: relative;
 	min-height: 100vh;
 	background-color: darken(white, 10%);
 	background-size: cover;
 	background-position: center center;
-	padding-top: $headerHeight;
+	padding-top: 4rem;
 	opacity: 0;
 	transition: opacity 300ms ease-out;
 
@@ -17,26 +15,22 @@
 
 .content{
 	padding: 2rem 0rem;
-
-	@media #{$mobile}{
-		padding: 2rem .5rem 4rem .5rem;
-	}
 }
 
 .header{
 	position: relative;
 	background-color: white;
 	padding: 2rem 0rem;
+}
 
-	.link{
-		color: $primary;
-	}
+.link{
+	composes: primary from '../../styles/colors.scss';
 }
 
 
 .title{
+	composes: dark from '../../styles/colors.scss';
 	position: relative;
-	color: $dark;
 	font-weight: 700;
 	font-size: 2rem;
 	padding: 1rem 0rem;
@@ -44,11 +38,11 @@
 }
 
 .overlay{
+	composes: faded_dark_background from '../../styles/colors.scss';
 	position: absolute;
 	top: 0;
 	left: 0;
 	width: 100%;
 	height: 100%;
 	opacity: 0;
-	background-color: fade-out($dark, .1);
 }

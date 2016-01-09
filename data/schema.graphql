@@ -1,5 +1,25 @@
+type Menu implements Node {
+  id: ID!
+  name: String
+  items: [MenuItem]
+}
+
+type MenuItem {
+  id: ID!
+  linkedId: Int
+  navitem: Post
+  children: [MenuItem]
+}
+
 interface Node {
   id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
 }
 
 type Post implements Node {
@@ -8,9 +28,47 @@ type Post implements Node {
   post_content: String
   post_status: String
   post_type: String
+  post_name: String
+  post_meta(after: String, first: Int, before: String, last: Int): PostmetaConnection
 }
 
-type Query {
+type PostConnection {
+  pageInfo: PageInfo!
+  edges: [PostEdge]
+}
+
+type PostEdge {
+  node: Post
+  cursor: String!
+}
+
+type Postmeta implements Node {
+  id: ID!
+  meta_id: Int
+  post_id: Int
+  meta_key: String
+  meta_value: String
+}
+
+type PostmetaConnection {
+  pageInfo: PageInfo!
+  edges: [PostmetaEdge]
+}
+
+type PostmetaEdge {
+  node: Postmeta
+  cursor: String!
+}
+
+type Root {
+  viewer: User
   node(id: ID!): Node
-  pages(post_title: String): Post
+}
+
+type User implements Node {
+  id: ID!
+  posts(post_type: String = "post", after: String, first: Int, before: String, last: Int): PostConnection
+  pages(post_title: String, after: String, first: Int, before: String, last: Int): PostConnection
+  menus(name: String): Menu
+  postmeta(post_id: Int, after: String, first: Int, before: String, last: Int): PostmetaConnection
 }

@@ -1,0 +1,19 @@
+@import "./styles/reset";
+@import "./styles/fonts";
+@import "./styles/vars";
+@import "./styles/typeplate/typeplate";
+@import "./styles/flexbox";
+@import "./styles/z-index";
+
+*{
+  box-sizing: border-box;
+}
+
+body{
+  font-family: $sansSerif;
+  background-color: darken(white, 10%);
+}
+
+a{
+  text-decoration: none;
+}

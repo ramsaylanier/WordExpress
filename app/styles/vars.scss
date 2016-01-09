@@ -1,8 +1,6 @@
 $serif: 'Lora', Helvetica, serif;
 $sansSerif: 'Source Sans Pro', Helvetica, sans-serif;
 
-$headerHeight: 40px;
-
 $primary: #F26425;
 $secondary: #39A2D6;
 $tertiary: #E71D36;
@@ -13,7 +11,6 @@ $dark: #240425;
 $lightGrey: #f3f3f3;
 $borderGrey: #e0e0e0;
 $twitter: #55acee;
-
 
 // Breakpoints
 // ------------------------- Source: http://blog.scur.pl/2012/06/variable-media-queries-less-css/
@@ -26,3 +23,10 @@ $mobile-landscape: 	"only screen and (min-device-width: 320px) and (max-device-w
 $tablet:      		"only screen and (min-width: 569px) and (max-width: 980px)";
 $desktop:     		"only screen and (min-width: 981px) and (max-width: 1200px)";
 $desktop-xl:  		"only screen and (min-width: 1201px)";
+
+:global {
+
+  .dark_background{
+    background-color: $dark;
+  }
+}
