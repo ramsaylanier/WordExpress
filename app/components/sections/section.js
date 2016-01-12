@@ -9,11 +9,40 @@ import settings from '../../../settings/dev.json';
 @CSSModules(styles, {allowMultiple: true})
 class Section extends React.Component{
 
+
+  _handleMoustEnter(e){
+    const { _title, _section } = this;
+
+    TweenMax.to(_title, 2, {
+      y: -20,
+      ease: Power4.easeOut
+    })
+  }
+
+  _handleMouseLeave(e){
+    let title = this._title;
+
+    TweenMax.to(title, 1, {
+      y: 0,
+      ease: Power4.easeOut
+    })
+  }
+
+  _handleMouseMove(e){
+    const section = e.nativeEvent.target;
+    const sectionWidth = section.offsetWidth;
+    let offsetX = (e.nativeEvent.offsetX / (sectionWidth / 2 / 5)) + 45;
+    TweenMax.to(section, 2, {
+      backgroundPositionX: offsetX,
+      ease: Power4.easeOut
+    })
+
+  }
+
   _renderPostTitle(){
     const title = this.props.section.post_title.match(/.{1,2}/g);
-    console.log(title);
-    return title.map( fragment => {
-      return <span>{fragment}<br></br></span>
+    return title.map( (fragment, index) => {
+      return <span key={index}>{fragment}<br></br></span>
     })
   }
 
@@ -30,9 +59,16 @@ class Section extends React.Component{
     const bgClass = src ? 'with_background' : '';
 
     return(
-      <div styleName={post_title + ' ' + bgClass} style={bg}>
-        <h2 styleName="title">{this._renderPostTitle()}</h2>
+      <div ref={ (c) => this._section = c }
+        styleName={post_title + ' ' + bgClass}
+        style={bg}
+        onMouseEnter={this._handleMoustEnter.bind(this)}
+        onMouseLeave={this._handleMouseLeave.bind(this)}
+        onMouseMove={this._handleMouseMove.bind(this)}>
+
+        <h2 ref={ (t)=> this._title = t } styleName="title">{this._renderPostTitle()}</h2>
         {this.props.children}
+
       </div>
     )
   }

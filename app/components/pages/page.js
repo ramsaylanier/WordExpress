@@ -27,30 +27,4 @@ const Page = React.createClass({
 	}
 });
 
-const PageContent = React.createClass({
-	render(){
-
-		let className = styles.content;
-		let wrapperClassName = wrapperStyles[this.props.wrapperType] || wrapperStyles.main;
-
-		return(
-			<div className={className}>
-				<div className={wrapperClassName}>
-					{this.props.children}
-				</div>
-			</div>
-		)
-	}
-})
-
-class PageHero extends React.Component{
-	render(){
-		return(
-			<div className={styles.hero}>
-				{this.props.children}
-			</div>
-		)
-	}
-}
-
-export { Page, PageContent, PageHero };
+export default Page;

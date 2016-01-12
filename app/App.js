@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import Relay from 'react-relay'
 
 import styles from './App.scss';
 
@@ -16,4 +16,19 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default Relay.createContainer(App, {
+
+  fragments: {
+    viewer: () => Relay.QL`
+      fragment on User {
+        posts(post_type: "page" first: 4){
+					edges{
+						node{
+							id
+						}
+					}
+				}
+      }
+    `,
+  },
+});

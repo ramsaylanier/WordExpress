@@ -24,7 +24,8 @@
 }
 
 .with_background{
-  composes: cover center from '../../styles/background.scss';
+  composes: cover from '../../styles/background.scss';
+  background-position-x: 40%;
   position: relative;
 
   &:after{
@@ -41,4 +42,5 @@
   font-size: 6vw;
   line-height: 5vw;
   padding: 1rem 2rem;
+  pointer-events: none;
 }

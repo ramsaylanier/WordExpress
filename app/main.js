@@ -9,7 +9,7 @@ import createHashHistory from 'history/lib/createHashHistory';
 import { browserHistory, IndexRoute, Route } from 'react-router';
 
 import App from './App.js';
-import * as Page from './components/Page/Pages.js';
+import LandingPage from './components/pages/LandingPage.js';
 
 // const history = useRouterHistory(createHashHistory)({ queryKey: false });
 const AppQueries = {
@@ -27,11 +27,7 @@ render((
         queries={AppQueries}
       >
         <IndexRoute
-          component={Page.HomePage}
-          queries={AppQueries}
-        />
-        <Route
-          path=":page" component={Page.WordpressPage}
+          component={LandingPage}
           queries={AppQueries}
         />
       </Route>
