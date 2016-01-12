@@ -1,46 +1,38 @@
 import React from 'react';
-import { render } from 'react-dom';
 import Relay from 'react-relay';
-import { Link } from 'react-router';
-import { Page, PageContent, PageHero } from '../Page/page.js';
+import { Page } from '../Page/page.js';
+
+import Section from '../sections/section.js';
 
 class HomePage extends React.Component{
 
 	render(){
 
-		const {post_title, post_type } = this.props.viewer.pages.edges[0].node;
+		const { viewer } = this.props;
+		const { edges } = viewer.posts;
 
 		return (
 			<Page>
-				<PageContent>
-					<PageHero>
-						<h1>{post_title}</h1>
-						<p>{post_type}</p>
-					</PageHero>
-
-					<Link to="/test">Test</Link>
-				</PageContent>
+				{edges.map( ({node}) => {
+					return(
+						<Section key={node.id} viewer={viewer} section={node}>
+						</Section>
+					)
+				})}
 			</Page>
 		)
 	}
 }
 
 export default Relay.createContainer(HomePage, {
-
-	initialVariables: {
-		postTitle: "Homepage",
-		limit: 1
-	},
-
   fragments: {
     viewer: () => Relay.QL`
       fragment on User {
-        pages(post_title: $postTitle, first: $limit){
+        posts(post_type: "page" first: 4){
 					edges{
 						node{
-							id
-							post_title
-							post_type
+							id,
+							${Section.getFragment("section")}
 						}
 					}
 				}

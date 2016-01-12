@@ -1,48 +1,7 @@
 .base{
+	composes: container from '../../styles/flexbox.scss';
 	position: relative;
-	min-height: 100vh;
-	background-color: darken(white, 10%);
-	background-size: cover;
-	background-position: center center;
-	padding-top: 4rem;
+	height: 100vh;
 	opacity: 0;
 	transition: opacity 300ms ease-out;
-
-	&.with_overlay{
-		background-color: blue;
-	}
-}
-
-.content{
-	padding: 2rem 0rem;
-}
-
-.header{
-	position: relative;
-	background-color: white;
-	padding: 2rem 0rem;
-}
-
-.link{
-	composes: primary from '../../styles/colors.scss';
-}
-
-
-.title{
-	composes: dark from '../../styles/colors.scss';
-	position: relative;
-	font-weight: 700;
-	font-size: 2rem;
-	padding: 1rem 0rem;
-	margin-bottom: 0rem;
-}
-
-.overlay{
-	composes: faded_dark_background from '../../styles/colors.scss';
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	opacity: 0;
 }

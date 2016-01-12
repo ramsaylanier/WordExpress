@@ -169,18 +169,26 @@ const ConnQueries = {
       }
     })
   },
-  getPostmetaById(metaId){
-    // console.log('metaId:', metaId);
+  getPostmetaById(metaId, keys){
+    console.log('meta keys:', keys);
+
     return Conn.models[settings.wp_prefix + 'postsmeta'].findOne({
       where: {
-        meta_id: metaId
+        meta_id: metaId,
+        meta_key: {
+          $in: keys
+        }
       }
     })
   },
-  getPostmeta(postId){
+  getPostmeta(postId, keys){
+    console.log('meta keys:', keys);
     return Conn.models[settings.wp_prefix + 'postmeta'].findAll({
       where: {
-        post_id: postId
+        post_id: postId,
+        meta_key: {
+          $in: keys
+        }
       }
     })
   },

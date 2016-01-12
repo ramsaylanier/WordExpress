@@ -11,6 +11,11 @@ type MenuItem {
   children: [MenuItem]
 }
 
+enum MetaType {
+  thumbnailID
+  attachedFile
+}
+
 interface Node {
   id: ID!
 }
@@ -29,7 +34,7 @@ type Post implements Node {
   post_status: String
   post_type: String
   post_name: String
-  post_meta(after: String, first: Int, before: String, last: Int): PostmetaConnection
+  post_meta(keys: [MetaType], after: String, first: Int, before: String, last: Int): PostmetaConnection
 }
 
 type PostConnection {
@@ -48,6 +53,7 @@ type Postmeta implements Node {
   post_id: Int
   meta_key: String
   meta_value: String
+  connecting_post: Post
 }
 
 type PostmetaConnection {
@@ -68,7 +74,6 @@ type Root {
 type User implements Node {
   id: ID!
   posts(post_type: String = "post", after: String, first: Int, before: String, last: Int): PostConnection
-  pages(post_title: String, after: String, first: Int, before: String, last: Int): PostConnection
   menus(name: String): Menu
   postmeta(post_id: Int, after: String, first: Int, before: String, last: Int): PostmetaConnection
 }

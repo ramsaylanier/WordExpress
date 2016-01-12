@@ -1,10 +1,15 @@
-:global{
-  .flex_container{
-    display: flex;
-  }
+.container{
+  display: flex;
+}
 
+.child_1{
+  flex: 1;
+}
 
-  .small{
-    font-size: .8rem;
-  }
+.justify_center{
+  justify-content: center;
+}
+
+.self_center{
+  align-self: center;
 }

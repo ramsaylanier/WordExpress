@@ -73,9 +73,14 @@ const GraphQLPost = new GraphQLObjectType({
     post_name: { type: GraphQLString},
     post_meta: {
       type: PostmetaConnection,
-      args: connectionArgs,
-      resolve: (root, args) => {
-        return connectionFromPromisedArray(ConnQueries.getPostmeta(root.id), args);
+      args: {
+        keys: {
+          type: new GraphQLList(GraphQLMetaType)
+        },
+        ...connectionArgs,
+      },
+      resolve: (root, args ) => {
+        return connectionFromPromisedArray(ConnQueries.getPostmeta(root.id, args.keys), args);
       }
     }
   }),
@@ -104,7 +109,6 @@ const GraphQLMenuItem = new GraphQLObjectType({
     children: {
       type: new GraphQLList(GraphQLMenuItem),
       resolve: (root) => {
-        console.log('root:', root.children)
         return root.children
       }
     }
@@ -126,6 +130,14 @@ const GraphQLMenu = new GraphQLObjectType({
   interfaces: [nodeInterface]
 });
 
+const GraphQLMetaType = new GraphQLEnumType({
+  name: 'MetaType',
+  values: {
+    thumbnailID: {value: '_thumbnail_id'},
+    attachedFile: {value: '_wp_attached_file'}
+  }
+})
+
 const GraphQLPostmeta = new GraphQLObjectType({
   name: 'Postmeta',
   fields: () => ({
@@ -138,7 +150,13 @@ const GraphQLPostmeta = new GraphQLObjectType({
     meta_id: { type: GraphQLInt },
     post_id: { type: GraphQLInt },
     meta_key: { type: GraphQLString },
-    meta_value: { type: GraphQLString }
+    meta_value: { type: GraphQLString },
+    connecting_post: {
+      type: GraphQLPost,
+      resolve: (root) => {
+        return ConnQueries.getPostById(root.meta_value)
+      }
+    }
   }),
   interfaces: [nodeInterface]
 });
@@ -166,18 +184,6 @@ const GraphQLUser = new GraphQLObjectType({
       },
       resolve(root, args) {
         return connectionFromPromisedArray( ConnQueries.getPosts(args.post_type), args );
-      }
-    },
-    pages: {
-      type: PostsConnection,
-      args: {
-        post_title: {
-          type: GraphQLString
-        },
-        ...connectionArgs
-      },
-      resolve(root, args) {
-        return connectionFromPromisedArray( ConnQueries.getPageByTitle(args.post_title), args );
       }
     },
     menus: {
