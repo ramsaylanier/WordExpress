@@ -6,11 +6,14 @@ It's built using Webpack, and requires Node V 5.0.0. You might be able to get aw
 You should also read about [why I am doing this](https://medium.com/@verybadhello/wordpress-with-node-react-and-graphql-part-1-introduction-ee0fc491730e#.4e1pvhq67). 
 
 ## Major update to project
-Inspired by [this project](https://github.com/vesparny/react-kickstart) and the evolving of [react-transform](https://github.com/gaearon/react-transform-boilerplate) and [CSS Modules]((http://glenmaddern.com/articles/css-modules)), this project has gotten a major upgrade.
+Inspired by [this project](https://github.com/vesparny/react-kickstart) and the evolving of [react-transform](https://github.com/gaearon/react-transform-boilerplate) and [CSS Modules](http://glenmaddern.com/articles/css-modules), this project has gotten a major upgrade.
 
 
 ## Get Started
 Just run ```npm install``` and then ```npm start```
+
+## Connecting to a Wordpress Database
+You'll notice a [settings](https://github.com/ramsaylanier/WordpressExpress/tree/master/settings) folder, which contains JSON files for development and production. This is where your wordpress database settings, as well as a wordpress table prefix, and uploads directory. Change accordingly.  
 
 ### React by default
 The project runs with React by default and hot replacement of changes to the modules.
