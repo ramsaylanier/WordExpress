@@ -2,13 +2,10 @@ import React from 'react';
 import Relay from 'react-relay';
 import Page from './page.js';
 
-class LandingPage extends React.Component{
+class WordpressPage extends React.Component{
 
 	render(){
-
-		const { viewer } = this.props;
-		const { page } = viewer;
-		const { post_title, post_content} = page;
+		const { post_title, post_content} = this.props.viewer.page;
 
 		return (
 			<Page withWrapper="true">
@@ -19,11 +16,14 @@ class LandingPage extends React.Component{
 	}
 }
 
-export default Relay.createContainer(LandingPage, {
+export default Relay.createContainer(WordpressPage, {
+
+  initialVariables: { page: null},
+
   fragments: {
     viewer: () => Relay.QL`
       fragment on User {
-        page(post_title:"Homepage"){
+        page(post_title:$page){
 					id,
 					post_title
 					post_content

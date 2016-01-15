@@ -53,7 +53,6 @@ export default Relay.createContainer(Header, {
 		numOfMetaItems: 10
 	},
 
-
   fragments: {
 		viewer: () => Relay.QL`
 			fragment on User {

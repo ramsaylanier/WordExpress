@@ -24,10 +24,6 @@ import {
 import {
   Conn,
   ConnQueries,
-  User,
-  Post,
-  Menu,
-  Postmeta,
   getUser,
   getMenu,
  } from './db.js';
@@ -37,6 +33,8 @@ let {nodeInterface, nodeField} = nodeDefinitions(
     const {type, id} = fromGlobalId(globalId);
     if (type === 'User') {
       return getUser(id);
+    } else if (type === 'Option') {
+      return ConnQueries.getOptionById(id)
     } else if (type === 'Post') {
       return ConnQueries.getPostById(id)
     } else if (type === 'Postmeta'){
@@ -50,6 +48,8 @@ let {nodeInterface, nodeField} = nodeDefinitions(
   (obj) => {
     if (obj instanceof User) {
       return GraphQLUser;
+    } else if (obj instanceof Option){
+      return GraphQLOption;
     } else if (obj instanceof Post){
       return GraphQLPost;
     } else if (obj instanceof Postmeta){
@@ -61,6 +61,29 @@ let {nodeInterface, nodeField} = nodeDefinitions(
     }
   }
 )
+
+const GraphQLOption = new GraphQLObjectType({
+  name: 'Option',
+  fields: () => ({
+    id: {
+      type: new GraphQLNonNull(GraphQLID),
+      resolve(root){
+        console.log(root);
+        return root.dataValues.option_id;
+      }
+    },
+    option_name: { type: GraphQLString },
+    option_value: { type: GraphQLString },
+  })
+});
+
+const {
+  connectionType: OptionConnection,
+  edgeType: GraphQLOptionEdge,
+} = connectionDefinitions({
+  name: 'Option',
+  nodeType: GraphQLOption
+});
 
 const GraphQLPost = new GraphQLObjectType({
   name: 'Post',
@@ -173,6 +196,12 @@ const GraphQLUser = new GraphQLObjectType({
   name: "User",
   fields: {
     id: globalIdField("User"),
+    options: {
+      type: OptionConnection,
+      resolve: (root, args) => {
+        return connectionFromPromisedArray( ConnQueries.getOptions(), args);
+      }
+    },
     posts: {
       type: PostsConnection,
       args: {
@@ -184,6 +213,15 @@ const GraphQLUser = new GraphQLObjectType({
       },
       resolve(root, args) {
         return connectionFromPromisedArray( ConnQueries.getPosts(args.post_type), args );
+      }
+    },
+    page: {
+      type: GraphQLPost,
+      args:{
+        post_title:{ type: GraphQLString },
+      },
+      resolve(root, args){
+        return ConnQueries.getPageByTitle(args.post_title);
       }
     },
     menus: {

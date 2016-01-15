@@ -1,7 +1,13 @@
 .base{
-	composes: container from '../../styles/flexbox.scss';
-	position: relative;
-	height: 100vh;
+	min-height: 100vh;
 	opacity: 0;
 	transition: opacity 300ms ease-out;
+	padding-top: 5rem;
+}
+
+.wrapper{
+	width: 95%;
+	max-width: 1200px;
+	margin-left: auto;
+	margin-right: auto;
 }

@@ -20,6 +20,12 @@ interface Node {
   id: ID!
 }
 
+type Option {
+  id: ID!
+  option_name: String
+  option_value: String
+}
+
 type PageInfo {
   hasNextPage: Boolean!
   hasPreviousPage: Boolean!
@@ -73,7 +79,9 @@ type Root {
 
 type User implements Node {
   id: ID!
+  options: Option
   posts(post_type: String = "post", after: String, first: Int, before: String, last: Int): PostConnection
+  page(post_title: String): Post
   menus(name: String): Menu
   postmeta(post_id: Int, after: String, first: Int, before: String, last: Int): PostmetaConnection
 }

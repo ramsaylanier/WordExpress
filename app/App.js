@@ -2,15 +2,19 @@ import React from 'react';
 import Relay from 'react-relay'
 
 import styles from './App.scss';
+import Header from './components/header/header.js';
 
 class App extends React.Component {
 
   render() {
-    const { viewer, children } = this.props;
+    const { viewer, children, params } = this.props;
+
+    const page = React.cloneElement(children, params)
 
     return (
       <div className="application">
-        {children}
+        <Header viewer={viewer} />
+        {page}
       </div>
     )
   }
@@ -21,13 +25,7 @@ export default Relay.createContainer(App, {
   fragments: {
     viewer: () => Relay.QL`
       fragment on User {
-        posts(post_type: "page" first: 4){
-					edges{
-						node{
-							id
-						}
-					}
-				}
+        ${Header.getFragment("viewer")}
       }
     `,
   },

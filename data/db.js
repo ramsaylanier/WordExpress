@@ -46,6 +46,12 @@ const Conn = new Sequelize(
   }
 );
 
+const Options = Conn.define(settings.wp_prefix + 'options', {
+  option_id: { type: Sequelize.INTEGER, primaryKey: true},
+  option_name: { type: Sequelize.STRING },
+  option_value: { type: Sequelize.INTEGER },
+})
+
 const Post = Conn.define(settings.wp_prefix + 'posts', {
   id: { type: Sequelize.INTEGER, primaryKey: true},
   post_author: { type: Sequelize.INTEGER },
@@ -154,6 +160,22 @@ const ConnQueries = {
   getViewer(){
     return viewer
   },
+  getOptions(){
+    return Conn.models[settings.wp_prefix + 'options'].findAll({
+      where: {
+        option_name: {
+          $in: ['page_on_front', 'page_for_posts']
+        }
+      }
+    })
+  },
+  getOptionById(id){
+    return Conn.models[settings.wp_prefix + 'options'].findAll({
+      where: {
+        option_id: id
+      }
+    })
+  },
   getPosts(type){
     return Conn.models[settings.wp_prefix + 'posts'].findAll({
       where: {
@@ -193,7 +215,7 @@ const ConnQueries = {
     })
   },
   getPageByTitle(title){
-    return Conn.models[settings.wp_prefix + 'posts'].findAll({
+    return Conn.models[settings.wp_prefix + 'posts'].findOne({
       where: {
         post_type: 'page',
         post_status: 'publish',
