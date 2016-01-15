@@ -192,8 +192,6 @@ const ConnQueries = {
     })
   },
   getPostmetaById(metaId, keys){
-    console.log('meta keys:', keys);
-
     return Conn.models[settings.wp_prefix + 'postsmeta'].findOne({
       where: {
         meta_id: metaId,
@@ -204,7 +202,6 @@ const ConnQueries = {
     })
   },
   getPostmeta(postId, keys){
-    console.log('meta keys:', keys);
     return Conn.models[settings.wp_prefix + 'postmeta'].findAll({
       where: {
         post_id: postId,
@@ -225,7 +222,6 @@ const ConnQueries = {
   },
   getMenu(slug){
     getMenuItems();
-    console.log('primary menu:', primaryMenu);
     return primaryMenu
   }
 }

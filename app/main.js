@@ -21,6 +21,14 @@ const AppQueries = {
     `,
 };
 
+const PageQueries = {
+  page: () => Relay.QL`
+    query {
+      page(post_title:$page)
+    }
+  `,
+}
+
 render((
   <RelayRouter history={browserHistory}>
       <Route
@@ -35,7 +43,7 @@ render((
         <Route
           path=":page"
           component={WordpressPage}
-          queries={AppQueries}
+          queries={PageQueries}
         />
       </Route>
   </RelayRouter>

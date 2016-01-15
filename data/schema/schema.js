@@ -26,7 +26,11 @@ import {
   ConnQueries,
   getUser,
   getMenu,
- } from './db.js';
+} from '../db.js';
+
+import GraphQLPage from './page.js';
+import { GraphQLPost, PostsConnection } from './post.js';
+import { GraphQLPostmeta, PostmetaConnection } from './postmeta.js';
 
 let {nodeInterface, nodeField} = nodeDefinitions(
   (globalId) => {
@@ -68,7 +72,6 @@ const GraphQLOption = new GraphQLObjectType({
     id: {
       type: new GraphQLNonNull(GraphQLID),
       resolve(root){
-        console.log(root);
         return root.dataValues.option_id;
       }
     },
@@ -83,39 +86,6 @@ const {
 } = connectionDefinitions({
   name: 'Option',
   nodeType: GraphQLOption
-});
-
-const GraphQLPost = new GraphQLObjectType({
-  name: 'Post',
-  fields: () => ({
-    id: { type: new GraphQLNonNull(GraphQLID) },
-    post_title: { type: GraphQLString },
-    post_content: { type: GraphQLString },
-    post_status: { type: GraphQLString },
-    post_type: { type: GraphQLString },
-    post_name: { type: GraphQLString},
-    post_meta: {
-      type: PostmetaConnection,
-      args: {
-        keys: {
-          type: new GraphQLList(GraphQLMetaType)
-        },
-        ...connectionArgs,
-      },
-      resolve: (root, args ) => {
-        return connectionFromPromisedArray(ConnQueries.getPostmeta(root.id, args.keys), args);
-      }
-    }
-  }),
-  interfaces: [nodeInterface]
-});
-
-const {
-  connectionType: PostsConnection,
-  edgeType: GraphQLPostEdge,
-} = connectionDefinitions({
-  name: 'Post',
-  nodeType: GraphQLPost
 });
 
 const GraphQLMenuItem = new GraphQLObjectType({
@@ -153,51 +123,13 @@ const GraphQLMenu = new GraphQLObjectType({
   interfaces: [nodeInterface]
 });
 
-const GraphQLMetaType = new GraphQLEnumType({
-  name: 'MetaType',
-  values: {
-    thumbnailID: {value: '_thumbnail_id'},
-    attachedFile: {value: '_wp_attached_file'}
-  }
-})
-
-const GraphQLPostmeta = new GraphQLObjectType({
-  name: 'Postmeta',
-  fields: () => ({
-    id: {
-      type: new GraphQLNonNull(GraphQLID),
-      resolve(root){
-        return root.dataValues.meta_id;
-      }
-    },
-    meta_id: { type: GraphQLInt },
-    post_id: { type: GraphQLInt },
-    meta_key: { type: GraphQLString },
-    meta_value: { type: GraphQLString },
-    connecting_post: {
-      type: GraphQLPost,
-      resolve: (root) => {
-        return ConnQueries.getPostById(root.meta_value)
-      }
-    }
-  }),
-  interfaces: [nodeInterface]
-});
-
-const {
-  connectionType: PostmetaConnection,
-  edgeType: GraphQLPostmetaEdge,
-} = connectionDefinitions({
-  name: 'Postmeta',
-  nodeType: GraphQLPostmeta
-});
-
 const GraphQLUser = new GraphQLObjectType({
   name: "User",
   fields: {
     id: globalIdField("User"),
     options: {
       type: OptionConnection,
+      args: connectionArgs,
       resolve: (root, args) => {
         return connectionFromPromisedArray( ConnQueries.getOptions(), args);
       }
@@ -256,6 +188,15 @@ const GraphQLRoot = new GraphQLObjectType({
       type: GraphQLUser,
       resolve: () => {
         return ConnQueries.getViewer();
+      }
+    },
+    page: {
+      type: GraphQLPage,
+      args:{
+        post_title:{ type: GraphQLString },
+      },
+      resolve: (root, args) => {
+        return ConnQueries.getPageByTitle(args.post_title);
       }
     },
     node: nodeField,

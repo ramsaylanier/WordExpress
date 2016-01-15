@@ -5,7 +5,7 @@ import Page from './page.js';
 class LandingPage extends React.Component{
 
 	render(){
-
+		console.log('landing page');
 		const { viewer } = this.props;
 		const { page } = viewer;
 		const { post_title, post_content} = page;

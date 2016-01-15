@@ -14,6 +14,7 @@ type MenuItem {
 enum MetaType {
   thumbnailID
   attachedFile
+  reactLayout
 }
 
 interface Node {
@@ -26,6 +27,23 @@ type Option {
   option_value: String
 }
 
+type OptionConnection {
+  pageInfo: PageInfo!
+  edges: [OptionEdge]
+}
+
+type OptionEdge {
+  node: Option
+  cursor: String!
+}
+
+type Page {
+  id: ID!
+  post_title: String
+  post_content: String
+  posts(post_type: String = "post", after: String, first: Int, before: String, last: Int): PostConnection
+}
+
 type PageInfo {
   hasNextPage: Boolean!
   hasPreviousPage: Boolean!
@@ -33,7 +51,7 @@ type PageInfo {
   endCursor: String
 }
 
-type Post implements Node {
+type Post {
   id: ID!
   post_title: String
   post_content: String
@@ -53,7 +71,7 @@ type PostEdge {
   cursor: String!
 }
 
-type Postmeta implements Node {
+type Postmeta {
   id: ID!
   meta_id: Int
   post_id: Int
@@ -74,12 +92,13 @@ type PostmetaEdge {
 
 type Root {
   viewer: User
+  page(post_title: String): Page
   node(id: ID!): Node
 }
 
 type User implements Node {
   id: ID!
-  options: Option
+  options(after: String, first: Int, before: String, last: Int): OptionConnection
   posts(post_type: String = "post", after: String, first: Int, before: String, last: Int): PostConnection
   page(post_title: String): Post
   menus(name: String): Menu

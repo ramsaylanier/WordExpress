@@ -8,7 +8,7 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 import config from './webpack.config.js';
 import {graphql} from 'graphql';
 import graphqlHTTP from 'express-graphql';
-import Schema from './data/schema';
+import Schema from './data/schema/schema.js';
 import mysql from 'mysql';
 
 let app;
