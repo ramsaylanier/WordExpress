@@ -39,6 +39,8 @@ let {nodeInterface, nodeField} = nodeDefinitions(
       return getUser(id);
     } else if (type === 'Option') {
       return ConnQueries.getOptionById(id)
+    } else if (type === 'Page') {
+      return ConnQueries.getPostById(id)
     } else if (type === 'Post') {
       return ConnQueries.getPostById(id)
     } else if (type === 'Postmeta'){
@@ -52,6 +54,8 @@ let {nodeInterface, nodeField} = nodeDefinitions(
   (obj) => {
     if (obj instanceof User) {
       return GraphQLUser;
+    } else if (obj instanceof Page){
+      return GraphQLPage;
     } else if (obj instanceof Option){
       return GraphQLOption;
     } else if (obj instanceof Post){
@@ -189,18 +193,8 @@ const GraphQLRoot = new GraphQLObjectType({
       resolve: () => {
         return ConnQueries.getViewer();
       }
-    },
-    page: {
-      type: GraphQLPage,
-      args:{
-        post_title:{ type: GraphQLString },
-      },
-      resolve: (root, args) => {
-        return ConnQueries.getPageByTitle(args.post_title);
-      }
-    },
-    node: nodeField,
-  },
+    }
+  }
 });
 
 const Schema = new GraphQLSchema({

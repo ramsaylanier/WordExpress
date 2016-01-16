@@ -25,7 +25,6 @@ class PostList extends React.Component{
     return(
       <div>
         <h3>Posts</h3>
-
         {this._renderPosts()}
       </div>
     )

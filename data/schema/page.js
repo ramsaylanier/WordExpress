@@ -27,14 +27,8 @@ import { PostsConnection, GraphQLPost } from './post.js';
 const GraphQLPage = new GraphQLObjectType({
   name: "Page",
   fields: {
-    id: {
-      type: new GraphQLNonNull(GraphQLID),
-      resolve(root){
-        return root.dataValues.id;
-      }
-    },
-    post_title: { type: GraphQLString },
-    post_content: { type: GraphQLString },
+    id: { type: new GraphQLNonNull(GraphQLID) },
+    post_title: { type: GraphQLString},
     posts: {
       type: PostsConnection,
       args: {
@@ -48,8 +42,7 @@ const GraphQLPage = new GraphQLObjectType({
         return connectionFromPromisedArray( ConnQueries.getPosts(args.post_type), args );
       }
     }
-  },
-  interfaces: []
+  }
 })
 
 export default GraphQLPage;

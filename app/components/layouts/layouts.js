@@ -2,7 +2,7 @@ import PostList from '../posts/PostList.js';
 
 const Layouts = {
   'PostList': {
-    component: PostList,
+    Component: PostList,
     showPosts: true,
     postType: 'post',
     limit: 10

@@ -15,19 +15,11 @@ import WordpressPage from './components/pages/WordpressPage.js';
 // const history = useRouterHistory(createHashHistory)({ queryKey: false });
 const AppQueries = {
   viewer: () => Relay.QL`
-      query {
-        viewer
-      }
-    `,
-};
-
-const PageQueries = {
-  page: () => Relay.QL`
     query {
-      page(post_title:$page)
+      viewer
     }
   `,
-}
+};
 
 render((
   <RelayRouter history={browserHistory}>
@@ -43,7 +35,7 @@ render((
         <Route
           path=":page"
           component={WordpressPage}
-          queries={PageQueries}
+          queries={AppQueries}
         />
       </Route>
   </RelayRouter>

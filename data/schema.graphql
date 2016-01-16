@@ -37,10 +37,9 @@ type OptionEdge {
   cursor: String!
 }
 
-type Page {
+type Page implements Node {
   id: ID!
   post_title: String
-  post_content: String
   posts(post_type: String = "post", after: String, first: Int, before: String, last: Int): PostConnection
 }
 

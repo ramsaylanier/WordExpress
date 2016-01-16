@@ -15,7 +15,7 @@ class App extends React.Component {
     return (
       <div className="application">
         <Header viewer={viewer} />
-        {page}
+        {children}
       </div>
     )
   }
@@ -34,9 +34,9 @@ export default Relay.createContainer(App, {
               option_value
             }
           }
-        }
+        },
         ${Header.getFragment("viewer")}
       }
-    `,
+    `
   },
 });

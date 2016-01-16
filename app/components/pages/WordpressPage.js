@@ -6,15 +6,27 @@ import Layouts from '../layouts/layouts.js';
 
 class WordpressPage extends React.Component{
 
+	componentDidMount(){
+		const { post_meta } = this.props.viewer.page;
+		const Layout = Layouts[post_meta.edges[0].node.meta_value];
+		const { Component, limit, postType, showPosts} = Layout
+
+		this.props.relay.setVariables({
+			page: this.props.page,
+			showPosts: showPosts,
+			limit: limit
+		})
+
+	}
+
 	render(){
-		const { post_title, post_content, post_meta } = this.props.page;
-		const Layout = post_meta.edges[0].node.meta_value;
-		const LayoutComponent = Layouts[Layout].component;
+		const { post_meta } = this.props.viewer.page;
+		const Layout = Layouts[post_meta.edges[0].node.meta_value];
+		const { Component, limit, postType, showPosts} = Layout
 
 		return (
-			<Page withWrapper="true">
-				<h1>{post_title}</h1>
-				<p>{post_content}</p>
+			<Page withWrapper="true" viewer={this.props.viewer}>
+				<Component viewer={this.props.viewer} />
 			</Page>
 		)
 	}
@@ -22,17 +34,33 @@ class WordpressPage extends React.Component{
 
 export default Relay.createContainer(WordpressPage, {
 
+	initialVariables:{
+		page: null,
+		showPosts: false,
+		limit: 10
+	},
+
   fragments: {
-    page: () => Relay.QL`
-      fragment on Post {
-				id
-				post_title
-				post_content
-				post_meta(keys: reactLayout first: 1){
+    viewer: () => Relay.QL`
+      fragment on User {
+				page(post_title:$page){
+					id,
+					post_title,
+					post_content
+					post_meta(keys: reactLayout first: 1){
+						edges{
+							node{
+								id,
+								meta_value
+							}
+						}
+					}
+				},
+				posts(first: $limit){
 					edges{
 						node{
-							id
-							meta_value
+							id,
+							post_title
 						}
 					}
 				}
