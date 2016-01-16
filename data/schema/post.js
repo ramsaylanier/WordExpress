@@ -34,6 +34,7 @@ export const GraphQLPost = new GraphQLObjectType({
     post_status: { type: GraphQLString },
     post_type: { type: GraphQLString },
     post_name: { type: GraphQLString},
+    menu_order: { type: GraphQLInt},
     post_meta: {
       type: PostmetaConnection,
       args: {

@@ -2,17 +2,17 @@ import React from 'react';
 import { Link } from 'react-router';
 import styles from './navs.scss';
 import {NavList, NavItem} from './navs.js';
+import lodash from 'lodash';
 
-const AppNav = React.createClass({
-
-	componentDidMount(){
-
-	},
+class AppNav extends  React.Component{
 
 	render(){
 
-		const { items } = this.props.viewer.menus;
+		// const { items } = _.sortBy(this.props.viewer.menus, ['order']);
+		let { items } = this.props.viewer.menus;
+		items = _.sortBy(items, 'order');
 
+		console.log(items);
 		return(
 			<NavList type="primary">
 				{items.map( item => {
@@ -35,6 +35,6 @@ const AppNav = React.createClass({
 			</NavList>
 		)
 	}
-})
+}
 
 export default AppNav;

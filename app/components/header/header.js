@@ -9,40 +9,17 @@ import styles from './header.scss';
 @CSSModules(styles, {allowMultiple: true})
 class Header extends React.Component{
 
-	componentDidMount(){
-
-	}
-
 	render(){
-		let logoLink = '/';
-
 		const { viewer } = this.props;
 
 		return (
 			<header styleName="base">
 				<div className={styles.wrapper}>
-					<Link to={logoLink} styleName="brand">Home</Link>
-					<span ref="title" className={styles.title}>{this.props.title}</span>
-
+					<Link to='/' styleName="brand">Home</Link>
 					<AppNav viewer={viewer}/>
-
-					{this.props.children}
 				</div>
 			</header>
 		)
-	}
-
-	_animateTitleIn(){
-		let title = this.refs.title;
-
-		TweenMax.fromTo(title, .6, {
-			y: 20,
-			opacity: 0
-		},{
-			y: 0,
-			opacity: 1,
-			ease: Power4.easeInOut
-		})
 	}
 }
 
@@ -58,16 +35,18 @@ export default Relay.createContainer(Header, {
 			fragment on User {
 				menus {
 		      items {
+						id,
+						order,
 		        navitem {
-		          id
-		          post_title
+		          id,
+		          post_title,
 		          post_name
-		        }
+		        },
 		        children {
-		          id
-		          linkedId
+		          id,
+		          linkedId,
 		          navitem {
-		            post_title
+		            post_title,
 		            post_name
 		          }
 		        }

@@ -8,8 +8,8 @@ class WordpressPage extends React.Component{
 
 	componentDidMount(){
 		const { post_meta } = this.props.viewer.page;
-		const Layout = Layouts[post_meta.edges[0].node.meta_value];
-		const { Component, limit, postType, showPosts} = Layout
+		const Layout = post_meta.edges.length > 0 ? Layouts[post_meta.edges[0].node.meta_value] : Layouts['Default'];
+		const { Component, limit, postType, showPosts} = Layout;
 
 		this.props.relay.setVariables({
 			page: this.props.page,
@@ -21,8 +21,8 @@ class WordpressPage extends React.Component{
 
 	render(){
 		const { post_meta } = this.props.viewer.page;
-		const Layout = Layouts[post_meta.edges[0].node.meta_value];
-		const { Component, limit, postType, showPosts} = Layout
+		const Layout = post_meta.edges.length > 0 ? Layouts[post_meta.edges[0].node.meta_value] : Layouts['Default'];
+		const { Component, limit, postType, showPosts} = Layout;
 
 		return (
 			<Page withWrapper="true" viewer={this.props.viewer}>

@@ -97,6 +97,7 @@ const GraphQLMenuItem = new GraphQLObjectType({
   fields: () => ({
     id: { type: new GraphQLNonNull(GraphQLID) },
     linkedId: { type: GraphQLInt },
+    order: { type: GraphQLInt },
     navitem: {
       type: GraphQLPost,
       resolve: (root) => {

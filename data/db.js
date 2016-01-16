@@ -60,7 +60,8 @@ const Post = Conn.define(settings.wp_prefix + 'posts', {
   post_status:{ type: Sequelize.STRING },
   post_type:{ type: Sequelize.STRING },
   post_name:{ type: Sequelize.STRING},
-  post_parent: { type: Sequelize.INTEGER}
+  post_parent: { type: Sequelize.INTEGER},
+  menu_order: { type: Sequelize.INTEGER}
 });
 
 const Postmeta = Conn.define(settings.wp_prefix + 'postmeta', {
@@ -134,6 +135,7 @@ function getMenuItems(){
 
         if (isParent){
           navItem.id = post.id;
+          navItem.order = post.menu_order;
           navItem.linkedId = linkedId;
           navItem.children = [];
           navItems.push(navItem);

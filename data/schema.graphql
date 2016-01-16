@@ -7,6 +7,7 @@ type Menu implements Node {
 type MenuItem {
   id: ID!
   linkedId: Int
+  order: Int
   navitem: Post
   children: [MenuItem]
 }
@@ -37,12 +38,6 @@ type OptionEdge {
   cursor: String!
 }
 
-type Page implements Node {
-  id: ID!
-  post_title: String
-  posts(post_type: String = "post", after: String, first: Int, before: String, last: Int): PostConnection
-}
-
 type PageInfo {
   hasNextPage: Boolean!
   hasPreviousPage: Boolean!
@@ -57,6 +52,7 @@ type Post {
   post_status: String
   post_type: String
   post_name: String
+  menu_order: Int
   post_meta(keys: [MetaType], after: String, first: Int, before: String, last: Int): PostmetaConnection
 }
 
@@ -91,8 +87,6 @@ type PostmetaEdge {
 
 type Root {
   viewer: User
-  page(post_title: String): Page
-  node(id: ID!): Node
 }
 
 type User implements Node {
