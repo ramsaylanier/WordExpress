@@ -1,23 +1,11 @@
 @import "vars";
 
-.red-background{
-  background-color: $red;
+.primary_background{
+  background-color: $primary;
 }
 
 .dark_background{
   background-color: $dark;
-}
-
-.faded_dark_backgroud{
-	background-color: fade-out($dark, .1);
-}
-
-.red-border{
-  border-color: darken($red, 10%);
-}
-
-.dark-border{
-  border-color: darken($dark, 10%);
 }
 
 .primary{

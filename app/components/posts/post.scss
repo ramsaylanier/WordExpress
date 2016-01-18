@@ -1,0 +1,22 @@
+.base{
+
+}
+
+.excerpt{
+  composes: container from "../../styles/flexbox.scss";
+  background-color: white;
+
+  &:not(:last-of-type){
+    margin-bottom: 1rem;
+  }
+}
+
+.info{
+  composes: child_1 from "../../styles/flexbox.scss";
+  padding: 2rem;
+}
+
+.thumbnail{
+  composes: child_1 from "../../styles/flexbox.scss";
+  composes: cover center from "../../styles/background.scss";
+}

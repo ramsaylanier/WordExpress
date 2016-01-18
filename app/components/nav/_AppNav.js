@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import styles from './navs.scss';
 import {NavList, NavItem} from './navs.js';
+import Logo from '../icons/logo.js';
 import lodash from 'lodash';
 
 class AppNav extends  React.Component{
@@ -15,6 +16,9 @@ class AppNav extends  React.Component{
 		console.log(items);
 		return(
 			<NavList type="primary">
+				<NavItem>
+					<Link to='/' styleName="brand"><Logo/></Link>
+				</NavItem>
 				{items.map( item => {
 					const { children } = item;
 					return(

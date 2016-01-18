@@ -15,7 +15,6 @@ class Header extends React.Component{
 		return (
 			<header styleName="base">
 				<div className={styles.wrapper}>
-					<Link to='/' styleName="brand">Home</Link>
 					<AppNav viewer={viewer}/>
 				</div>
 			</header>

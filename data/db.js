@@ -193,8 +193,40 @@ const ConnQueries = {
       }
     })
   },
+  getPostThumbnail(postId){
+    return Conn.models[settings.wp_prefix + 'postmeta'].findOne({
+      where: {
+        post_id: postId,
+        meta_key: '_thumbnail_id'
+      }
+    }).then( res => {
+      if (res){
+        return Post.findOne({
+          where: {
+            id: Number(res.dataValues.meta_value)
+          },
+          include: {
+            model: Postmeta,
+            where: {
+              meta_key:'_wp_attached_file'
+            },
+            limit: 1
+          }
+        }).then( post => {
+          if (post.wp_postmeta){
+            console.log(post.wp_postmeta[0].dataValues.meta_value)
+            return post.wp_postmeta[0].dataValues.meta_value;
+          }else {
+            return null;
+          }
+        })
+      } else {
+        return
+      }
+    })
+  },
   getPostmetaById(metaId, keys){
-    return Conn.models[settings.wp_prefix + 'postsmeta'].findOne({
+    return Conn.models[settings.wp_prefix + 'postmeta'].findOne({
       where: {
         meta_id: metaId,
         meta_key: {

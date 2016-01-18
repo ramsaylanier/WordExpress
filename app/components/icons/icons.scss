@@ -1,0 +1,9 @@
+.base{
+  width: 40px;
+  height: 40px;
+}
+
+.logo{
+  composes: base;
+  margin-right: 1rem;
+}

@@ -35,6 +35,12 @@ export const GraphQLPost = new GraphQLObjectType({
     post_type: { type: GraphQLString },
     post_name: { type: GraphQLString},
     menu_order: { type: GraphQLInt},
+    thumbnail: {
+      type: GraphQLString,
+      resolve(root, args){
+        return ConnQueries.getPostThumbnail(root.id);
+      }
+    },
     post_meta: {
       type: PostmetaConnection,
       args: {

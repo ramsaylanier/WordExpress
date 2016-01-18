@@ -9,9 +9,11 @@
 
 .wrapper{
   composes: main from "../../styles/wrapper.scss";
+  composes: container align_center from "../../styles/flexbox.scss";
 }
 
 .brand{
+
   height: 100%;
 }
 

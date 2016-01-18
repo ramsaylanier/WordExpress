@@ -60,7 +60,9 @@ export default Relay.createContainer(WordpressPage, {
 					edges{
 						node{
 							id,
-							post_title
+							post_title,
+							post_content,
+							thumbnail
 						}
 					}
 				}
