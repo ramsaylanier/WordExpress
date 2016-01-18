@@ -13,10 +13,10 @@ import Schema from './data/schema/schema.js';
 
 console.log(browserSync)
 
-let app;
+let app = express();
 
 const isDeveloping = process.env.NODE_ENV !== 'production';
-const APP_PORT = isDeveloping ? 3000 : process.env.PORT;
+const APP_PORT = isDeveloping ? 3100 : process.env.PORT;
 const GRAPHQL_PORT = 8080;
 
 const graphQLServer = express();
@@ -35,65 +35,31 @@ if (isDeveloping) {
 
   const compiler = webpack(config);
 
-  // app = new WebpackDevServer(compiler, {
-  //   hot: true,
-  //   historyApiFallback: true,
-  //   contentBase: 'src',
-  //   proxy: {'/graphql': `http://localhost:${GRAPHQL_PORT}`},
-  //   publicPath: config.output.publicPath,
-  //   stats: {
-  //     colors: true,
-  //     hash: false,
-  //     timings: true,
-  //     chunks: false,
-  //     chunkModules: false,
-  //     modules: false
-  //   }
-  // });
-  // app.use(webpackHotMiddleware(compiler));
+  app = new WebpackDevServer(compiler, {
+    hot: true,
+    historyApiFallback: true,
+    contentBase: 'src',
+    proxy: {'/graphql': `http://localhost:${GRAPHQL_PORT}`},
+    publicPath: config.output.publicPath,
+    stats: {
+      colors: true,
+      hash: false,
+      timings: true,
+      chunks: false,
+      chunkModules: false,
+      modules: false
+    }
+   });
 
-  browserSync({
-    ui: false,
-    ghostMode: false,
-    online: false,
-    open: false,
-    notify: false,
-    host: config.devServer.host,
-    port: APP_PORT,
-    xip: false,
-    tunnel: true,
-    proxy: {
-        target: `http://localhost:${GRAPHQL_PORT}`,
-        middleware: [
-            webpackMiddleware(compiler, {
-              hot: true,
-              historyApiFallback: true,
-              contentBase: 'src',
-              publicPath: config.output.publicPath,
-              stats: {
-                colors: true,
-                hash: false,
-                timings: true,
-                chunks: false,
-                chunkModules: false,
-                modules: false
-              }
-            }),
-            webpackHotMiddleware(compiler)
-        ]
-    },
-    files: [
-        './dist/*.css'
-    ]
-  });
+   app.use(webpackHotMiddleware(compiler));
 
 } else {
   app.use(express.static(__dirname + '/dist'));
   app.get('*', function response(req, res) {
     res.sendFile(path.join(__dirname, 'dist/index.html'));
   });
-
-  app.listen(APP_PORT, () => {
-    console.log(`App is now running on http://localhost:${APP_PORT}`);
-  });
 }
+
+app.listen(APP_PORT, () => {
+  console.log(`App is now running on http://localhost:${APP_PORT}`);
+});
