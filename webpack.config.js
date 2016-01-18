@@ -5,16 +5,31 @@ var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+const devServer = {
+    contentBase: path.resolve(__dirname, './app'),
+    colors: true,
+    quiet: false,
+    noInfo: false,
+    publicPath: '/',
+    historyApiFallback: false,
+    host: '127.0.0.1',
+    port: 3000,
+    hot: true
+};
+
 module.exports = {
   devtool: 'eval-source-map',
+  debug: true,
+  devServer: devServer,
   entry: [
+    'webpack/hot/dev-server',
     'webpack-hot-middleware/client?reload=true',
     path.join(__dirname, 'app/main.js')
   ],
   output: {
     path: path.join(__dirname, '/dist/'),
     filename: '[name].js',
-    publicPath: '/'
+    publicPath: devServer.publicPath
   },
   module: {
     loaders: [

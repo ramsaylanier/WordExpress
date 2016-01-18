@@ -1,7 +1,7 @@
 /* eslint no-console: 0 */
 import path from 'path';
+import browserSync from 'browser-sync';
 import express from 'express';
-import expose from 'express-expose';
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 import webpackMiddleware from 'webpack-dev-middleware';
@@ -10,9 +10,8 @@ import config from './webpack.config.js';
 import {graphql} from 'graphql';
 import graphqlHTTP from 'express-graphql';
 import Schema from './data/schema/schema.js';
-import mysql from 'mysql';
 
-import devSettings from './settings/dev.json';
+console.log(browserSync)
 
 let app;
 
@@ -36,30 +35,65 @@ if (isDeveloping) {
 
   const compiler = webpack(config);
 
-  app = new WebpackDevServer(compiler, {
-    hot: true,
-    historyApiFallback: true,
-    contentBase: 'src',
-    proxy: {'/graphql': `http://localhost:${GRAPHQL_PORT}`},
-    publicPath: config.output.publicPath,
-    stats: {
-      colors: true,
-      hash: false,
-      timings: true,
-      chunks: false,
-      chunkModules: false,
-      modules: false
-    }
+  // app = new WebpackDevServer(compiler, {
+  //   hot: true,
+  //   historyApiFallback: true,
+  //   contentBase: 'src',
+  //   proxy: {'/graphql': `http://localhost:${GRAPHQL_PORT}`},
+  //   publicPath: config.output.publicPath,
+  //   stats: {
+  //     colors: true,
+  //     hash: false,
+  //     timings: true,
+  //     chunks: false,
+  //     chunkModules: false,
+  //     modules: false
+  //   }
+  // });
+  // app.use(webpackHotMiddleware(compiler));
+
+  browserSync({
+    ui: false,
+    ghostMode: false,
+    online: false,
+    open: false,
+    notify: false,
+    host: config.devServer.host,
+    port: APP_PORT,
+    xip: false,
+    tunnel: true,
+    proxy: {
+        target: `http://localhost:${GRAPHQL_PORT}`,
+        middleware: [
+            webpackMiddleware(compiler, {
+              hot: true,
+              historyApiFallback: true,
+              contentBase: 'src',
+              publicPath: config.output.publicPath,
+              stats: {
+                colors: true,
+                hash: false,
+                timings: true,
+                chunks: false,
+                chunkModules: false,
+                modules: false
+              }
+            }),
+            webpackHotMiddleware(compiler)
+        ]
+    },
+    files: [
+        './dist/*.css'
+    ]
   });
-  app.use(webpackHotMiddleware(compiler));
-  
+
 } else {
   app.use(express.static(__dirname + '/dist'));
   app.get('*', function response(req, res) {
     res.sendFile(path.join(__dirname, 'dist/index.html'));
   });
-}
 
-app.listen(APP_PORT, () => {
-  console.log(`App is now running on http://localhost:${APP_PORT}`);
-});
+  app.listen(APP_PORT, () => {
+    console.log(`App is now running on http://localhost:${APP_PORT}`);
+  });
+}

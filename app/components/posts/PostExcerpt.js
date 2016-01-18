@@ -21,8 +21,10 @@ class PostExcerpt extends React.Component{
       backgroundImage: "url('" + thumbnailSrc + "')"
     }
 
+    console.log(post_name);
+
     return(
-      <Link to={'post/' + post_name} styleName="excerpt">
+      <Link to={'post/' + encodeURIComponent(post_name)} styleName="excerpt">
         <div styleName="info">
           <h3>{post_title}</h3>
           <p dangerouslySetInnerHTML = {this._renderExcerpt()}/>

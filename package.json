@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.3.14",
-    "browser-sync": "^2.11.0",
+    "browser-sync": "^2.11.1",
     "dotenv": "^1.2.0",
     "express-expose": "^0.3.4",
     "express-graphql": "^0.4.5",
