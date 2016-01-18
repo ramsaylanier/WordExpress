@@ -1,6 +1,7 @@
 /* eslint no-console: 0 */
 import path from 'path';
 import express from 'express';
+import expose from 'express-expose';
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 import webpackMiddleware from 'webpack-dev-middleware';
@@ -10,6 +11,8 @@ import {graphql} from 'graphql';
 import graphqlHTTP from 'express-graphql';
 import Schema from './data/schema/schema.js';
 import mysql from 'mysql';
+
+import devSettings from './settings/dev.json';
 
 let app;
 
@@ -48,9 +51,8 @@ if (isDeveloping) {
       modules: false
     }
   });
-
   app.use(webpackHotMiddleware(compiler));
-
+  
 } else {
   app.use(express.static(__dirname + '/dist'));
   app.get('*', function response(req, res) {

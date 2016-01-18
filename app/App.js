@@ -15,7 +15,7 @@ class App extends React.Component {
     return (
       <div className="application">
         <Header viewer={viewer} />
-        {children}
+        {page}
       </div>
     )
   }
@@ -26,14 +26,9 @@ export default Relay.createContainer(App, {
   fragments: {
     viewer: () => Relay.QL`
       fragment on User {
-        options(first: 2){
-          edges{
-            node{
-              id,
-              option_name,
-              option_value
-            }
-          }
+        settings{
+          id
+          uploads
         },
         ${Header.getFragment("viewer")}
       }

@@ -11,8 +11,8 @@ import { browserHistory, IndexRoute, Route } from 'react-router';
 import App from './App.js';
 import LandingPage from './components/pages/LandingPage.js';
 import WordpressPage from './components/pages/WordpressPage.js';
+import PostSingle from './components/posts/PostSingle.js';
 
-// const history = useRouterHistory(createHashHistory)({ queryKey: false });
 const AppQueries = {
   viewer: () => Relay.QL`
     query {
@@ -35,6 +35,11 @@ render((
         <Route
           path=":page"
           component={WordpressPage}
+          queries={AppQueries}
+        />
+        <Route
+          path="post/:post"
+          component={PostSingle}
           queries={AppQueries}
         />
       </Route>

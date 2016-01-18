@@ -1,34 +1,40 @@
 {
-  "name": "webpack-express-boilerplate",
+  "name": "wordpress-express",
   "version": "0.1.0",
-  "description": "A boilerplate for running a Webpack workflow in Node express",
+  "description": "An example application using Node, Express, React, GraphQL and Relay with Wordpress",
   "main": "server.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/christianalfoni/webpack-express-boilerplate.git"
+    "url": "https://github.com/ramsaylanier/WordpressExpress"
   },
   "keywords": [
     "express",
     "webpack",
-    "node"
+    "node",
+    "react",
+    "graphql",
+    "relay",
+    "wordpress"
   ],
-  "author": "Christian Alfoni",
+  "author": "Ramsay Lanier",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/christianalfoni/webpack-express-boilerplate/issues"
+    "url": "https://github.com/ramsaylanier/WordpressExpress/issues"
   },
-  "homepage": "https://github.com/christianalfoni/webpack-express-boilerplate",
+  "homepage": "https://github.com/ramsaylanier/WordpressExpress",
   "scripts": {
     "test": "",
     "start": "NODE_ENV=dev babel-node --debug server.js",
     "build": "rimraf dist && NODE_ENV=production webpack --config ./webpack.production.config.js --progress --profile --colors",
     "eslint": "eslint .",
     "jscs": "jscs .",
-    "updateschema": "babel-node scripts/updateSchema"
+    "updateschema": "NODE_ENV=dev babel-node scripts/updateSchema"
   },
   "dependencies": {
     "babel-polyfill": "^6.3.14",
     "browser-sync": "^2.11.0",
+    "dotenv": "^1.2.0",
+    "express-expose": "^0.3.4",
     "express-graphql": "^0.4.5",
     "extract-text-webpack-plugin": "^0.8.2",
     "graphiql": "^0.4.5",

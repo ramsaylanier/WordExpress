@@ -31,6 +31,7 @@ export const GraphQLPost = new GraphQLObjectType({
     id: { type: new GraphQLNonNull(GraphQLID) },
     post_title: { type: GraphQLString },
     post_content: { type: GraphQLString },
+    post_excerpt: { type: GraphQLString },
     post_status: { type: GraphQLString },
     post_type: { type: GraphQLString },
     post_name: { type: GraphQLString},

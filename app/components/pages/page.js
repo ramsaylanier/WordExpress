@@ -20,10 +20,7 @@ class Page extends React.Component{
 			<div ref={ (c) => this._page = c } className={styles.base + ' ' + className}>
 
 				{ withWrapper ?
-					<div styleName="wrapper">
-						{children}
-					</div> :
-					{children}
+					<div styleName="wrapper">{children}</div> : children
 				}
 
 			</div>

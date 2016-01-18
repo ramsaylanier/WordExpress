@@ -26,6 +26,7 @@ import {
   ConnQueries,
   getUser,
   getMenu,
+  publicSettings
 } from '../db.js';
 
 import GraphQLPage from './page.js';
@@ -37,6 +38,8 @@ let {nodeInterface, nodeField} = nodeDefinitions(
     const {type, id} = fromGlobalId(globalId);
     if (type === 'User') {
       return getUser(id);
+    } else if (type === 'Setting') {
+      return publicSettings
     } else if (type === 'Option') {
       return ConnQueries.getOptionById(id)
     } else if (type === 'Page') {
@@ -54,6 +57,8 @@ let {nodeInterface, nodeField} = nodeDefinitions(
   (obj) => {
     if (obj instanceof User) {
       return GraphQLUser;
+    } else if (obj instanceof Setting){
+      return GraphQLSetting;
     } else if (obj instanceof Page){
       return GraphQLPage;
     } else if (obj instanceof Option){
@@ -128,10 +133,24 @@ const GraphQLMenu = new GraphQLObjectType({
   interfaces: [nodeInterface]
 });
 
+const GraphQLSetting = new GraphQLObjectType({
+  name: 'Setting',
+  fields: {
+    id: globalIdField("User"),
+    uploads: { type: GraphQLString }
+  }
+});
+
 const GraphQLUser = new GraphQLObjectType({
   name: "User",
   fields: {
     id: globalIdField("User"),
+    settings: {
+      type: GraphQLSetting,
+      resolve: ()=>{
+        return publicSettings
+      }
+    },
     options: {
       type: OptionConnection,
       args: connectionArgs,
@@ -155,10 +174,10 @@ const GraphQLUser = new GraphQLObjectType({
     page: {
       type: GraphQLPost,
       args:{
-        post_title:{ type: GraphQLString },
+        post_name:{ type: GraphQLString },
       },
       resolve(root, args){
-        return ConnQueries.getPageByTitle(args.post_title);
+        return ConnQueries.getPostByName(args.post_name);
       }
     },
     menus: {

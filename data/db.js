@@ -5,6 +5,8 @@ import _ from 'lodash';
 
 const env = process.env.NODE_ENV;
 const settings = env === 'dev' ? devSettings : prodSettings;
+const privateSettings = settings.private;
+export const publicSettings = settings.public;
 
 export class User extends Object {}
 
@@ -33,12 +35,12 @@ export function getMenu(id) {
 }
 
 const Conn = new Sequelize(
-  settings.database.name,
-  settings.database.username,
-  settings.database.password,
+  privateSettings.database.name,
+  privateSettings.database.username,
+  privateSettings.database.password,
   {
     dialect: 'mysql',
-    host: settings.database.host,
+    host: privateSettings.database.host,
     define: {
       timestamps: false,
       freezeTableName: true,
@@ -46,17 +48,18 @@ const Conn = new Sequelize(
   }
 );
 
-const Options = Conn.define(settings.wp_prefix + 'options', {
+const Options = Conn.define(privateSettings.wp_prefix + 'options', {
   option_id: { type: Sequelize.INTEGER, primaryKey: true},
   option_name: { type: Sequelize.STRING },
   option_value: { type: Sequelize.INTEGER },
 })
 
-const Post = Conn.define(settings.wp_prefix + 'posts', {
+const Post = Conn.define(privateSettings.wp_prefix + 'posts', {
   id: { type: Sequelize.INTEGER, primaryKey: true},
   post_author: { type: Sequelize.INTEGER },
   post_title: { type: Sequelize.STRING },
   post_content: { type: Sequelize.STRING },
+  post_excerpt: { type: Sequelize.STRING },
   post_status:{ type: Sequelize.STRING },
   post_type:{ type: Sequelize.STRING },
   post_name:{ type: Sequelize.STRING},
@@ -64,21 +67,21 @@ const Post = Conn.define(settings.wp_prefix + 'posts', {
   menu_order: { type: Sequelize.INTEGER}
 });
 
-const Postmeta = Conn.define(settings.wp_prefix + 'postmeta', {
+const Postmeta = Conn.define(privateSettings.wp_prefix + 'postmeta', {
   meta_id: { type: Sequelize.INTEGER, primaryKey: true, field: 'meta_id' },
   post_id: { type: Sequelize.INTEGER },
   meta_key: { type: Sequelize.STRING },
   meta_value: { type: Sequelize.INTEGER },
 });
 
-const Terms = Conn.define(settings.wp_prefix + 'terms', {
+const Terms = Conn.define(privateSettings.wp_prefix + 'terms', {
   term_id: { type: Sequelize.INTEGER, primaryKey: true },
   name: { type: Sequelize.STRING },
   slug: { type: Sequelize.STRING },
   term_group: { type: Sequelize.INTEGER },
 });
 
-const TermRelationships = Conn.define(settings.wp_prefix + 'term_relationships', {
+const TermRelationships = Conn.define(privateSettings.wp_prefix + 'term_relationships', {
   object_id: { type: Sequelize.INTEGER, primaryKey: true },
   term_taxonomy_id: { type: Sequelize.INTEGER },
   term_order: { type: Sequelize.INTEGER },
@@ -104,7 +107,7 @@ const TermTaxonomy = Conn.define('wp_term_taxonomy', {
 });
 
 function getMenuItems(){
-  Conn.models[settings.wp_prefix + 'terms'].findOne({
+  Conn.models[privateSettings.wp_prefix + 'terms'].findOne({
     where: {
       slug: 'primary-navigation'
     },
@@ -163,7 +166,7 @@ const ConnQueries = {
     return viewer
   },
   getOptions(){
-    return Conn.models[settings.wp_prefix + 'options'].findAll({
+    return Conn.models[privateSettings.wp_prefix + 'options'].findAll({
       where: {
         option_name: {
           $in: ['page_on_front', 'page_for_posts']
@@ -172,14 +175,14 @@ const ConnQueries = {
     })
   },
   getOptionById(id){
-    return Conn.models[settings.wp_prefix + 'options'].findAll({
+    return Conn.models[privateSettings.wp_prefix + 'options'].findAll({
       where: {
         option_id: id
       }
     })
   },
   getPosts(type){
-    return Conn.models[settings.wp_prefix + 'posts'].findAll({
+    return Conn.models[privateSettings.wp_prefix + 'posts'].findAll({
       where: {
         post_type: type,
         post_status: 'publish'
@@ -187,14 +190,22 @@ const ConnQueries = {
     })
   },
   getPostById(postId){
-    return Conn.models[settings.wp_prefix + 'posts'].findOne({
+    return Conn.models[privateSettings.wp_prefix + 'posts'].findOne({
       where: {
         id: postId
       }
     })
   },
+  getPostByName(name){
+    return Conn.models[privateSettings.wp_prefix + 'posts'].findOne({
+      where: {
+        post_status: 'publish',
+        post_name: name
+      }
+    })
+  },
   getPostThumbnail(postId){
-    return Conn.models[settings.wp_prefix + 'postmeta'].findOne({
+    return Conn.models[privateSettings.wp_prefix + 'postmeta'].findOne({
       where: {
         post_id: postId,
         meta_key: '_thumbnail_id'
@@ -226,7 +237,7 @@ const ConnQueries = {
     })
   },
   getPostmetaById(metaId, keys){
-    return Conn.models[settings.wp_prefix + 'postmeta'].findOne({
+    return Conn.models[privateSettings.wp_prefix + 'postmeta'].findOne({
       where: {
         meta_id: metaId,
         meta_key: {
@@ -236,21 +247,12 @@ const ConnQueries = {
     })
   },
   getPostmeta(postId, keys){
-    return Conn.models[settings.wp_prefix + 'postmeta'].findAll({
+    return Conn.models[privateSettings.wp_prefix + 'postmeta'].findAll({
       where: {
         post_id: postId,
         meta_key: {
           $in: keys
         }
-      }
-    })
-  },
-  getPageByTitle(title){
-    return Conn.models[settings.wp_prefix + 'posts'].findOne({
-      where: {
-        post_type: 'page',
-        post_status: 'publish',
-        post_title: title
       }
     })
   },

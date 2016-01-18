@@ -49,6 +49,7 @@ type Post {
   id: ID!
   post_title: String
   post_content: String
+  post_excerpt: String
   post_status: String
   post_type: String
   post_name: String
@@ -88,13 +89,20 @@ type PostmetaEdge {
 
 type Root {
   viewer: User
+  post(post_name: String): Post
+}
+
+type Setting {
+  id: ID!
+  uploads: String
 }
 
 type User implements Node {
   id: ID!
+  settings: Setting
   options(after: String, first: Int, before: String, last: Int): OptionConnection
   posts(post_type: String = "post", after: String, first: Int, before: String, last: Int): PostConnection
-  page(post_title: String): Post
+  page(post_name: String): Post
   menus(name: String): Menu
   postmeta(post_id: Int, after: String, first: Int, before: String, last: Int): PostmetaConnection
 }
