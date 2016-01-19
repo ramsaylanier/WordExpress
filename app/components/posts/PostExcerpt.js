@@ -13,10 +13,10 @@ class PostExcerpt extends React.Component{
 
     TweenMax.fromTo(excerpt, 1, {
       opacity: 0,
-      y: 10
+      x: 20
     },{
       opacity: 1,
-      y: 0,
+      x: 0,
       ease: Power4.easeOut,
       delay: index * 0.1
     });
@@ -26,10 +26,11 @@ class PostExcerpt extends React.Component{
     e.preventDefault();
     const target = e.currentTarget.href;
     const posts = document.getElementsByClassName(this.props.styles.base);
-    TweenMax.staggerTo(posts, 0.3, {
+    TweenMax.staggerTo(posts, 0.5, {
       opacity: 0,
-      y: -10
-    }, 0.1);
+      x: -20,
+      ease: Power4.easeOut
+    }, -0.1);
 
     window.setTimeout( ()=> {
       browserHistory.push(target)

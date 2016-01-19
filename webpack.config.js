@@ -8,7 +8,7 @@ var WriteFilePlugin = require('write-file-webpack-plugin');
 var BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
 const devServer = {
-    contentBase: path.resolve(__dirname, './dist'),
+    contentBase: path.resolve(__dirname, './app'),
     outputPath: path.join(__dirname, './dist'),
     colors: true,
     quiet: false,
@@ -42,32 +42,9 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.jsx?$/,
+        test: /\.js?$/,
         loader: 'babel',
         exclude: /node_modules|lib/,
-        query: {
-          presets: ['react', 'es2015', 'stage-0'],
-          cacheDirectory: true,
-          plugins: [
-            './build/babelRelayPlugin',
-            'transform-react-display-name',
-            'transform-runtime',
-            'transform-decorators-legacy',
-            ['react-transform', {
-              'transforms': [{
-                'transform': 'react-transform-hmr',
-                'imports': ['react'],
-                // this is important for Webpack HMR:
-                'locals': ['module']
-              }, {
-                'transform': 'react-transform-catch-errors',
-                // the second import is the React component to render error
-                // (it can be a local path too, like './src/ErrorReporter')
-                'imports': ['react', 'redbox-react']
-              }]
-            }]
-          ]
-        },
       },
       {
         test: /\.json?$/,

@@ -11,8 +11,6 @@ import {graphql} from 'graphql';
 import graphqlHTTP from 'express-graphql';
 import Schema from './data/schema/schema.js';
 
-console.log(browserSync)
-
 let app = express();
 
 const isDeveloping = process.env.NODE_ENV !== 'production';
