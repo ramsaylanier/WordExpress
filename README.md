@@ -10,16 +10,38 @@ You should also read about [why I am doing this](https://medium.com/@verybadhell
 
 [Part 2 - The Setup](https://medium.com/@verybadhello/wordpress-with-node-react-and-graphql-part-2-the-setup-adbbfba1e776#.oizvqnau7)
 
-
-## Major update to project
-Inspired by [this project](https://github.com/vesparny/react-kickstart) and the evolving of [react-transform](https://github.com/gaearon/react-transform-boilerplate) and [CSS Modules](http://glenmaddern.com/articles/css-modules), this project has gotten a major upgrade.
-
-
 ## Get Started
 Just run ```npm install``` and then ```npm start```
 
 ## Connecting to a Wordpress Database
 You'll notice a [settings](https://github.com/ramsaylanier/WordpressExpress/tree/master/settings) folder, which contains JSON files for development and production. This is where your wordpress database settings, as well as a wordpress table prefix, and uploads directory. Change accordingly.  
+
+## Using React Components as Layouts
+You can use any React component you'd like as a page layout by using a custom field in Wordpress. First, in your application add the layout to the ```Layouts``` object in the [layouts directory](https://github.com/ramsaylanier/WordpressExpress/blob/master/app/components/layouts/layouts.js). The ```Layouts``` object stores some basic parameters that the ```WordpressPage``` component will read. It looks like this:
+
+```
+import PostList from '../posts/PostList.js';
+import DefaultLayout from './DefaultLayout.js';
+
+const Layouts = {
+  'Default': {
+    Component: DefaultLayout,
+    showPosts: false
+  },
+  'PostList': {
+    Component: PostList,
+    showPosts: true,
+    postType: 'post',
+    limit: 10
+  }
+};
+
+
+export default Layouts;
+```
+
+Then, simply add a ```react_layout``` custom field to your wordpress page. The value of the field must be the name of the layout in the ```Layouts``` object. [Here's how you can add custom fields to a page](https://codex.wordpress.org/Custom_Fields). 
+
 
 ### React by default
 The project runs with React by default and hot replacement of changes to the modules.
