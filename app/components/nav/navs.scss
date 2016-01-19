@@ -29,12 +29,6 @@
     background-color: $primary;
     width: 100%;
 		padding: .5rem;
-
-		@for $i from 1 through 5{
-			&:nth-child(#{$i}) {
-				background-color: darken($primary, (5 - $i) * 3);
-			}
-		};
 	}
 }
 
@@ -47,10 +41,15 @@
 }
 
 .link{
+  composes: sans from '../../App.scss';
   color: white;
 	display: block;
 	height: 100%;
 	align-items: center;
+
+  &:hover{
+    color: $primary;
+  }
 }
 
 .primary{
@@ -75,19 +74,4 @@
 		transform: rotateX(90deg);
 		opacity: 0;
   }
-}
-
-.mobile{
-  position: fixed;
-  width: 100%;
-  height: 35px;
-  top: 0;
-  left: 0;
-  display: none;
-  text-align: right;
-  height: 4rem;
-}
-
-.shelf{
-
 }

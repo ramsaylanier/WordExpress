@@ -1,43 +1,13 @@
-.base{
+.main{
 	margin-left: auto;
 	margin-right: auto;
 	height: 100%;
-}
-
-.main{
-	composes: base;
 	position: relative;
 	width: 95%;
 	max-width: 900px;
 }
 
-.form{
-	composes: base;
-	max-width: 500px;
-	border-radius: 3px;
-	padding: 1rem;
-
-	&:not(last-of-type){
-		margin-bottom: 1.5rem;
-	}
-}
-
-.form__white{
-	composes: form;
-	background-color: white;
-}
-
 .tight{
-	composes: base;
-	max-width: 750px;
-}
-
-.full{
-	max-width: 100%;
-}
-
-.flex{
 	composes: main;
-	display: flex;
-	justify-content: space-between;
+	max-width: 750px;
 }

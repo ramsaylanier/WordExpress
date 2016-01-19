@@ -5,10 +5,11 @@
   left: 0;
   width: 100%;
   height: 4rem;
+  z-index: 900;
 }
 
 .wrapper{
-  composes: main from "../../styles/wrapper.scss";
+  composes: main from "../../App.scss";
   composes: container align_center from "../../styles/flexbox.scss";
 }
 

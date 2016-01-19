@@ -1,7 +1,8 @@
 @import "./styles/reset";
-@import "./styles/fonts";
 @import "./styles/vars";
-@import "./styles/typeplate/typeplate";
+@import "./styles/typography";
+@import "./styles/wrapper";
+@import "./styles/background";
 @import "./styles/flexbox";
 @import "./styles/z-index";
 
@@ -10,8 +11,6 @@
 }
 
 body{
-  font-family: $sansSerif;
-  font-weight: 400;
   background-color: darken(white, 10%);
 }
 

@@ -9,11 +9,9 @@ class AppNav extends  React.Component{
 
 	render(){
 
-		// const { items } = _.sortBy(this.props.viewer.menus, ['order']);
 		let { items } = this.props.viewer.menus;
 		items = _.sortBy(items, 'order');
 
-		console.log(items);
 		return(
 			<NavList type="primary">
 				<NavItem>
@@ -22,8 +20,8 @@ class AppNav extends  React.Component{
 				{items.map( item => {
 					const { children } = item;
 					return(
-						<NavItem>
-							<Link to={item.navitem.post_name} className={styles.link}>{item.navitem.post_title}</Link>
+						<NavItem key={item.id}>
+							<Link to={`/${item.navitem.post_name}`} className={styles.link}>{item.navitem.post_title}</Link>
 							{children.length > 0 &&
 								<NavList type="subnav">
 									{children.map( child => {

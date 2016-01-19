@@ -1,7 +1,4 @@
-$serif: 'proxima-nova', Helvetica, serif;
-$sansSerif: 'proxima-nova', Helvetica, sans-serif;
-
-$primary: #e71e2d;
+$primary: #7fbd42;
 $secondary: #510a0d;
 $dark: #380436;
 $lightGrey: #f3f3f3;
@@ -18,10 +15,3 @@ $mobile-landscape: 	"only screen and (min-device-width: 320px) and (max-device-w
 $tablet:      		"only screen and (min-width: 569px) and (max-width: 980px)";
 $desktop:     		"only screen and (min-width: 981px) and (max-width: 1200px)";
 $desktop-xl:  		"only screen and (min-width: 1201px)";
-
-:global {
-
-  .dark_background{
-    background-color: $dark;
-  }
-}

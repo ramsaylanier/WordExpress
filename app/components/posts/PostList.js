@@ -9,9 +9,9 @@ class PostList extends React.Component{
     const { posts } = this.props.viewer;
     return(
       <div>
-        {posts.edges.map( post => {
+        {posts.edges.map( (post, index) => {
           return(
-            <PostExcerpt viewer={this.props.viewer} {...post.node} />
+            <PostExcerpt index={index} key={post.node.id} viewer={this.props.viewer} {...post.node} />
           )
         })}
       </div>
