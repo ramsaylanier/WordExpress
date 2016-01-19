@@ -7,6 +7,7 @@ You should also read about [why I am doing this](https://medium.com/@verybadhell
 
 ## Docs on Medium
 [Part 1 - Introduction](https://medium.com/@verybadhello/wordpress-with-node-react-and-graphql-part-1-introduction-ee0fc491730e#.ir4lezuav)
+
 [Part 2 - The Setup](https://medium.com/@verybadhello/wordpress-with-node-react-and-graphql-part-2-the-setup-adbbfba1e776#.oizvqnau7)
 
 
