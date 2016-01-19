@@ -57,7 +57,7 @@ class PostExcerpt extends React.Component{
         <Link to={'post/' + encodeURIComponent(post_name)} styleName="base" onClick={this._handleClick.bind(this)}>
           <div styleName="info">
             <h2 styleName="title">{post_title}</h2>
-            <p dangerouslySetInnerHTML = {this._renderExcerpt()}/>
+            <p styleName="text" dangerouslySetInnerHTML = {this._renderExcerpt()}/>
           </div>
           <div styleName="thumbnail" style={bg}></div>
         </Link>

@@ -20,8 +20,14 @@ class PostSingle extends React.Component{
 
   _renderExcerpt(){
     const { post_content } = this.props.viewer.page;
+    const trimmed = post_content.trim();
+
+    //Recreates the Wordpress autop function to wrap new lines in paragraph tags.
+    //This is necessary because Wordpress doesn't save the paragraph tags in the post-content column.
+    const content = trimmed.replace(/[\r\n]+/g,'</p><p>');
+
     return {
-      __html: post_content
+      __html: content
     }
   }
 
@@ -36,10 +42,12 @@ class PostSingle extends React.Component{
       <div ref={(c) => this._post = c} styleName="base">
         <header styleName="header" style={bg}>
         </header>
-        <div styleName="content">
+        <div styleName="main">
           <div styleName="wrapper">
             <h1 styleName="title">{post_title}</h1>
-            <p dangerouslySetInnerHTML = {this._renderExcerpt()}/>
+            <div styleName="content">
+              <div dangerouslySetInnerHTML = {this._renderExcerpt()}/>
+            </div>
           </div>
         </div>
       </div>

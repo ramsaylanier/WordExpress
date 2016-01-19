@@ -1,3 +1,5 @@
+@import "../../styles/vars";
+
 .base{
   min-height: 100vh;
 }
@@ -17,25 +19,52 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: fade-out(black, .6);
+    background-color: fade-out($dark, .3);
   }
 }
 
-.content{
+.main{
   padding: 2rem;
   background-color: white;
+  font-size: 1.2rem;
+}
+
+.content{
+  padding: 0rem 2rem;
+
+  p{
+    font-size: 1.2rem;
+  }
+
+  a{
+    color: $secondary;
+    border-bottom: 1px solid currentColor;
+    line-height: 0;
+    transition: color 150ms ease-out;
+
+    &:hover{
+      color: $primary;
+    }
+  }
+
+  .alignleft{
+    float: left;
+    margin-right: 1.5rem;
+  }
 }
 
 .wrapper{
   composes: main from "../../styles/wrapper.scss";
   position: relative;
   background-color: white;
-  padding: 2rem;
   top: -10rem;
   z-index: 20;
 }
 
 .title{
+  padding: 2rem;
+  font-size: 3em;
   position: relative;
   z-index: 2;
+  box-shadow: 0px -100px 100px -30px $dark;
 }

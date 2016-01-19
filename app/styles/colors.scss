@@ -12,6 +12,16 @@
   color: $primary;
 }
 
+.primary_hover{
+  &:hover{
+    color: $primary;
+  }
+}
+
+.secondary{
+  color: $secondary;
+}
+
 .dark{
   color: $dark;
 }
