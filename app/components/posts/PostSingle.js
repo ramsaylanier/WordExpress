@@ -9,6 +9,15 @@ import styles from './post.scss';
 @CSSModules(styles, {allowMultiple: true})
 class PostSingle extends React.Component{
 
+  componentDidMount(){
+    const post = this._post;
+    TweenMax.fromTo(post, 0.5, {
+      opacity: 0
+    }, {
+      opacity: 1
+    });
+  }
+
   _renderExcerpt(){
     const { post_content } = this.props.viewer.page;
     return {
@@ -24,7 +33,7 @@ class PostSingle extends React.Component{
     }
 
     return(
-      <div styleName="base">
+      <div ref={(c) => this._post = c} styleName="base">
         <header styleName="header" style={bg}>
         </header>
         <div styleName="content">
