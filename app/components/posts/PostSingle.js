@@ -6,6 +6,8 @@ import Page from '../pages/page.js';
 import CSSModules from 'react-css-modules';
 import styles from './post.scss';
 
+console.log(styles);
+
 @CSSModules(styles, {allowMultiple: true})
 class PostSingle extends React.Component{
 
@@ -32,6 +34,7 @@ class PostSingle extends React.Component{
   }
 
   render(){
+    console.log(this.props);
     const { post_title, post_content, thumbnail } = this.props.viewer.page;
     const { uploads } = this.props.viewer.settings;
     const bg = {

@@ -11,13 +11,12 @@ import {graphql} from 'graphql';
 import graphqlHTTP from 'express-graphql';
 import Schema from './data/schema/schema.js';
 
-let app = express();
-
 const isDeveloping = process.env.NODE_ENV !== 'production';
 const APP_PORT = isDeveloping ? 3100 : process.env.PORT;
 const GRAPHQL_PORT = 8080;
 
 const graphQLServer = express();
+let app = express();
 
 graphQLServer.use('/', graphqlHTTP({
   graphiql: true,

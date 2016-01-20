@@ -10,21 +10,27 @@ export const publicSettings = settings.public;
 
 export class User extends Object {}
 
-export class Menu extends Object{
-  constructor(id, name, items){
-    super();
-    this.id = id;
-    this.name = name;
-    this.items = items;
-  }
-}
-
 // Mock user data
 let viewer = new User();
 viewer.id = '1';
 viewer.name = 'Anonymous';
 
-let primaryMenu = new Menu( 1, 'primary-navigation', []);
+// export class Menu extends Object{
+//   constructor(id, name, items){
+//     super();
+//     this.id = id;
+//     this.name = name;
+//     this.items = items;
+//   }
+// }
+//
+// let primaryMenu = new Menu( 1, 'primary-navigation', []);
+// let footerMenu = new Menu( 2, 'footer-navigation', []);
+// let Menus = [
+//   {'primary-navigation': primaryMenu},
+//   {'footer-navigation': footerMenu},
+// ]
+
 
 export function getUser(id) {
   id === viewer.id ? viewer : null;
@@ -106,10 +112,10 @@ const TermTaxonomy = Conn.define('wp_term_taxonomy', {
   count: { type: Sequelize.INTEGER },
 });
 
-function getMenuItems(){
-  Conn.models[privateSettings.wp_prefix + 'terms'].findOne({
+function getMenuItems(name){
+  return Conn.models[privateSettings.wp_prefix + 'terms'].findOne({
     where: {
-      slug: 'primary-navigation'
+      slug: name
     },
     include: [{
       model: TermRelationships,
@@ -120,6 +126,12 @@ function getMenuItems(){
     }]
   }).then ( res => {
     if (res){
+      let menu = {
+        id: null,
+        name: name,
+        items: null,
+      };
+      menu.id = res.term_id;
       const relationship = res.wp_term_relationships;
       const posts = _.map(_.pluck (relationship, 'wp_post'), 'dataValues');
       const navItems = [];
@@ -153,8 +165,10 @@ function getMenuItems(){
           }
         }
 
-        primaryMenu.items = navItems;
+        menu.items = navItems;
       });
+
+      return menu;
     }
   });
 }
@@ -256,9 +270,10 @@ const ConnQueries = {
       }
     })
   },
-  getMenu(slug){
-    getMenuItems();
-    return primaryMenu
+  getMenu(name){
+    const menu = getMenuItems(name);
+    menu.then( res => { console.log('menu:', res) } );
+    return menu;
   }
 }
 

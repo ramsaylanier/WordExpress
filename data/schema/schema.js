@@ -124,10 +124,7 @@ const GraphQLMenu = new GraphQLObjectType({
     id: { type: new GraphQLNonNull(GraphQLID) },
     name: { type: GraphQLString },
     items: {
-      type: new GraphQLList(GraphQLMenuItem),
-      resolve: (root, args) => {
-        return ConnQueries.getMenu().items;
-      }
+      type: new GraphQLList(GraphQLMenuItem)
     }
   }),
   interfaces: [nodeInterface]
