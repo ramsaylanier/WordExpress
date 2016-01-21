@@ -4,8 +4,8 @@ var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var WriteFilePlugin = require('write-file-webpack-plugin');
-var StatsPlugin = require('stats-webpack-plugin');
+// var WriteFilePlugin = require('write-file-webpack-plugin');
+// var StatsPlugin = require('stats-webpack-plugin');
 
 module.exports = {
   entry: [
@@ -13,11 +13,10 @@ module.exports = {
   ],
   output: {
     path: path.join(__dirname, '/dist/'),
-    filename: '[name]-[hash].min.js'
+    filename: '/[name]-[hash].min.js'
   },
   plugins: [
-    new WriteFilePlugin(),
-    new ExtractTextPlugin('app.min.css', {
+    new ExtractTextPlugin('/app.min.css', {
       allChunks: true
     }),
     new HtmlWebpackPlugin({
@@ -31,10 +30,6 @@ module.exports = {
         warnings: false,
         screw_ie8: true
       }
-    }),
-    new StatsPlugin('webpack.stats.json', {
-      source: false,
-      modules: false
     }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)

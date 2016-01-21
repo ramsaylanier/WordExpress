@@ -25,7 +25,7 @@
   "scripts": {
     "test": "",
     "start": "NODE_ENV=production node ./dist/server.js",
-    "startdev": "NODE_ENV=dev babel-node --debug ./server/server.js",
+    "startdev": "NODE_ENV=dev babel-node --debug ./server.js",
     "build-server": "babel -d ./dist ./server.js ./webpack.config.js",
     "build-schema": "babel -d ./dist/data ./data",
     "build-settings": "cp -R ./settings ./dist/",

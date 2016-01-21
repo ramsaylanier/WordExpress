@@ -51,7 +51,7 @@ if (isDeveloping) {
    app.use(webpackHotMiddleware(compiler));
 
 } else {
-  app.use(express.static(__dirname));
+  app.use(express.static('./dist'));
   app.use('/graphql', graphqlHTTP(request => ({
       graphiql: true,
       pretty: true,
@@ -59,6 +59,7 @@ if (isDeveloping) {
     })
   ));
   app.get('*', function response(req, res) {
+    console.log(path.join(__dirname, '/index.html'));
     res.sendFile(path.join(__dirname, '/index.html'));
   });
 }
