@@ -24,9 +24,12 @@
   "homepage": "https://github.com/ramsaylanier/WordpressExpress",
   "scripts": {
     "test": "",
-    "start": "NODE_ENV=production node server.js",
-    "startdev": "NODE_ENV=dev babel-node --debug server.js",
-    "build": "rimraf dist && NODE_ENV=production webpack --config ./webpack.production.config.js --progress --profile --colors",
+    "start": "NODE_ENV=production node ./dist/server.js",
+    "startdev": "NODE_ENV=dev babel-node --debug ./server/server.js",
+    "build-server": "babel -d ./dist ./server.js ./webpack.config.js",
+    "build-schema": "babel -d ./dist/data ./data",
+    "build-settings": "cp -R ./settings ./dist/",
+    "build": "rimraf dist && NODE_ENV=production webpack --config ./webpack.production.config.js --progress --profile --colors && npm run build-server && npm run build-schema && npm run build-settings",
     "eslint": "eslint .",
     "jscs": "jscs .",
     "updateschema": "NODE_ENV=dev babel-node scripts/updateSchema"
