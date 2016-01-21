@@ -12,7 +12,7 @@ import graphqlHTTP from 'express-graphql';
 import Schema from './data/schema/schema.js';
 
 const isDeveloping = process.env.NODE_ENV !== 'production';
-const APP_PORT = isDeveloping ? 3100 : process.env.PORT;
+const APP_PORT = isDeveloping ? 3100 : process.env.PORT || 3000;
 const GRAPHQL_PORT = 8080;
 
 const graphQLServer = express();

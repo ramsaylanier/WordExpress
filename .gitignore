@@ -4,3 +4,4 @@ dist
 *.log
 coverage
 wordpress
+settings/prod.json
