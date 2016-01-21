@@ -32,7 +32,7 @@ export default Relay.createContainer(Header, {
   fragments: {
 		viewer: () => Relay.QL`
 			fragment on User {
-				menus(name:"primary-navigation") {
+				menus(name:"footer-navigation") {
 		      items {
 						id,
 						order,

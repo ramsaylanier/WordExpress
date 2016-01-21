@@ -1,19 +1,31 @@
 {
   "presets": ["es2015", "react", "stage-0"],
-  "plugins": [
-    "./build/babelRelayPlugin",
-    "transform-react-display-name",
-    "transform-runtime",
-    "transform-decorators-legacy",
-    ["react-transform", {
-      "transforms": [{
-        "transform": "react-transform-hmr",
-        "imports": ["react"],
-        "locals": ["module"]
-      }, {
-        "transform": "react-transform-catch-errors",
-        "imports": ["react", "redbox-react"]
-      }]
-    }]
-  ]
+  "env":{
+    "production":{
+      "plugins": [
+        "./build/babelRelayPlugin",
+        "transform-react-display-name",
+        "transform-runtime",
+        "transform-decorators-legacy"
+      ]
+    },
+    "dev":{
+      "plugins": [
+        "./build/babelRelayPlugin",
+        "transform-react-display-name",
+        "transform-runtime",
+        "transform-decorators-legacy",
+        ["react-transform", {
+          "transforms": [{
+            "transform": "react-transform-hmr",
+            "imports": ["react"],
+            "locals": ["module"]
+          }, {
+            "transform": "react-transform-catch-errors",
+            "imports": ["react", "redbox-react"]
+          }]
+        }]
+      ]
+    }
+  }
 }

@@ -4,6 +4,7 @@ var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var WriteFilePlugin = require('write-file-webpack-plugin');
 var StatsPlugin = require('stats-webpack-plugin');
 
 module.exports = {
@@ -15,13 +16,16 @@ module.exports = {
     filename: '[name]-[hash].min.js'
   },
   plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
+    new WriteFilePlugin(),
+    new ExtractTextPlugin('app.min.css', {
+      allChunks: true
+    }),
     new HtmlWebpackPlugin({
       template: 'app/index.tpl.html',
       inject: 'body',
       filename: 'index.html'
     }),
-    new ExtractTextPlugin('[name]-[hash].min.css'),
+    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compressor: {
         warnings: false,
@@ -37,17 +41,29 @@ module.exports = {
     })
   ],
   module: {
-    loaders: [{
-      test: /\.js?$/,
-      exclude: /node_modules/,
-      loader: 'babel'
-    }, {
-      test: /\.json?$/,
-      loader: 'json'
-    }, {
-      test: /\.css$/,
-      loader: ExtractTextPlugin.extract('style', 'css?modules&localIdentName=[name]---[local]---[hash:base64:5]!postcss')
-    }]
+    loaders: [
+      {
+        test: /\.js?$/,
+        loader: 'babel',
+        exclude: /node_modules|lib/,
+      },
+      {
+        test: /\.json?$/,
+        loader: 'json'
+      },
+      {
+        test: /\.css$/,
+        loader: 'style!css?modules&localIdentName=[name]---[local]---[hash:base64:5]'
+      },
+      {
+        test: /\.scss$/,
+        loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]!sass'),
+        exclude: /node_modules|lib/,
+      },
+    ],
+  },
+  node: {
+    fs: 'empty'
   },
   postcss: [
     require('autoprefixer')

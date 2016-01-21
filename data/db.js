@@ -15,29 +15,8 @@ let viewer = new User();
 viewer.id = '1';
 viewer.name = 'Anonymous';
 
-// export class Menu extends Object{
-//   constructor(id, name, items){
-//     super();
-//     this.id = id;
-//     this.name = name;
-//     this.items = items;
-//   }
-// }
-//
-// let primaryMenu = new Menu( 1, 'primary-navigation', []);
-// let footerMenu = new Menu( 2, 'footer-navigation', []);
-// let Menus = [
-//   {'primary-navigation': primaryMenu},
-//   {'footer-navigation': footerMenu},
-// ]
-
-
 export function getUser(id) {
   id === viewer.id ? viewer : null;
-}
-
-export function getMenu(id) {
-  return primaryMenu
 }
 
 const Conn = new Sequelize(
@@ -271,9 +250,7 @@ const ConnQueries = {
     })
   },
   getMenu(name){
-    const menu = getMenuItems(name);
-    menu.then( res => { console.log('menu:', res) } );
-    return menu;
+    return getMenuItems(name);
   }
 }
 

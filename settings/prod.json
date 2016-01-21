@@ -1,10 +1,14 @@
 {
-  "ENV":"Prod",
-  "wp-prefix": "wp_",
-  "database": {
-    "name": "wpexpress_dev",
-    "username": "root",
-    "password": "",
-    "host": "127.0.0.1"
+  "public": {
+    "uploads": "http://wordpressexpress.dev/wp-content/uploads/"
+  },
+  "private": {
+    "wp_prefix": "wp_",
+    "database": {
+      "name": "wpexpress_dev",
+      "username": "root",
+      "password": "",
+      "host": "127.0.0.1"
+    }
   }
 }

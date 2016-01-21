@@ -25,7 +25,6 @@ import {
   Conn,
   ConnQueries,
   getUser,
-  getMenu,
   publicSettings
 } from '../db.js';
 
@@ -48,8 +47,6 @@ let {nodeInterface, nodeField} = nodeDefinitions(
       return ConnQueries.getPostById(id)
     } else if (type === 'Postmeta'){
       return ConnQueries.getPostmetaById(id)
-    } else if (type === 'Menu'){
-      return getMenu(id);
     } else {
       return null
     }
@@ -67,8 +64,6 @@ let {nodeInterface, nodeField} = nodeDefinitions(
       return GraphQLPost;
     } else if (obj instanceof Postmeta){
       return GraphQLPostmeta;
-    } else if (obj instanceof Menu){
-      return GraphQLMenu;
     } else {
       return null
     }

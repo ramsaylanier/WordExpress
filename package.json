@@ -24,7 +24,8 @@
   "homepage": "https://github.com/ramsaylanier/WordpressExpress",
   "scripts": {
     "test": "",
-    "start": "NODE_ENV=dev babel-node --debug server.js",
+    "start": "NODE_ENV=production babel-node server.js",
+    "startdev": "NODE_ENV=dev babel-node --debug server.js",
     "build": "rimraf dist && NODE_ENV=production webpack --config ./webpack.production.config.js --progress --profile --colors",
     "eslint": "eslint .",
     "jscs": "jscs .",
