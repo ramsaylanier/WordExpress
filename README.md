@@ -16,6 +16,28 @@ Just run ```npm install``` and then ```npm start```
 ## Connecting to a Wordpress Database
 You'll notice a [settings](https://github.com/ramsaylanier/WordpressExpress/tree/master/settings) folder, which contains JSON files for development and production. This is where your wordpress database settings, as well as a wordpress table prefix, and uploads directory. Change accordingly.  
 
+## Setting the Landing Page
+By default, the [LandingPage](https://github.com/ramsaylanier/WordpressExpress/blob/master/app/components/pages/LandingPage.js) component queries a post with the post-name (AKA slug) of "homepage". If you are using a fresh Wordpress installation, simply create a page and give it a slug of "homepage." If you are working with an exsiting Wordpress database, you can change which page that gets loaded by changing the page query in the ```LandingPage``` component. See below:
+
+```
+export default Relay.createContainer(LandingPage, {
+  fragments: {
+    viewer: () => Relay.QL`
+      fragment on User {
+        page(post_name:"homepage"){
+					id,
+					post_title
+					post_content
+				}
+      }
+    `,
+  },
+});
+```
+
+Simply change "homepage" to anything you want. Keep in mind that it queries the post-name (AKA slug), not the post-title. 
+
+
 ## Using React Components as Layouts
 You can use any React component you'd like as a page layout by using a custom field in Wordpress. First, in your application add the layout to the ```Layouts``` object in the [layouts directory](https://github.com/ramsaylanier/WordpressExpress/blob/master/app/components/layouts/layouts.js). The ```Layouts``` object stores some basic parameters that the ```WordpressPage``` component will read. It looks like this:
 
