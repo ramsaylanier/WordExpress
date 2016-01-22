@@ -11,7 +11,7 @@ You should also read about [why I am doing this](https://medium.com/@verybadhell
 [Part 2 - The Setup](https://medium.com/@verybadhello/wordpress-with-node-react-and-graphql-part-2-the-setup-adbbfba1e776#.oizvqnau7)
 
 ## Get Started
-Just run ```npm install``` and then ```npm rub startdev```
+Just run ```npm install``` and then ```npm run startdev```
 To build for production, run ```npm run build```, which creates a ```dist``` folder in the root directory which contains production-ready code. You can run ```npm start``` which will start the express server using code in the ```dist``` folder. 
 
 ## Connecting to a Wordpress Database
