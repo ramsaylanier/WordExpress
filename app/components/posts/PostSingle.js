@@ -2,11 +2,10 @@ import React from 'react';
 import Relay from 'react-relay';
 
 import Page from '../pages/page.js';
+import PostContent from './PostContent.js';
 
 import CSSModules from 'react-css-modules';
 import styles from './post.scss';
-
-console.log(styles);
 
 @CSSModules(styles, {allowMultiple: true})
 class PostSingle extends React.Component{
@@ -18,19 +17,6 @@ class PostSingle extends React.Component{
     }, {
       opacity: 1
     });
-  }
-
-  _renderExcerpt(){
-    const { post_content } = this.props.viewer.page;
-    const trimmed = post_content.trim();
-
-    //Recreates the Wordpress autop function to wrap new lines in paragraph tags.
-    //This is necessary because Wordpress doesn't save the paragraph tags in the post-content column.
-    const content = trimmed.replace(/[\r\n]+/g,'</p><p>');
-
-    return {
-      __html: content
-    }
   }
 
   render(){
@@ -49,7 +35,7 @@ class PostSingle extends React.Component{
           <div styleName="wrapper">
             <h1 styleName="title">{post_title}</h1>
             <div styleName="content">
-              <div dangerouslySetInnerHTML = {this._renderExcerpt()}/>
+              <PostContent post_content={post_content}/>
             </div>
           </div>
         </div>

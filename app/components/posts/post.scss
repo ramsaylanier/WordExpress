@@ -36,6 +36,14 @@
     font-size: 1.2rem;
   }
 
+  pre{
+    p{
+      color: black;
+      font-size: .9rem;
+      margin: 0;
+    }
+  }
+
   a{
     color: $secondary;
     border-bottom: 1px solid currentColor;
@@ -50,6 +58,13 @@
   .alignleft{
     float: left;
     margin-right: 1.5rem;
+  }
+
+  img{
+    max-width: 100%;
+    height: auto;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
   }
 }
 

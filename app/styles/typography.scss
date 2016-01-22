@@ -1,5 +1,6 @@
 $heading: "jaf-facitweb", Helvetica, sans-serif;
 $copy: "freight-text-pro", serif;
+$mono: "source-code-pro", sans-serif;
 
 html {font-size: 1.125em;}
 
@@ -52,8 +53,30 @@ sup {
   top: -0.5em;
 }
 
+pre{
+  font-family: $mono;
+  font-size: 1rem;
+  padding: 1rem;
+  border: 1px solid darken(white, 5%);
+  background-color: darken(white, 10%);
+  overflow: auto;
+
+  p{
+    font-size: 1rem;
+    margin: 0;
+  }
+}
+
 sub {
   bottom: -0.25em;
+}
+
+em{
+  font-style: italic;
+}
+
+strong{
+  font-weight: 700;
 }
 
 .sans{
