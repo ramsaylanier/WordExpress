@@ -17,6 +17,8 @@ To build for production, run ```npm run build```, which creates a ```dist``` fol
 ## Connecting to a Wordpress Database
 You'll notice a [settings](https://github.com/ramsaylanier/WordpressExpress/tree/master/settings) folder, which contains JSON files for development and production. This is where your wordpress database settings, as well as a wordpress table prefix, and uploads directory. Change accordingly.  
 
+For production, create a prod.json file in the same format as dev.json.
+
 ## Setting the Landing Page
 When you run ```npm startdev``` for the first time, you'll probably get an error saying "cannot find page-title of undefined." This is probably because you haven't set a landing page in Wordpress. By default, the [LandingPage](https://github.com/ramsaylanier/WordpressExpress/blob/master/app/components/pages/LandingPage.js) component queries a post with the post-name (AKA slug) of "homepage". If you are using a fresh Wordpress installation, simply create a page and give it a slug of "homepage." If you are working with an exsiting Wordpress database, you can change which page that gets loaded by changing the page query in the ```LandingPage``` component. See below:
 
