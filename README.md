@@ -17,10 +17,10 @@ To build for production, run ```npm run build```, which creates a ```dist``` fol
 ## Defining Your Application Settings
 You'll notice a [settings](https://github.com/ramsaylanier/WordpressExpress/tree/master/settings) folder, which contains JSON files for development. This is where you can define settings for uploads, wordpress database connection, and some other things. Change accordingly. For production, create a prod.json file in the same format as dev.json.
 
-### Upload Settings
+#### Upload Settings
 This project uses Amazon AWS with an S3 bucket. If you are hosting your media files on the same server as your wordpress installation, set amazonS3 to false and set the uploads directory accordingly. If you are using S3, set don't include 'wp-content/uploads' to the end of the setting - it will be added for you. 
 
-### Database Settings
+#### Database Settings
 This should be pretty self-explanatory: simply enter in the name of your database, username and password, and host. Make sure these are inside of "private", or else they'll be available on the client (WHICH IS BAD).  
 
 ## Setting the Landing Page
