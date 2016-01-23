@@ -160,7 +160,8 @@ const GraphQLUser = new GraphQLObjectType({
         ...connectionArgs
       },
       resolve(root, args) {
-        return connectionFromPromisedArray( ConnQueries.getPosts(args.post_type), args );
+        console.log('ARGS:',args);
+        return connectionFromPromisedArray( ConnQueries.getPosts(args), args );
       }
     },
     page: {

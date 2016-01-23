@@ -174,11 +174,12 @@ const ConnQueries = {
       }
     })
   },
-  getPosts(type){
+  getPosts(args){
+    const {post_type, first} = args;
     return Conn.models[privateSettings.wp_prefix + 'posts'].findAll({
       where: {
-        post_type: type,
-        post_status: 'publish'
+        post_type: post_type,
+        post_status: 'publish',
       }
     })
   },
@@ -205,6 +206,8 @@ const ConnQueries = {
       }
     }).then( res => {
       if (res){
+        let meta_key = publicSettings.amazonS3 ? 'amazonS3_info' : '_wp_attached_file';
+
         return Post.findOne({
           where: {
             id: Number(res.dataValues.meta_value)
@@ -212,13 +215,13 @@ const ConnQueries = {
           include: {
             model: Postmeta,
             where: {
-              meta_key:'_wp_attached_file'
+              meta_key:meta_key
             },
             limit: 1
           }
         }).then( post => {
           if (post.wp_postmeta){
-            console.log(post.wp_postmeta[0].dataValues.meta_value)
+            console.log('postmeta:',post.wp_postmeta[0].dataValues.meta_value)
             return post.wp_postmeta[0].dataValues.meta_value;
           }else {
             return null;

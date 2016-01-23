@@ -1,6 +1,7 @@
 {
   "public": {
-    "uploads": "http://wordpressexpress.dev/wp-content/uploads/"
+    "uploads": "http://wordexpress.s3.amazonaws.com/wp-content/uploads/",
+    "amazonS3": true
   },
   "private": {
     "wp_prefix": "wp_",

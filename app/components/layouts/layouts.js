@@ -4,7 +4,9 @@ import DefaultLayout from './DefaultLayout.js';
 const Layouts = {
   'Default': {
     Component: DefaultLayout,
-    showPosts: false
+    showPosts: false,
+    postType: 'post',
+    limit: 10
   },
   'PostList': {
     Component: PostList,

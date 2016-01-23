@@ -5,6 +5,12 @@ import PostExcerpt from './PostExcerpt.js';
 
 class PostList extends React.Component{
 
+  componentDidMount(){
+    this.props.relay.setVariables({
+      limit: this.props.layoutVars.limit
+    })
+  }
+
   render(){
     const { posts } = this.props.viewer;
     return(
@@ -19,4 +25,37 @@ class PostList extends React.Component{
   }
 }
 
-export default PostList;
+export default Relay.createContainer(PostList, {
+
+  initialVariables:{
+    limit: 1
+  },
+
+  prepareVariables(prevVars){
+    console.log(prevVars);
+    return{
+      limit: prevVars.limit
+    }
+  },
+
+  fragments: {
+    viewer: (variables) => Relay.QL`
+      fragment on User {
+        posts(first: $limit){
+					edges{
+						node{
+							id
+							post_title
+							post_name
+							post_excerpt
+						}
+					}
+				},
+        settings{
+          id
+          uploads
+        }
+			}
+    `
+  },
+});

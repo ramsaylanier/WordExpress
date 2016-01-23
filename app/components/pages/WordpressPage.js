@@ -3,8 +3,14 @@ import Relay from 'react-relay';
 import Page from './page.js';
 
 import Layouts from '../layouts/layouts.js';
+import PostList from '../posts/PostList.js';
 
 class WordpressPage extends React.Component{
+
+	constructor(){
+		super();
+		this._setLayout = this._setLayout.bind(this);
+	}
 
 	_setLayout(){
 		let Layout;
@@ -33,14 +39,17 @@ class WordpressPage extends React.Component{
 	}
 
 	componentDidUpdate(){
+		console.log('updated');
 		this._setLayout();
 	}
 
 	shouldComponentUpdate(nextProps){
 		let nextComponent = nextProps.relay.variables.Component;
 		let thisComponent = this.props.relay.variables.Component;
+		let nextLimit = nextProps.relay.variables.limit;
+		let thisLimit =  this.props.relay.variables.limit;
 
-		return nextComponent !== thisComponent;
+		return nextComponent !== thisComponent || nextLimit !== thisLimit;
 	}
 
 	render(){
@@ -50,7 +59,7 @@ class WordpressPage extends React.Component{
 		if (Component){
 			return (
 				<Page withWrapper={true}>
-					<Component viewer={viewer}/>
+					<Component viewer={viewer} layoutVars={this.props.relay.variables}/>
 				</Page>
 			)
 		} else {
@@ -66,13 +75,14 @@ export default Relay.createContainer(WordpressPage, {
 	initialVariables:{
 		Component: null,
 		page: null,
-		showPosts: false,
-		limit: 10
+		showPosts: true,
+		limit: 5
 	},
 
   fragments: {
-    viewer: () => Relay.QL`
+    viewer: ({showPosts, limit}) => Relay.QL`
       fragment on User {
+				${PostList.getFragment("viewer", {limit:limit}).if(showPosts)},
 				page(post_name:$page){
 					id,
 					post_title,
@@ -87,21 +97,10 @@ export default Relay.createContainer(WordpressPage, {
 						}
 					}
 				},
-				posts(first: $limit){
-					edges{
-						node{
-							id
-							post_title
-							post_name
-							post_excerpt
-							thumbnail
-						}
-					}
-				},
 				settings{
-					id,
+					id
 					uploads
-				}
+				},
 			}
     `,
   },

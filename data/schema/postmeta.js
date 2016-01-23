@@ -29,7 +29,8 @@ export const GraphQLMetaType = new GraphQLEnumType({
   values: {
     thumbnailID: {value: '_thumbnail_id'},
     attachedFile: {value: '_wp_attached_file'},
-    reactLayout: {value: 'react_layout'}
+    reactLayout: {value: 'react_layout'},
+    amazonInfo: {value: 'amazonS3_info'}
   }
 })
 

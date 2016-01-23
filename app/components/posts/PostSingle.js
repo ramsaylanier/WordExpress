@@ -56,7 +56,6 @@ export default Relay.createContainer(PostSingle, {
           id
           post_title
           post_content
-          thumbnail
         },
         settings{
           id

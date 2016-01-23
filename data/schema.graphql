@@ -16,6 +16,7 @@ enum MetaType {
   thumbnailID
   attachedFile
   reactLayout
+  amazonInfo
 }
 
 interface Node {
@@ -89,7 +90,6 @@ type PostmetaEdge {
 
 type Root {
   viewer: User
-  post(post_name: String): Post
 }
 
 type Setting {
