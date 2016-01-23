@@ -48,14 +48,12 @@ class PostExcerpt extends React.Component{
 
   render(){
     const { post_title, post_name, thumbnail } = this.props;
-    console.log(thumbnail);
     const { uploads, amazonS3 } = this.props.viewer.settings;
     let thumbnailSrc, bg;
 
     if (thumbnail){
       if (amazonS3){
         thumbnailSrc = uploads + PHPUnserialize.unserialize(thumbnail).key;
-        console.log(thumbnailSrc);
       } else {
         thumbnailSrc = uploads + thumbnail;
       }
