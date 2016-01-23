@@ -75,8 +75,15 @@ export default Relay.createContainer(WordpressPage, {
 	initialVariables:{
 		Component: null,
 		page: null,
-		showPosts: true,
+		showPosts: false,
 		limit: 5
+	},
+
+	prepareVariables(prevVars){
+		return{
+			...prevVars,
+			showPosts: true
+		}
 	},
 
   fragments: {

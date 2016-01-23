@@ -32,7 +32,6 @@ export default Relay.createContainer(PostList, {
   },
 
   prepareVariables(prevVars){
-    console.log(prevVars);
     return{
       limit: prevVars.limit
     }
@@ -48,12 +47,14 @@ export default Relay.createContainer(PostList, {
 							post_title
 							post_name
 							post_excerpt
+              thumbnail
 						}
 					}
 				},
         settings{
           id
           uploads
+          amazonS3
         }
 			}
     `

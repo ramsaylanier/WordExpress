@@ -1,6 +1,6 @@
 {
   "public": {
-    "uploads": "http://wordexpress.s3.amazonaws.com/wp-content/uploads/",
+    "uploads": "http://wordexpress.s3.amazonaws.com/",
     "amazonS3": true
   },
   "private": {

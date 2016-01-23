@@ -95,6 +95,7 @@ type Root {
 type Setting {
   id: ID!
   uploads: String
+  amazonS3: Boolean
 }
 
 type User implements Node {

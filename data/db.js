@@ -220,10 +220,10 @@ const ConnQueries = {
             limit: 1
           }
         }).then( post => {
-          if (post.wp_postmeta){
+          if (post.wp_postmeta[0]){
             console.log('postmeta:',post.wp_postmeta[0].dataValues.meta_value)
             return post.wp_postmeta[0].dataValues.meta_value;
-          }else {
+          } else {
             return null;
           }
         })

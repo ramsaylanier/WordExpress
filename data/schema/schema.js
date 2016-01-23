@@ -2,6 +2,7 @@ import {
   GraphQL,
   GraphQLSchema,
   GraphQLEnumType,
+  GraphQLBoolean,
   GraphQLObjectType,
   GraphQLID,
   GraphQLString,
@@ -129,7 +130,8 @@ const GraphQLSetting = new GraphQLObjectType({
   name: 'Setting',
   fields: {
     id: globalIdField("User"),
-    uploads: { type: GraphQLString }
+    uploads: { type: GraphQLString },
+    amazonS3: { type: GraphQLBoolean }
   }
 });
 

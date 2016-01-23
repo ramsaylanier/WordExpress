@@ -2,7 +2,8 @@ import React from 'react';
 import CSSModules from 'react-css-modules';
 import { Link } from 'react-router';
 import styles from './post_excerpt.scss';
-import { browserHistory } from 'react-router'
+import { browserHistory } from 'react-router';
+import unserialize from 'php-unserialize';
 
 @CSSModules(styles, {allowMultiple: true})
 class PostExcerpt extends React.Component{
@@ -47,10 +48,20 @@ class PostExcerpt extends React.Component{
 
   render(){
     const { post_title, post_name, thumbnail } = this.props;
-    const { uploads } = this.props.viewer.settings;
-    const thumbnailSrc = uploads + thumbnail;
-    const bg = {
-      backgroundImage: "url('" + thumbnailSrc + "')"
+    console.log(thumbnail);
+    const { uploads, amazonS3 } = this.props.viewer.settings;
+    let thumbnailSrc, bg;
+
+    if (thumbnail){
+      if (amazonS3){
+        thumbnailSrc = uploads + PHPUnserialize.unserialize(thumbnail).key;
+        console.log(thumbnailSrc);
+      } else {
+        thumbnailSrc = uploads + thumbnail;
+      }
+      bg = {
+        backgroundImage: "url('" + thumbnailSrc + "')"
+      }
     }
 
     return(
