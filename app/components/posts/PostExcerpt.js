@@ -1,9 +1,13 @@
 import React from 'react';
-import CSSModules from 'react-css-modules';
+
+import PostThumbnail from './PostThumbnail.js';
 import { Link } from 'react-router';
+
+import CSSModules from 'react-css-modules';
 import styles from './post_excerpt.scss';
+
 import { browserHistory } from 'react-router';
-import unserialize from 'php-unserialize';
+
 
 @CSSModules(styles, {allowMultiple: true})
 class PostExcerpt extends React.Component{
@@ -69,7 +73,7 @@ class PostExcerpt extends React.Component{
             <h2 styleName="title">{post_title}</h2>
             <p styleName="text" dangerouslySetInnerHTML = {this._renderExcerpt()}/>
           </div>
-          <div styleName="thumbnail" style={bg}></div>
+          <PostThumbnail thumbnail={thumbnail} settings={this.props.viewer.settings}/>
         </Link>
       </div>
     )

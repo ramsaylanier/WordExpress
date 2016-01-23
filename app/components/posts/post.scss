@@ -23,6 +23,11 @@
   }
 }
 
+.thumbnail{
+  composes: child_1 from "../../styles/flexbox.scss";
+  composes: cover center from "../../styles/background.scss";
+}
+
 .main{
   padding: 2rem;
   background-color: white;

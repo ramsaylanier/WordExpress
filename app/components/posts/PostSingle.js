@@ -3,10 +3,10 @@ import Relay from 'react-relay';
 
 import Page from '../pages/page.js';
 import PostContent from './PostContent.js';
+import PostThumbnail from './PostThumbnail.js';
 
 import CSSModules from 'react-css-modules';
 import styles from './post.scss';
-import unserialize from 'php-unserialize';
 
 @CSSModules(styles, {allowMultiple: true})
 class PostSingle extends React.Component{
@@ -21,27 +21,13 @@ class PostSingle extends React.Component{
   }
 
   render(){
-    console.log(this.props);
     const { post_title, post_content, thumbnail } = this.props.viewer.page;
-    const { uploads, amazonS3 } = this.props.viewer.settings;
-    let thumbnailSrc, bg;
-
-    if (thumbnail){
-      if (amazonS3){
-        thumbnailSrc = uploads + PHPUnserialize.unserialize(thumbnail).key;
-        console.log(thumbnailSrc)
-      } else {
-        thumbnailSrc = uploads + thumbnail;
-      }
-      bg = {
-        backgroundImage: "url('" + thumbnailSrc + "')"
-      }
-    }
+    const { settings } = this.props.viewer;
+    const { uploads, amazonS3 } = settings;
 
     return(
       <div ref={(c) => this._post = c} styleName="base">
-        <header styleName="header" style={bg}>
-        </header>
+        <PostThumbnail thumbnail={thumbnail} settings={settings} styleName="header"/>
         <div styleName="main">
           <div styleName="wrapper">
             <h1 styleName="title">{post_title}</h1>
