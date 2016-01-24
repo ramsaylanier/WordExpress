@@ -1,16 +1,15 @@
 # Wordpress Express
-This project is my attempt at using Node.js and Express to consume data from a Wordpress database using GraphQL and Relay and React and...other stuff.
+
+This project is my attempt at using Node.js and Express to consume data from a Wordpress database using GraphQL and Relay and React and...other stuff. **This repo is the codebase for [wordexpress.io](http://wordexpress.io), where I will write articles and documentation explaining how it works**.
 
 It's built using Webpack, and requires Node V 5.0.0. You might be able to get away with 4.0, but really just tighten up and use 5.0. 
-
-You should also read about [why I am doing this](https://medium.com/@verybadhello/wordpress-with-node-react-and-graphql-part-1-introduction-ee0fc491730e#.4e1pvhq67). 
 
 ## Docs on Medium
 [Part 1 - Introduction](https://medium.com/@verybadhello/wordpress-with-node-react-and-graphql-part-1-introduction-ee0fc491730e#.ir4lezuav)
 
 [Part 2 - The Setup](https://medium.com/@verybadhello/wordpress-with-node-react-and-graphql-part-2-the-setup-adbbfba1e776#.oizvqnau7)
 
-## Get Started
+## Getting Started
 Just run ```npm install``` and then ```npm run startdev```
 To build for production, run ```npm run build```, which creates a ```dist``` folder in the root directory which contains production-ready code. You can run ```npm start``` which will start the express server using code in the ```dist``` folder. 
 
@@ -70,6 +69,9 @@ export default Layouts;
 ```
 
 Then, simply add a ```react_layout``` custom field to your wordpress page. The value of the field must be the name of the layout in the ```Layouts``` object. [Here's how you can add custom fields to a page](https://codex.wordpress.org/Custom_Fields). 
+
+##Playing With GraphQL
+For experimentation purposes, I've kept the GrapiQL IDE publically available so you can play aroud with querying the WordExpress database. [Check it out here](http://wordexpress.io:8080).
 
 
 ### React by default
