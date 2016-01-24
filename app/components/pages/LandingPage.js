@@ -1,24 +1,30 @@
 import React from 'react';
 import Relay from 'react-relay';
 import Page from './page.js';
+import PostContent from '../posts/PostContent';
 
 class LandingPage extends React.Component{
 
 	render(){
-		const { viewer } = this.props;
-		const { page, settings } = viewer;
-		const { post_title, post_content, thumbnail} = page;
-		console.log(settings);
+		const { post_title, post_content, thumbnail} = this.props.viewer.page;
 		let bg = {
 			backgroundImage: "url('" + thumbnail + "')"
 		}
 
+		let heroClass = thumbnail ? "hero_thumbnail" : "hero"
+
 		return (
 			<Page>
-				<div styleName="hero" style={bg}>
-					<div styleName="wrapper">
+				<div styleName={heroClass} style={bg}>
+					<div styleName="wrapper tight">
 						<h1 styleName="title">WordExpress</h1>
-						<h3 styleName="subtitle">Wordpress development with Javascript instead of PHP.</h3>
+						<h4 styleName="subtitle">WordPress using Node, Express, and React.</h4>
+					</div>
+				</div>
+
+				<div styleName="content">
+					<div styleName="wrapper tight">
+						<PostContent post_content={post_content}/>
 					</div>
 				</div>
 			</Page>

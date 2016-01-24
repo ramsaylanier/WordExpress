@@ -39,7 +39,6 @@ class WordpressPage extends React.Component{
 	}
 
 	componentDidUpdate(){
-		console.log('updated');
 		this._setLayout();
 	}
 
@@ -58,7 +57,7 @@ class WordpressPage extends React.Component{
 
 		if (Component){
 			return (
-				<Page withWrapper={true}>
+				<Page>
 					<Component viewer={viewer} layoutVars={this.props.relay.variables}/>
 				</Page>
 			)
@@ -95,6 +94,7 @@ export default Relay.createContainer(WordpressPage, {
 					post_title,
 					post_type,
 					post_content,
+					thumbnail,
 					post_meta(keys: reactLayout first: 1){
 						edges{
 							node{
@@ -103,11 +103,7 @@ export default Relay.createContainer(WordpressPage, {
 							}
 						}
 					}
-				},
-				settings{
-					id
-					uploads
-				},
+				}
 			}
     `,
   },

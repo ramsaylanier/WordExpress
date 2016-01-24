@@ -1,3 +1,5 @@
+@import "../../styles/vars";
+
 .base{
 	min-height: 100vh;
 	opacity: 0;
@@ -6,23 +8,49 @@
 }
 
 .wrapper{
+	position: relative;
 	width: 95%;
 	max-width: 1200px;
 	margin-left: auto;
 	margin-right: auto;
+	z-index: 2;
+
+	&.tight{
+		max-width: 750px;
+	}
 }
 
 .hero{
-	composes: dark_background from '../../styles/colors.scss';
+	composes: primary_background from '../../styles/colors.scss';
+	composes: cover center from '../../styles/background.scss';
 	padding: 4rem 0rem;
+  position: relative;
+
+	z-index: 1;
+}
+
+.hero_thumbnail{
+	composes: hero;
+
+	&:after{
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: fade-out($secondary, .1);
+	}
 }
 
 .title{
 	color: white;
+	margin: 0;
 }
 
 .subtitle{
 	color: white;
+	margin: 0;
 }
 
 .thumbnail{
@@ -32,4 +60,9 @@
 	left: 0;
 	height: 100%;
 	width: 100%;
+}
+
+.content{
+	background-color: white;
+	padding: 2rem 0rem;
 }

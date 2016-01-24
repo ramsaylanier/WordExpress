@@ -36,9 +36,7 @@ class PostSingle extends React.Component{
         <div styleName="main">
           <div styleName="wrapper">
             <h1 styleName="title">{post_title}</h1>
-            <div styleName="content">
-              <PostContent post_content={post_content}/>
-            </div>
+            <PostContent post_content={post_content}/>
           </div>
         </div>
       </div>

@@ -1,7 +1,10 @@
 import React from 'react';
 import _ from 'lodash';
 import htmlparser from 'htmlparser2';
+import CSSModules from 'react-css-modules';
+import styles from './post.scss';
 
+@CSSModules(styles, {allowMultiple: true})
 class PostContent extends React.Component{
 
   _parseContent(){
@@ -26,7 +29,7 @@ class PostContent extends React.Component{
 
   render(){
     return(
-      <div dangerouslySetInnerHTML = {this._parseContent()}/>
+      <div styleName="content" dangerouslySetInnerHTML = {this._parseContent()}></div>
     )
   }
 }
