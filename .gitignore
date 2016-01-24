@@ -5,3 +5,4 @@ dist
 coverage
 wordpress
 settings/prod.json
+scripts/deploy.sh

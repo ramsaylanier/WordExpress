@@ -30,6 +30,7 @@
     "build-schema": "babel -d ./dist/data ./data",
     "build-settings": "cp -R ./settings ./dist/",
     "build": "rimraf dist && NODE_ENV=production webpack --config ./webpack.production.config.js --progress --profile --colors && npm run build-server && npm run build-schema && npm run build-settings",
+    "deploy": "bash scripts/deploy.sh",
     "eslint": "eslint .",
     "jscs": "jscs .",
     "updateschema": "NODE_ENV=dev babel-node scripts/updateSchema"

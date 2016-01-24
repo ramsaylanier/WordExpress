@@ -9,12 +9,11 @@ class Head extends React.Component{
           titleTemplate="WordExpress - %s"
           meta={[
               {"name": "description", "content": "WordExpress application"},
-              {"property": "og:type", "content": "website"}
+              {"property": "og:type", "content": "website"},
+              {"property": "og:image", "content": "http://wordexpress.s3.amazonaws.com/wp-content/uploads/2016/01/24195552/logowithtype.png"}
           ]}
           link={[
               {"rel": "canonical", "href": "http://wordexpress.io"},
-              {"rel": "apple-touch-icon", "href": "http://mysite.com/img/apple-touch-icon-57x57.png"},
-              {"rel": "apple-touch-icon", "sizes": "72x72", "href": "http://mysite.com/img/apple-touch-icon-72x72.png"}
           ]}
           onChangeClientState={(newState) => console.log(newState)}
       />
