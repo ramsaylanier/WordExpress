@@ -4,8 +4,6 @@ var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-// var WriteFilePlugin = require('write-file-webpack-plugin');
-// var StatsPlugin = require('stats-webpack-plugin');
 
 module.exports = {
   entry: [

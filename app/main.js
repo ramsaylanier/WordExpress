@@ -12,6 +12,7 @@ import App from './App.js';
 import LandingPage from './components/pages/LandingPage.js';
 import WordpressPage from './components/pages/WordpressPage.js';
 import PostSingle from './components/posts/PostSingle.js';
+import '../scripts/scrollToPlugin.js';
 
 const AppQueries = {
   viewer: () => Relay.QL`

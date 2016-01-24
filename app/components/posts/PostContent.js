@@ -18,10 +18,15 @@ class PostContent extends React.Component{
       const target = anchor.getAttribute("href");
 
       if (!r.test(target)){
-        console.log('not r');
         anchor.addEventListener('click', (e)=>{
           e.preventDefault();
-          browserHistory.push(anchor.href);
+          browserHistory.push(target);
+          TweenMax.to(window, 0.5, {
+            scrollTo:{
+              y:0
+            },
+            ease: Power4.easeInOut
+          });
         });
       }
     });
