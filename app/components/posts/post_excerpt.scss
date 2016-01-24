@@ -31,6 +31,10 @@
       background-color: fade-out($dark, .5);
     }
   }
+
+  &:first-of-type{
+    margin-top: 1rem;
+  }
 }
 
 .info{
@@ -52,4 +56,9 @@
   composes: dark from "../../App.scss";
   font-size: 1.3rem;
   transition: color 150ms ease-out;
+}
+
+.thumbnail{
+  composes: child_1 from "../../styles/flexbox.scss";
+  composes: cover center from "../../styles/background.scss";
 }

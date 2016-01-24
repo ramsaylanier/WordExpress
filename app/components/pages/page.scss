@@ -2,7 +2,7 @@
 	min-height: 100vh;
 	opacity: 0;
 	transition: opacity 300ms ease-out;
-	padding-top: 5rem;
+	padding-top: 4rem;
 }
 
 .wrapper{
@@ -10,4 +10,26 @@
 	max-width: 1200px;
 	margin-left: auto;
 	margin-right: auto;
+}
+
+.hero{
+	composes: dark_background from '../../styles/colors.scss';
+	padding: 4rem 0rem;
+}
+
+.title{
+	color: white;
+}
+
+.subtitle{
+	color: white;
+}
+
+.thumbnail{
+	composes: cover from '../../styles/background.scss';
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
 }

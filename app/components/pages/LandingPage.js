@@ -5,15 +5,22 @@ import Page from './page.js';
 class LandingPage extends React.Component{
 
 	render(){
-		console.log('landing page');
 		const { viewer } = this.props;
-		const { page } = viewer;
-		const { post_title, post_content} = page;
+		const { page, settings } = viewer;
+		const { post_title, post_content, thumbnail} = page;
+		console.log(settings);
+		let bg = {
+			backgroundImage: "url('" + thumbnail + "')"
+		}
 
 		return (
-			<Page withWrapper="true">
-					<h1>{post_title}</h1>
-					<p>{post_content}</p>
+			<Page>
+				<div styleName="hero" style={bg}>
+					<div styleName="wrapper">
+						<h1 styleName="title">WordExpress</h1>
+						<h3 styleName="subtitle">Wordpress development with Javascript instead of PHP.</h3>
+					</div>
+				</div>
 			</Page>
 		)
 	}
@@ -27,6 +34,12 @@ export default Relay.createContainer(LandingPage, {
 					id,
 					post_title
 					post_content
+					thumbnail
+				},
+				settings{
+					id
+					uploads
+					amazonS3
 				}
       }
     `,

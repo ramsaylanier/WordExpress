@@ -3,7 +3,6 @@ import Relay from 'react-relay';
 
 import Page from '../pages/page.js';
 import PostContent from './PostContent.js';
-import PostThumbnail from './PostThumbnail.js';
 
 import CSSModules from 'react-css-modules';
 import styles from './post.scss';
@@ -25,9 +24,15 @@ class PostSingle extends React.Component{
     const { settings } = this.props.viewer;
     const { uploads, amazonS3 } = settings;
 
+    let bg = {
+      backgroundImage: 'url("' + thumbnail + '")'
+    }
+
     return(
       <div ref={(c) => this._post = c} styleName="base">
-        <PostThumbnail thumbnail={thumbnail} settings={settings} styleName="header"/>
+        <div styleName="header" style={bg}>
+
+        </div>
         <div styleName="main">
           <div styleName="wrapper">
             <h1 styleName="title">{post_title}</h1>

@@ -2,6 +2,7 @@ import Sequelize from 'sequelize';
 import devSettings from '../settings/dev.json';
 import prodSettings from '../settings/prod.json';
 import _ from 'lodash';
+import PHPUnserialize from 'php-unserialize';
 
 const env = process.env.NODE_ENV;
 const settings = env === 'dev' ? devSettings : prodSettings;
@@ -221,8 +222,12 @@ const ConnQueries = {
           }
         }).then( post => {
           if (post.wp_postmeta[0]){
-            console.log('postmeta:',post.wp_postmeta[0].dataValues.meta_value)
-            return post.wp_postmeta[0].dataValues.meta_value;
+            const thumbnail = post.wp_postmeta[0].dataValues.meta_value;
+            const thumbnailSrc = publicSettings.amazonS3 ?
+              publicSettings.uploads + PHPUnserialize.unserialize(thumbnail).key :
+              publicSettings.uploads + thumbnail;
+
+            return thumbnailSrc
           } else {
             return null;
           }

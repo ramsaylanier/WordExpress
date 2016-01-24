@@ -1,6 +1,4 @@
 import React from 'react';
-
-import PostThumbnail from './PostThumbnail.js';
 import { Link } from 'react-router';
 
 import CSSModules from 'react-css-modules';
@@ -53,17 +51,8 @@ class PostExcerpt extends React.Component{
   render(){
     const { post_title, post_name, thumbnail } = this.props;
     const { uploads, amazonS3 } = this.props.viewer.settings;
-    let thumbnailSrc, bg;
-
-    if (thumbnail){
-      if (amazonS3){
-        thumbnailSrc = uploads + PHPUnserialize.unserialize(thumbnail).key;
-      } else {
-        thumbnailSrc = uploads + thumbnail;
-      }
-      bg = {
-        backgroundImage: "url('" + thumbnailSrc + "')"
-      }
+    const bg = {
+      backgroundImage: "url('" + thumbnail + "')"
     }
 
     return(
@@ -73,7 +62,8 @@ class PostExcerpt extends React.Component{
             <h2 styleName="title">{post_title}</h2>
             <p styleName="text" dangerouslySetInnerHTML = {this._renderExcerpt()}/>
           </div>
-          <PostThumbnail thumbnail={thumbnail} settings={this.props.viewer.settings}/>
+          <div styleName="thumbnail" style={bg}>
+          </div>
         </Link>
       </div>
     )
