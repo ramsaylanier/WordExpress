@@ -8,6 +8,7 @@ import { RelayRouter } from 'react-router-relay';
 import createBrowserHistory from 'history/lib/createBrowserHistory'
 import { browserHistory, IndexRoute, Route } from 'react-router';
 
+import Head from './components/head/head';
 import App from './App.js';
 import LandingPage from './components/pages/LandingPage.js';
 import WordpressPage from './components/pages/WordpressPage.js';

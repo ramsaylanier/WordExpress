@@ -55,6 +55,7 @@
     "react": "^0.14.5",
     "react-css-modules": "^3.6.4",
     "react-dom": "^0.14.5",
+    "react-helmet": "^2.3.1",
     "react-redux": "^4.0.6",
     "react-router": "^2.0.0-rc4",
     "react-router-relay": "^0.9.0",

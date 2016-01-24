@@ -1,6 +1,7 @@
 import React from 'react';
 import Relay from 'react-relay';
 import Page from './page.js';
+import Helmet from 'react-helmet';
 
 import Layouts from '../layouts/layouts.js';
 import PostList from '../posts/PostList.js';
@@ -58,6 +59,7 @@ class WordpressPage extends React.Component{
 		if (Component){
 			return (
 				<Page>
+					<Helmet title={viewer.page.post_title} />
 					<Component viewer={viewer} layoutVars={this.props.relay.variables}/>
 				</Page>
 			)

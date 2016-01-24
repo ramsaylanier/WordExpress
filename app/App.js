@@ -2,7 +2,8 @@ import React from 'react';
 import Relay from 'react-relay'
 
 import styles from './App.scss';
-import Header from './components/header/header.js';
+import Head from './components/head/head';
+import Header from './components/header/header';
 
 class App extends React.Component {
 
@@ -14,6 +15,7 @@ class App extends React.Component {
 
     return (
       <div className="application">
+        <Head/>
         <Header viewer={viewer} />
         {page}
       </div>
