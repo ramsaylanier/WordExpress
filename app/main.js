@@ -5,7 +5,7 @@ import Relay from 'react-relay';
 import { render } from 'react-dom';
 
 import { RelayRouter } from 'react-router-relay';
-import createHashHistory from 'history/lib/createHashHistory';
+import createBrowserHistory from 'history/lib/createBrowserHistory'
 import { browserHistory, IndexRoute, Route } from 'react-router';
 
 import App from './App.js';

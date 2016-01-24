@@ -1,11 +1,31 @@
 import React from 'react';
 import _ from 'lodash';
 import htmlparser from 'htmlparser2';
+
+import { browserHistory } from 'react-router';
+
 import CSSModules from 'react-css-modules';
 import styles from './post.scss';
 
 @CSSModules(styles, {allowMultiple: true})
 class PostContent extends React.Component{
+
+  componentDidMount(){
+    const content = this._content;
+    const anchors = content.getElementsByTagName('a');
+    const r = new RegExp('^(?:[a-z]+:)?//', 'i');
+    _.map(anchors, anchor => {
+      const target = anchor.getAttribute("href");
+
+      if (!r.test(target)){
+        console.log('not r');
+        anchor.addEventListener('click', (e)=>{
+          e.preventDefault();
+          browserHistory.push(anchor.href);
+        });
+      }
+    });
+  }
 
   _parseContent(){
     const { post_content } = this.props;
@@ -29,7 +49,7 @@ class PostContent extends React.Component{
 
   render(){
     return(
-      <div styleName="content" dangerouslySetInnerHTML = {this._parseContent()}></div>
+      <div ref={ (c)=> this._content = c } styleName="content" dangerouslySetInnerHTML = {this._parseContent()}></div>
     )
   }
 }
