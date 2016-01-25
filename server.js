@@ -58,7 +58,7 @@ if (isDeveloping) {
       schema: Schema,
     })
   ));
-  app.get('*', function response(req, res) {
+  app.get('*', function response(req, res, next) {
     res.sendFile(path.join(__dirname, '/index.html'));
   });
 }

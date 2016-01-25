@@ -8,8 +8,10 @@ class Head extends React.Component{
           title="WordExpress"
           titleTemplate="WordExpress - %s"
           meta={[
-              {"name": "description", "content": "WordExpress application"},
+              {"name": "description", "content": "Replacing PHP with Javascript in WordPress development"},
+              {"property": "og:title", "content": "WordExpress"},
               {"property": "og:type", "content": "website"},
+              {"property": "og:description", "content": "Replacing PHP with Javascript in WordPress development"},
               {"property": "og:image", "content": "http://wordexpress.s3.amazonaws.com/wp-content/uploads/2016/01/24195552/logowithtype.png"}
           ]}
           link={[
