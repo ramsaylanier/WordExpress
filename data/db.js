@@ -34,12 +34,6 @@ const Conn = new Sequelize(
   }
 );
 
-const Options = Conn.define(privateSettings.wp_prefix + 'options', {
-  option_id: { type: Sequelize.INTEGER, primaryKey: true},
-  option_name: { type: Sequelize.STRING },
-  option_value: { type: Sequelize.INTEGER },
-})
-
 const Post = Conn.define(privateSettings.wp_prefix + 'posts', {
   id: { type: Sequelize.INTEGER, primaryKey: true},
   post_author: { type: Sequelize.INTEGER },
@@ -159,25 +153,9 @@ const ConnQueries = {
   getViewer(){
     return viewer
   },
-  getOptions(){
-    return Conn.models[privateSettings.wp_prefix + 'options'].findAll({
-      where: {
-        option_name: {
-          $in: ['page_on_front', 'page_for_posts']
-        }
-      }
-    })
-  },
-  getOptionById(id){
-    return Conn.models[privateSettings.wp_prefix + 'options'].findAll({
-      where: {
-        option_id: id
-      }
-    })
-  },
   getPosts(args){
-    const {post_type, first} = args;
-    return Conn.models[privateSettings.wp_prefix + 'posts'].findAll({
+    const {post_type} = args;
+    return Post.findAll({
       where: {
         post_type: post_type,
         post_status: 'publish',
@@ -185,14 +163,14 @@ const ConnQueries = {
     })
   },
   getPostById(postId){
-    return Conn.models[privateSettings.wp_prefix + 'posts'].findOne({
+    return Post.findOne({
       where: {
         id: postId
       }
     })
   },
   getPostByName(name){
-    return Conn.models[privateSettings.wp_prefix + 'posts'].findOne({
+    return Post.findOne({
       where: {
         post_status: 'publish',
         post_name: name
@@ -200,7 +178,7 @@ const ConnQueries = {
     })
   },
   getPostThumbnail(postId){
-    return Conn.models[privateSettings.wp_prefix + 'postmeta'].findOne({
+    return Postmeta.findOne({
       where: {
         post_id: postId,
         meta_key: '_thumbnail_id'
@@ -238,7 +216,7 @@ const ConnQueries = {
     })
   },
   getPostmetaById(metaId, keys){
-    return Conn.models[privateSettings.wp_prefix + 'postmeta'].findOne({
+    return Postmeta.findOne({
       where: {
         meta_id: metaId,
         meta_key: {
@@ -248,7 +226,7 @@ const ConnQueries = {
     })
   },
   getPostmeta(postId, keys){
-    return Conn.models[privateSettings.wp_prefix + 'postmeta'].findAll({
+    return Postmeta.findAll({
       where: {
         post_id: postId,
         meta_key: {
@@ -262,4 +240,4 @@ const ConnQueries = {
   }
 }
 
-export { Conn, ConnQueries };
+  export { Conn, ConnQueries };

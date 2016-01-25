@@ -1,4 +1,4 @@
-type Menu implements Node {
+type Menu {
   id: ID!
   name: String
   items: [MenuItem]
@@ -17,26 +17,6 @@ enum MetaType {
   attachedFile
   reactLayout
   amazonInfo
-}
-
-interface Node {
-  id: ID!
-}
-
-type Option {
-  id: ID!
-  option_name: String
-  option_value: String
-}
-
-type OptionConnection {
-  pageInfo: PageInfo!
-  edges: [OptionEdge]
-}
-
-type OptionEdge {
-  node: Option
-  cursor: String!
 }
 
 type PageInfo {
@@ -98,10 +78,9 @@ type Setting {
   amazonS3: Boolean
 }
 
-type User implements Node {
+type User {
   id: ID!
   settings: Setting
-  options(after: String, first: Int, before: String, last: Int): OptionConnection
   posts(post_type: String = "post", after: String, first: Int, before: String, last: Int): PostConnection
   page(post_name: String): Post
   menus(name: String): Menu

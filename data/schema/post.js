@@ -1,7 +1,5 @@
 import {
   GraphQL,
-  GraphQLSchema,
-  GraphQLEnumType,
   GraphQLObjectType,
   GraphQLID,
   GraphQLString,
@@ -13,17 +11,12 @@ import {
 import {
   connectionArgs,
   connectionDefinitions,
-  connectionFromArray,
   connectionFromPromisedArray,
-  fromGlobalId,
-  globalIdField,
-  mutationWithClientMutationId,
-  nodeDefinitions,
 } from 'graphql-relay';
 
 import { ConnQueries } from '../db.js';
 
-import {PostmetaConnection, GraphQPPostmeta, GraphQLMetaType } from './postmeta.js';
+import { PostmetaConnection, GraphQPPostmeta, GraphQLMetaType } from './postmeta.js';
 
 export const GraphQLPost = new GraphQLObjectType({
   name: 'Post',
@@ -54,8 +47,7 @@ export const GraphQLPost = new GraphQLObjectType({
         return connectionFromPromisedArray(ConnQueries.getPostmeta(root.id, args.keys), args);
       }
     }
-  }),
-  interfaces: []
+  })
 });
 
 export const {
