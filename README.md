@@ -22,7 +22,49 @@ You'll notice a [settings](https://github.com/ramsaylanier/WordpressExpress/tree
 This project uses Amazon AWS with an S3 bucket. If you are hosting your media files on the same server as your WP installation, set amazonS3 to false and set the uploads directory accordingly. If you are using S3, set don't include 'wp-content/uploads' to the end of the setting - it will be added for you. 
 
 #### Database Settings
-This should be pretty self-explanatory: simply enter in the name of your database, username and password, and host. Make sure these are inside of "private", or else they'll be available on the client (WHICH IS BAD).  
+This should be pretty self-explanatory: simply enter in the name of your database, username and password, and host. Make sure these are inside of "private", or else they'll be available on the client (WHICH IS BAD). 
+
+##Connecting Your WordPress Database
+This project uses [WordExpress Schema](https://github.com/ramsaylanier/wordexpress-schema), an NPM package I wrote specifically for this project. WordExpress schema allows you to quickly connect to a WordPress database using your database settings. It provides some out-of-the-box WordPress models (like Post, Postmeta, Terms, etc.) and some queries. For more details, [read the documentation](https://github.com/ramsaylanier/wordexpress-schema).  Here is how it's being used in this project.
+
+```
+import { WordExpressDatabase } from 'wordexpress-schema';
+import { publicSettings, privateSettings } from '../settings/settings';
+
+/*
+  Example settings object:
+  publicSettings: {
+    uploads: "http://wordexpress.s3.amazonaws.com/",
+    amazonS3: true
+  },
+  privateSettings: {
+    wp_prefix: "wp_",
+    database: {
+      name: "wpexpress_dev",
+      username: "root",
+      password: "",
+      host: "127.0.0.1"
+    }
+  }
+*/
+
+const { name, username, password, host } = privateSettings.database;
+const { amazonS3, uploads } = publicSettings;
+
+const connectionDetails = {
+  name: name,
+  username: username,
+  password: password,
+  host: host,
+  amazonS3: amazonS3,
+  uploadDirectory: uploads
+}
+
+const Database = new WordExpressDatabase(connectionDetails);
+const ConnQueries = Database.queries;
+
+export default ConnQueries;
+```
 
 ## Setting the Landing Page
 When you run ```npm startdev``` for the first time, you'll probably get an error saying "cannot find page-title of undefined." This is probably because you haven't set a landing page in WordPress. By default, the [LandingPage](https://github.com/ramsaylanier/WordpressExpress/blob/master/app/components/pages/LandingPage.js) component queries a post with the post-name (AKA slug) of "homepage". If you are using a fresh WordPress installation, simply create a page and give it a slug of "homepage." If you are working with an exsiting WordPress database, you can change which page that gets loaded by changing the page query in the ```LandingPage``` component. See below:
