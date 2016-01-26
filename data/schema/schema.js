@@ -22,17 +22,14 @@ import {
   nodeDefinitions,
 } from 'graphql-relay';
 
-import {
-  Conn,
-  ConnQueries,
-  getUser,
-  publicSettings
-} from '../db.js';
+import ConnQueries from '../connection.js';
 
 import GraphQLPage from './page.js';
 import { GraphQLPost, PostsConnection } from './post.js';
 import { GraphQLPostmeta, PostmetaConnection } from './postmeta.js';
 import { GraphQLMenu, GraphQLMenuItem } from './menu.js';
+
+import { publicSettings } from '../../settings/settings'
 
 const GraphQLSetting = new GraphQLObjectType({
   name: 'Setting',

@@ -55,7 +55,7 @@ if (isDeveloping) {
   app.use('/graphql', graphqlHTTP(request => ({
       graphiql: true,
       pretty: true,
-      schema: Schema,
+      schema: WordExpressSchema,
     })
   ));
   app.get('*', function response(req, res, next) {

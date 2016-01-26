@@ -8,7 +8,7 @@ import {
   GraphQLList
 } from 'graphql';
 
-import { ConnQueries } from '../db.js';
+import ConnQueries from '../connection.js';
 
 import { GraphQLPost } from './post';
 

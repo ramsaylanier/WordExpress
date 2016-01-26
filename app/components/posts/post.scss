@@ -89,5 +89,5 @@
   font-size: 3em;
   position: relative;
   z-index: 2;
-  box-shadow: 0px -100px 100px -30px $dark;
+  box-shadow: 0px -100px 100px -30px fade-out($dark, .7);
 }

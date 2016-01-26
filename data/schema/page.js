@@ -21,7 +21,7 @@ import {
   nodeDefinitions,
 } from 'graphql-relay';
 
-import { ConnQueries } from '../db.js';
+import ConnQueries from '../connection.js';
 import { PostsConnection, GraphQLPost } from './post.js';
 
 const GraphQLPage = new GraphQLObjectType({

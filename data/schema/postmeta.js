@@ -21,7 +21,7 @@ import {
   nodeDefinitions,
 } from 'graphql-relay';
 
-import { ConnQueries } from '../db.js';
+import ConnQueries from '../connection.js';
 import { GraphQLPost } from './post.js';
 
 export const GraphQLMetaType = new GraphQLEnumType({

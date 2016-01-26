@@ -14,7 +14,7 @@ import {
   connectionFromPromisedArray,
 } from 'graphql-relay';
 
-import { ConnQueries } from '../db.js';
+import ConnQueries from '../connection.js';
 
 import { PostmetaConnection, GraphQPPostmeta, GraphQLMetaType } from './postmeta.js';
 
