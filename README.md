@@ -1,6 +1,6 @@
-# Wordpress Express
+# WordPress Express
 
-This project is my attempt at using Node.js and Express to consume data from a Wordpress database using GraphQL and Relay and React and...other stuff. **This repo is the codebase for [wordexpress.io](http://wordexpress.io), where I will write articles and documentation explaining how it works**.
+This project is my attempt at using Node.js and Express to consume data from a WordPress database using GraphQL and Relay and React and...other stuff. **This repo is the codebase for [wordexpress.io](http://wordexpress.io), where I will write articles and documentation explaining how it works**.
 
 It's built using Webpack, and requires Node V 5.0.0. You might be able to get away with 4.0, but really just tighten up and use 5.0. 
 
@@ -16,16 +16,16 @@ Just run ```npm install``` and then ```npm run startdev```
 To build for production, run ```npm run build```, which creates a ```dist``` folder in the root directory which contains production-ready code. You can run ```npm start``` which will start the express server using code in the ```dist``` folder. 
 
 ## Defining Your Application Settings
-You'll notice a [settings](https://github.com/ramsaylanier/WordpressExpress/tree/master/settings) folder, which contains JSON files for development. This is where you can define settings for uploads, wordpress database connection, and some other things. Change accordingly. For production, create a prod.json file in the same format as dev.json.
+You'll notice a [settings](https://github.com/ramsaylanier/WordpressExpress/tree/master/settings) folder, which contains JSON files for development. This is where you can define settings for uploads, WP database connection, and some other things. Change accordingly. For production, create a prod.json file in the same format as dev.json.
 
 #### Upload Settings
-This project uses Amazon AWS with an S3 bucket. If you are hosting your media files on the same server as your wordpress installation, set amazonS3 to false and set the uploads directory accordingly. If you are using S3, set don't include 'wp-content/uploads' to the end of the setting - it will be added for you. 
+This project uses Amazon AWS with an S3 bucket. If you are hosting your media files on the same server as your WP installation, set amazonS3 to false and set the uploads directory accordingly. If you are using S3, set don't include 'wp-content/uploads' to the end of the setting - it will be added for you. 
 
 #### Database Settings
 This should be pretty self-explanatory: simply enter in the name of your database, username and password, and host. Make sure these are inside of "private", or else they'll be available on the client (WHICH IS BAD).  
 
 ## Setting the Landing Page
-When you run ```npm startdev``` for the first time, you'll probably get an error saying "cannot find page-title of undefined." This is probably because you haven't set a landing page in Wordpress. By default, the [LandingPage](https://github.com/ramsaylanier/WordpressExpress/blob/master/app/components/pages/LandingPage.js) component queries a post with the post-name (AKA slug) of "homepage". If you are using a fresh Wordpress installation, simply create a page and give it a slug of "homepage." If you are working with an exsiting Wordpress database, you can change which page that gets loaded by changing the page query in the ```LandingPage``` component. See below:
+When you run ```npm startdev``` for the first time, you'll probably get an error saying "cannot find page-title of undefined." This is probably because you haven't set a landing page in Wordpress. By default, the [LandingPage](https://github.com/ramsaylanier/WordpressExpress/blob/master/app/components/pages/LandingPage.js) component queries a post with the post-name (AKA slug) of "homepage". If you are using a fresh WordPress installation, simply create a page and give it a slug of "homepage." If you are working with an exsiting WordPress database, you can change which page that gets loaded by changing the page query in the ```LandingPage``` component. See below:
 
 ```
 export default Relay.createContainer(LandingPage, {
@@ -70,7 +70,7 @@ const Layouts = {
 export default Layouts;
 ```
 
-Then, simply add a ```react_layout``` custom field to your wordpress page. The value of the field must be the name of the layout in the ```Layouts``` object. [Here's how you can add custom fields to a page](https://codex.wordpress.org/Custom_Fields). 
+Then, simply add a ```react_layout``` custom field to your WordPress page. The value of the field must be the name of the layout in the ```Layouts``` object. [Here's how you can add custom fields to a page](https://codex.wordpress.org/Custom_Fields). 
 
 ##Playing With GraphQL
 For experimentation purposes, I've kept the GrapiQL IDE publically available so you can play aroud with querying the WordExpress database. [Check it out here](http://wordexpress.io:8080).
