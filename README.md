@@ -25,7 +25,7 @@ This project uses Amazon AWS with an S3 bucket. If you are hosting your media fi
 This should be pretty self-explanatory: simply enter in the name of your database, username and password, and host. Make sure these are inside of "private", or else they'll be available on the client (WHICH IS BAD).  
 
 ## Setting the Landing Page
-When you run ```npm startdev``` for the first time, you'll probably get an error saying "cannot find page-title of undefined." This is probably because you haven't set a landing page in Wordpress. By default, the [LandingPage](https://github.com/ramsaylanier/WordpressExpress/blob/master/app/components/pages/LandingPage.js) component queries a post with the post-name (AKA slug) of "homepage". If you are using a fresh WordPress installation, simply create a page and give it a slug of "homepage." If you are working with an exsiting WordPress database, you can change which page that gets loaded by changing the page query in the ```LandingPage``` component. See below:
+When you run ```npm startdev``` for the first time, you'll probably get an error saying "cannot find page-title of undefined." This is probably because you haven't set a landing page in WordPress. By default, the [LandingPage](https://github.com/ramsaylanier/WordpressExpress/blob/master/app/components/pages/LandingPage.js) component queries a post with the post-name (AKA slug) of "homepage". If you are using a fresh WordPress installation, simply create a page and give it a slug of "homepage." If you are working with an exsiting WordPress database, you can change which page that gets loaded by changing the page query in the ```LandingPage``` component. See below:
 
 ```
 export default Relay.createContainer(LandingPage, {
@@ -47,7 +47,7 @@ Simply change "homepage" to anything you want. Keep in mind that it queries the 
 
 
 ## Using React Components as Layouts
-You can use any React component you'd like as a page layout by using a custom field in Wordpress. First, in your application add the layout to the ```Layouts``` object in the [layouts directory](https://github.com/ramsaylanier/WordpressExpress/blob/master/app/components/layouts/layouts.js). The ```Layouts``` object stores some basic parameters that the ```WordpressPage``` component will read. It looks like this:
+You can use any React component you'd like as a page layout by using a custom field in WordPress. First, in your application add the layout to the ```Layouts``` object in the [layouts directory](https://github.com/ramsaylanier/WordpressExpress/blob/master/app/components/layouts/layouts.js). The ```Layouts``` object stores some basic parameters that the ```WordpressPage``` component will read. It looks like this:
 
 ```
 import PostList from '../posts/PostList.js';
