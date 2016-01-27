@@ -9,7 +9,7 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 import config from './webpack.config.js';
 import {graphql} from 'graphql';
 import graphqlHTTP from 'express-graphql';
-import Schema from './data/connection';
+import Schema from './schema/schema';
 
 const isDeveloping = process.env.NODE_ENV !== 'production';
 const APP_PORT = isDeveloping ? 3100 : process.env.PORT || 3000;
