@@ -2,7 +2,7 @@
 
 This project is my attempt at using Node.js and Express to consume data from a WordPress database using GraphQL and Relay and React and...other stuff. **This repo is the codebase for [wordexpress.io](http://wordexpress.io), where I will write articles and documentation explaining how it works**.
 
-The core of this project revolves around setting up a connection to a WordPress database using Sequelize, defining models from that connection, and then querying those models using GraphQL. I've developed an NPM module, called [WordExpress Schema](https://github.com/ramsaylanier/wordexpress-schema), that takes care of all of this. It's included in this package. I highly suggest you start by [reading the documentation](https://github.com/ramsaylanier/wordexpress-schema). 
+The core of this project revolves around setting up a connection to a WordPress database using Sequelize, defining models from that connection, and then querying those models using GraphQL. **I've developed an NPM module, called [WordExpress Schema](https://github.com/ramsaylanier/wordexpress-schema), that takes care of all of this**. It's included in this project. I highly suggest you start by [reading the documentation](https://github.com/ramsaylanier/wordexpress-schema). 
 
 Regarding build, this project using Webpack, and requires Node V 5.0.0. You might be able to get away with 4.0, but really just tighten up and use 5.0. 
 
