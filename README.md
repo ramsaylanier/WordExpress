@@ -1,6 +1,6 @@
 # WordPress Express
 
-This project is my attempt at using Node.js and Express to consume data from a WordPress database using GraphQL and Relay and React and...other stuff. **This repo is the codebase for [wordexpress.io](http://wordexpress.io), where I will write articles and documentation explaining how it works**.
+This project aims to replace PHP with Javascript in WordPress development by using Node.js and Express to consume data from a WordPress database using GraphQL. It uses Relay to fetch the data and deliver it into React components. **This repo is the codebase for [wordexpress.io](http://wordexpress.io), where I will write articles and documentation explaining how it works**.
 
 The core of this project revolves around setting up a connection to a WordPress database using Sequelize, defining models from that connection, and then querying those models using GraphQL. **I've developed an NPM module, called [WordExpress Schema](https://github.com/ramsaylanier/wordexpress-schema), that takes care of all of this**. It's included in this project. I highly suggest you start by [reading the documentation](https://github.com/ramsaylanier/wordexpress-schema). 
 
