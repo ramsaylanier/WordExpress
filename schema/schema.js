@@ -1,5 +1,5 @@
-// import WordExpressDatabase  from './db';
-import { WordExpressDatabase } from 'wordexpress-schema';
+import { WordExpressDatabase, WordExpressGraphQLSchema } from 'wordexpress-schema';
+// import { WordExpressGraphQLSchema} from './schema/schema';
 import { publicSettings, privateSettings } from '../settings/settings';
 
 const { name, username, password, host } = privateSettings.database;
@@ -16,5 +16,6 @@ const connectionDetails = {
 
 const Database = new WordExpressDatabase(connectionDetails);
 const ConnQueries = Database.queries;
+const Schema = WordExpressGraphQLSchema(ConnQueries, publicSettings);
 
-export default ConnQueries;
+export default Schema;
