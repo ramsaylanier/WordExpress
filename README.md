@@ -4,7 +4,7 @@ This project aims to replace PHP with Javascript in WordPress development by usi
 
 The core of this project revolves around setting up a connection to a WordPress database using Sequelize, defining models from that connection, and then querying those models using GraphQL. **I've developed an NPM module, called [WordExpress Schema](https://github.com/ramsaylanier/wordexpress-schema), that takes care of all of this**. It's included in this project. I highly suggest you start by [reading the documentation](https://github.com/ramsaylanier/wordexpress-schema).
 
-Regarding build, this project using Webpack, and requires Node V 5.0.0. You might be able to get away with 4.0, but really just tighten up and use 5.0.
+Regarding building, this project using Webpack, and requires Node V 5.0.0. You might be able to get away with 4.0, but really just tighten up and use 5.0.
 
 ## Docs on Medium
 [Part 1 - Introduction](https://medium.com/@verybadhello/wordpress-with-node-react-and-graphql-part-1-introduction-ee0fc491730e#.ir4lezuav)
@@ -27,7 +27,7 @@ This project uses Amazon AWS with an S3 bucket. If you are hosting your media fi
 #### Database Settings
 This should be pretty self-explanatory: simply enter in the name of your database, username and password, and host. Make sure these are inside of "private", or else they'll be available on the client (WHICH IS BAD).
 
-##Connecting Your WordPress Database
+## Connecting Your WordPress Database
 This project uses [WordExpress Schema](https://github.com/ramsaylanier/wordexpress-schema), an NPM package I wrote specifically for this project. WordExpress schema allows you to quickly connect to a WordPress database using your database settings. It provides some out-of-the-box WordPress models (like Post, Postmeta, Terms, etc.) and some queries. For more details, [read the documentation](https://github.com/ramsaylanier/wordexpress-schema).  Here is how it's being used in this project.
 
 ```es6
@@ -100,5 +100,5 @@ export default Layouts;
 
 Then, simply add a `react_layout` custom field to your WordPress page. The value of the field must be the name of the layout in the `Layouts` object. [Here's how you can add custom fields to a page](https://codex.wordpress.org/Custom_Fields).
 
-##Playing With GraphQL
+## Playing With GraphQL
 For experimentation purposes, I've kept the GrapiQL IDE publically available so you can play aroud with querying the WordExpress database. [Check it out here](http://wordexpress.io:8080).
