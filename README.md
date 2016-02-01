@@ -101,7 +101,7 @@ export default Layouts;
 Then, simply add a `react_layout` custom field to your WordPress page. The value of the field must be the name of the layout in the `Layouts` object. [Here's how you can add custom fields to a page](https://codex.wordpress.org/Custom_Fields).
 
 ## Playing With GraphQL
-For experimentation purposes, I've kept the GrapiQL IDE publically available so you can play aroud with querying the WordExpress database. [Check it out here](http://wordexpress.io:8080).
+For experimentation purposes, I've kept the GraphQL IDE publically available so you can play aroud with querying the WordExpress database. [Check it out here](http://wordexpress.io:8080).
 
 ## Roadmap
 This projexct started out as just an expirement, but it seems like a lot of other developers have this paintpoint while developing in WordPress, so I've started builing out a road map of features. I'll try to prioritize them.
