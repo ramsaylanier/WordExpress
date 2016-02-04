@@ -10,6 +10,7 @@ import config from './webpack.config.js';
 import {graphql} from 'graphql';
 import graphqlHTTP from 'express-graphql';
 import Schema from './schema/schema';
+import { privateSettings } from './settings/settings';
 
 const isDeveloping = process.env.NODE_ENV !== 'production';
 const APP_PORT = isDeveloping ? 3100 : process.env.PORT || 3000;
@@ -51,11 +52,12 @@ if (isDeveloping) {
    app.use(webpackHotMiddleware(compiler));
 
 } else {
+  app.use(require('prerender-node').set('prerenderToken', privateSettings.prerenderToken ));
   app.use(express.static('./dist'));
   app.use('/graphql', graphqlHTTP(request => ({
       graphiql: true,
       pretty: true,
-      schema: WordExpressSchema,
+      schema: Schema,
     })
   ));
   app.get('*', function response(req, res, next) {
