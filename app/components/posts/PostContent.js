@@ -6,6 +6,7 @@ import { browserHistory } from 'react-router';
 
 import CSSModules from 'react-css-modules';
 import styles from './post.scss';
+import Shortcodes from '../shortcodes/shortcodes';
 
 @CSSModules(styles, {allowMultiple: true})
 class PostContent extends React.Component{
@@ -35,15 +36,25 @@ class PostContent extends React.Component{
   _parseContent(){
     const { post_content } = this.props;
     const trimmed = post_content.trim();
-    let content = trimmed.split('\n');
-    let voidTags = ["p","h1", "h2", "h3", "h4", "h5", "code", "pre", "img"]
+    const content = trimmed.split('\n');
+    const voidTags = ["p","h1", "h2", "h3", "h4", "h5", "code", "pre", "img"];
+    const shortcodes = ["caption", "embed"];
+
 
     _.map(content, (line, index) => {
-      let tag = line.match(/^<\w+/g);
-      tag = tag ? tag[0].slice(1) : '';
-      if (voidTags.indexOf(tag) === -1 && line.length > 1){
-        line = '<p>' + line + '</p>';
+      if (line[0] === '['){
+        let shortcode = line.match(/([[])\w+/g).toString().substr(1);
+        if (shortcodes.indexOf(shortcode) >= 0){
+          line = Shortcodes[shortcode](line);
+        }
+      } else {
+        let tag = line.match(/^<\w+/g);
+        tag = tag ? tag[0].slice(1) : '';
+        if (voidTags.indexOf(tag) === -1 && line.length > 1){
+          line = '<p>' + line + '</p>';
+        }
       }
+
       content[index] = line;
     });
 
