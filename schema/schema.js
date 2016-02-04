@@ -1,5 +1,6 @@
-import { WordExpressDatabase, WordExpressGraphQLSchema } from 'wordexpress-schema';
-// import { WordExpressGraphQLSchema} from './schema/schema';
+// import { WordExpressDatabase, WordExpressGraphQLSchema } from 'wordexpress-schema';
+import WordExpressDatabase from './db';
+import WordExpressGraphQLSchema from './graphQLSchema';
 import { publicSettings, privateSettings } from '../settings/settings';
 
 const { name, username, password, host } = privateSettings.database;

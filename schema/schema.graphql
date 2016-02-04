@@ -35,6 +35,7 @@ type Post {
   post_type: String
   post_name: String
   menu_order: Int
+  layout: Postmeta
   thumbnail: String
   post_meta(keys: [MetaType], after: String, first: Int, before: String, last: Int): PostmetaConnection
 }
@@ -70,6 +71,7 @@ type PostmetaEdge {
 
 type Root {
   viewer: User
+  posts(post_type: String = "post", after: String, first: Int, before: String, last: Int): PostConnection
 }
 
 type Setting {
