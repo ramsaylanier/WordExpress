@@ -15,7 +15,7 @@ class Header extends React.Component{
 
 		return (
 			<header styleName="base">
-				<div className={styles.wrapper}>
+				<div styleName="wrapper">
 					<AppNav viewer={viewer}/>
 					<a href="https://github.com/ramsaylanier/WordpressExpress" target="_blank">
 						<GithubLogo/>
@@ -27,11 +27,6 @@ class Header extends React.Component{
 }
 
 export default Relay.createContainer(Header, {
-
-	initialVariables: {
-		numOfMenuItems: 10,
-		numOfMetaItems: 10
-	},
 
   fragments: {
 		viewer: () => Relay.QL`
