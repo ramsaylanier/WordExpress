@@ -9,8 +9,6 @@ class App extends React.Component {
 
   render() {
     const { viewer, children } = this.props;
-    const { options } = viewer;
-
     const page = React.cloneElement(children, viewer)
 
     return (
@@ -28,10 +26,6 @@ export default Relay.createContainer(App, {
   fragments: {
     viewer: () => Relay.QL`
       fragment on User {
-        settings{
-          id
-          uploads
-        },
         ${Header.getFragment("viewer")}
       }
     `
