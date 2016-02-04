@@ -5,7 +5,7 @@ import PostExcerpt from './PostExcerpt.js';
 
 class PostList extends React.Component{
 
-  componentDidMount(){
+  componentWillMount(){
     this.props.relay.setVariables({
       limit: this.props.layoutVars.limit
     })
@@ -13,23 +13,26 @@ class PostList extends React.Component{
 
   render(){
     const { posts } = this.props.viewer;
-    return(
-      <div>
-        {posts.edges.map( (post, index) => {
-          return(
-            <PostExcerpt index={index} key={post.node.id} viewer={this.props.viewer} {...post.node} />
-          )
-        })}
-      </div>
-    )
+
+    if (posts){
+      return(
+        <div>
+          {posts.edges.map( (post, index) => {
+            return(
+              <PostExcerpt index={index} key={post.node.id} viewer={this.props.viewer} {...post.node} />
+            )
+          })}
+        </div>
+      )
+    } else {
+      return(
+        <div>Loading</div>
+      )
+    }
   }
 }
 
 export default Relay.createContainer(PostList, {
-
-  initialVariables:{
-    limit: 1
-  },
 
   prepareVariables(prevVars){
     return{
@@ -38,7 +41,7 @@ export default Relay.createContainer(PostList, {
   },
 
   fragments: {
-    viewer: (variables) => Relay.QL`
+    viewer: () => Relay.QL`
       fragment on User {
         posts(first: $limit){
 					edges{
