@@ -16,11 +16,10 @@ class WordpressPage extends React.Component{
 	_setLayout(){
 		let Layout;
 		const { page } = this.props;
-		const { post_meta } = this.props.viewer.page;
+		const layout = this.props.viewer.page.layout.meta_value;
 
-		if ( post_meta ){
-			const { meta_value } = post_meta.edges[0].node;
-			Layout = Layouts[meta_value] ? Layouts[meta_value] : Layouts['Default'];
+		if ( layout ){
+			Layout = Layouts[layout] ? Layouts[layout] : Layouts['Default'];
 		} else {
 			Layout = Layouts['Default']
 		}
@@ -30,7 +29,7 @@ class WordpressPage extends React.Component{
 		this.props.relay.setVariables({
 			Component: Component,
 			page: page,
-			showPosts: showPosts,
+			showPosts: false,
 			limit: limit
 		})
 	}
@@ -53,21 +52,18 @@ class WordpressPage extends React.Component{
 	}
 
 	render(){
+		console.log(this.props);
 		const { viewer } = this.props;
 		const { Component } = this.props.relay.variables;
 
-		if (Component){
-			return (
-				<Page>
-					<Helmet title={viewer.page.post_title} />
+		return (
+			<Page>
+				<Helmet title={viewer.page.post_title} />
+				{ Component &&
 					<Component viewer={viewer} layoutVars={this.props.relay.variables}/>
-				</Page>
-			)
-		} else {
-			return (
-				<div>Loading...</div>
-			)
-		}
+				}
+			</Page>
+		)
 	}
 }
 
@@ -77,7 +73,7 @@ export default Relay.createContainer(WordpressPage, {
 		Component: null,
 		page: null,
 		showPosts: false,
-		limit: 5
+		limit: 5,
 	},
 
 	prepareVariables(prevVars){
@@ -88,22 +84,17 @@ export default Relay.createContainer(WordpressPage, {
 	},
 
   fragments: {
-    viewer: ({showPosts, limit}) => Relay.QL`
+    viewer: ({limit, showPosts}) => Relay.QL`
       fragment on User {
-				${PostList.getFragment("viewer", {limit:limit}).if(showPosts)},
+				${PostList.getFragment("viewer", {limit: limit}).if(showPosts)},
 				page(post_name:$page){
 					id,
 					post_title,
 					post_type,
 					post_content,
 					thumbnail,
-					post_meta(keys: reactLayout first: 1){
-						edges{
-							node{
-								id
-								meta_value
-							}
-						}
+					layout{
+						meta_value
 					}
 				}
 			}
