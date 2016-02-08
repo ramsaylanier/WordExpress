@@ -11,7 +11,6 @@ const Layouts = {
   },
   'articles': {
     Component: PostList,
-    showPosts: true,
     postType: 'post',
     limit: 1
   }

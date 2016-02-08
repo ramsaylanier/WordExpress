@@ -75,20 +75,22 @@ export default Relay.createContainer(LandingPage, {
 Simply change "homepage" to anything you want. Keep in mind that it queries the post-name (AKA slug), not the post-title.
 
 ## Using React Components as Layouts
-You can use any React component you'd like as a page layout by using a custom field in WordPress. First, in your application add the layout to the `Layouts` object in the [layouts directory](https://github.com/ramsaylanier/WordpressExpress/blob/master/app/components/layouts/layouts.js). The `Layouts` object stores some basic parameters that the `WordpressPage` component will read. It looks like this:
+Layouts can be matched by page name, with a default if no layouts match. Refer to the `Layouts` object in the [layouts directory](https://github.com/ramsaylanier/WordpressExpress/blob/master/app/components/layouts/layouts.js). The `Layouts` object stores some basic parameters that the `WordpressPage` component will read. It looks like this:
 
 ```es6
 import PostList from '../posts/PostList.js';
 import DefaultLayout from './DefaultLayout.js';
+import FrontPageLayout from './FrontPageLayout.js';
 
 const Layouts = {
   'Default': {
-    Component: DefaultLayout,
-    showPosts: false
+    Component: DefaultLayout
   },
-  'PostList': {
+  'FrontPage': {
+    Component: FrontPageLayout
+  },
+  'articles': {
     Component: PostList,
-    showPosts: true,
     postType: 'post',
     limit: 10
   }
@@ -98,7 +100,7 @@ const Layouts = {
 export default Layouts;
 ```
 
-Then, simply add a `react_layout` custom field to your WordPress page. The value of the field must be the name of the layout in the `Layouts` object. [Here's how you can add custom fields to a page](https://codex.wordpress.org/Custom_Fields).
+In the above example, I have a WordPress page called 'articles'. On this page, I want it to use a PostList component and show posts of the 'post' type, with a limit of 10 posts per page.
 
 ## Playing With GraphiQL
 GraphiQL is the in-browser IDE for testing GraphQL queries. For experimentation purposes, I've kept the GraphiQL IDE publically available so you can play aroud with querying the WordExpress database. [Check it out here](http://wordexpress.io:8080).
@@ -112,4 +114,4 @@ This projexct started out as just an expirement, but it seems like a lot of othe
 
 3) Work on developing more complex queries. The WordExpressDatabase object is currently expandable, meaning after importing the default from `wordexpress-schema` you can add Sequel models and queries to it before passing it into WordExpressGraphQLSchema. However, WordExpressGraphQLSchema is **not** expandable. This should be a thing.
 
-4) Figuring out how to get WordPress shortcodes to work. I'd only expect that built in WordPress shortcodes would work (i.e `[caption]`, but they don't currently. It would require parsing the post_content field and then recognizing short codes and then probably building a unique React component for each shortcode. 
+4) Figuring out how to get WordPress shortcodes to work. I'd only expect that built in WordPress shortcodes would work (i.e `[caption]`, but they don't currently. It would require parsing the post_content field and then recognizing short codes and then probably building a unique React component for each shortcode.
