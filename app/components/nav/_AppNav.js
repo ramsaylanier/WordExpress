@@ -21,7 +21,7 @@ class AppNav extends  React.Component{
 					const { children } = item;
 					return(
 						<NavItem key={item.id}>
-							<Link to={`/${item.navitem.post_name}`} className={styles.link}>{item.navitem.post_title}</Link>
+							<Link to={{ pathname: `/${item.navitem.post_name}` }} className={styles.link}>{item.navitem.post_title}</Link>
 							{children.length > 0 &&
 								<NavList type="subnav">
 									{children.map( child => {

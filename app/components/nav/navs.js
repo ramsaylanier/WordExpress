@@ -20,7 +20,7 @@ const NavItem = (props) =>{
 	if (props.type =="link"){
 		return (
 			<li className={styles.item}>
-				<Link to={props.href} className={styles.link} onClick={props.onClick}>{props.children}</Link>
+				<Link to={{ pathname: props.href }} className={styles.link} onClick={props.onClick}>{props.children}</Link>
 			</li>
 		)
 	} else {
