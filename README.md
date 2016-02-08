@@ -53,19 +53,25 @@ const Schema = WordExpressGraphQLSchema(ConnQueries, publicSettings);
 export default Schema;
 ```
 
-## Setting the Landing Page
-When you run `npm startdev` for the first time, you'll probably get an error saying "cannot find page-title of undefined." This is probably because you haven't set a landing page in WordPress. By default, the [LandingPage](https://github.com/ramsaylanier/WordpressExpress/blob/master/app/components/pages/LandingPage.js) component queries a post with the post-name (AKA slug) of "homepage". If you are using a fresh WordPress installation, simply create a page and give it a slug of "homepage." If you are working with an exsiting WordPress database, you can change which page that gets loaded by changing the page query in the `LandingPage` component. See below:
+## Setting the Front Page
+When you run `npm startdev` for the first time, you'll probably get an error saying "cannot find page-title of undefined." This is probably because you haven't set a landing page in WordPress. By default, the [FrontPageLayout](https://github.com/ramsaylanier/WordPressExpress/blob/master/app/components/layouts/FrontPageLayout.js) component queries a post with the post-name (AKA slug) of "homepage". If you are using a fresh WordPress installation, simply create a page and give it a slug of "homepage." If you are working with an existing WordPress database, you can change which page that gets loaded by changing the page query in the `FrontPageLayout` component. See below:
 
 ```es6
-export default Relay.createContainer(LandingPage, {
+export default Relay.createContainer(FrontPageLayout, {
   fragments: {
     viewer: () => Relay.QL`
       fragment on User {
         page(post_name:"homepage"){
-	  id,
-	  post_title
-	  post_content
-	}
+					id,
+					post_title
+					post_content
+					thumbnail
+				},
+				settings{
+					id
+					uploads
+					amazonS3
+				}
       }
     `,
   },
