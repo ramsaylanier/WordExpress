@@ -3,9 +3,8 @@ import Relay from 'react-relay';
 import { IndexRoute, Route } from 'react-router';
 
 import App from './App.js';
-import LandingPage from './components/pages/LandingPage.js';
-import WordpressPage from './components/pages/WordpressPage.js';
 import PostSingle from './components/posts/PostSingle.js';
+import Layouts from './components/layouts/layouts.js';
 
 const AppQueries = {
   viewer: () => Relay.QL`
@@ -15,19 +14,35 @@ const AppQueries = {
   `,
 };
 
+function setLayout(nextState, replaceState){
+
+  const { pathname } = nextState.location;
+  const { page } = nextState.params;
+  let Layout;
+
+  if ( pathname == '/' ){
+    Layout = Layouts['FrontPage'];
+  } else {
+    Layout = Layouts[page] ? Layouts[page] : Layouts['Default'];
+  }
+
+  this.layout = Layout;
+  this.component = Layout.Component;
+}
+
 let routes = (
   <Route
     path="/" component={App}
     queries={AppQueries}
   >
     <IndexRoute
-      component={LandingPage}
+      onEnter={setLayout}
       queries={AppQueries}
     />
 
     <Route
       path=":page"
-      component={WordpressPage}
+      onEnter={setLayout}
       queries={AppQueries}
     />
     <Route

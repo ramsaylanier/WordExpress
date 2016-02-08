@@ -1,9 +1,9 @@
 import React from 'react';
 import Relay from 'react-relay';
-import Page from './page.js';
+import Page from '../pages/page.js';
 import PostContent from '../posts/PostContent';
 
-class LandingPage extends React.Component{
+class FrontPageLayout extends React.Component{
 
 	render(){
 		const { post_title, post_content, thumbnail} = this.props.viewer.page;
@@ -32,7 +32,7 @@ class LandingPage extends React.Component{
 	}
 }
 
-export default Relay.createContainer(LandingPage, {
+export default Relay.createContainer(FrontPageLayout, {
   fragments: {
     viewer: () => Relay.QL`
       fragment on User {

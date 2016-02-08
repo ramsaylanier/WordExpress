@@ -1,14 +1,19 @@
 import React from 'react';
 import Relay from 'react-relay';
 
+import Page from '../pages/page.js';
 import PostExcerpt from './PostExcerpt.js';
 
 class PostList extends React.Component{
 
   componentWillMount(){
+    const { limit, postType } = this.props.route.layout;
+
     this.props.relay.setVariables({
-      limit: this.props.layoutVars.limit
+      limit: limit,
+      postType: postType
     })
+
   }
 
   render(){
@@ -16,17 +21,17 @@ class PostList extends React.Component{
 
     if (posts){
       return(
-        <div>
+        <Page>
           {posts.edges.map( (post, index) => {
             return(
               <PostExcerpt index={index} key={post.node.id} viewer={this.props.viewer} {...post.node} />
             )
           })}
-        </div>
+        </Page>
       )
     } else {
       return(
-        <div>Loading</div>
+        <Page>Loading</Page>
       )
     }
   }
@@ -34,16 +39,26 @@ class PostList extends React.Component{
 
 export default Relay.createContainer(PostList, {
 
+  initialVariables: {
+    limit: 20,
+    postType: 'post'
+  },
+
   prepareVariables(prevVars){
-    return{
-      limit: prevVars.limit
+    console.log(prevVars);
+    return {
+      ...prevVars
     }
   },
 
   fragments: {
     viewer: () => Relay.QL`
       fragment on User {
-        posts(first: $limit){
+        page(post_name:"homepage"){
+					id,
+					thumbnail
+				},
+        posts(post_type: $postType first: $limit){
 					edges{
 						node{
 							id
@@ -61,5 +76,5 @@ export default Relay.createContainer(PostList, {
         }
 			}
     `
-  },
+  }
 });

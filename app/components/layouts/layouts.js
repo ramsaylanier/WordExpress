@@ -1,18 +1,19 @@
 import PostList from '../posts/PostList.js';
 import DefaultLayout from './DefaultLayout.js';
+import FrontPageLayout from './FrontPageLayout.js';
 
 const Layouts = {
   'Default': {
-    Component: DefaultLayout,
-    showPosts: false,
-    postType: 'post',
-    limit: 10
+    Component: DefaultLayout
   },
-  'PostList': {
+  'FrontPage': {
+    Component: FrontPageLayout
+  },
+  'articles': {
     Component: PostList,
     showPosts: true,
     postType: 'post',
-    limit: 10
+    limit: 1
   }
 };
 

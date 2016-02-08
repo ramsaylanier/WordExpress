@@ -1,5 +1,6 @@
 import React from 'react';
 import Relay from 'react-relay';
+import Page from '../pages/page.js';
 import PostContent from '../posts/PostContent';
 
 import CSSModules from 'react-css-modules';
@@ -7,9 +8,13 @@ import styles from '../pages/page.scss';
 
 @CSSModules(styles, {allowMultiple: true})
 class DefaultLayout extends React.Component{
+
   render(){
-    const { page } = this.props.viewer;
-    const { post_title, post_content, thumbnail } = page;
+    const { viewer } = this.props;
+    const { post_title, post_content, thumbnail } = viewer.page;
+
+    console.log(viewer);
+
     let bg = {
       backgroundImage: "url('" + thumbnail + "')"
     }
@@ -17,7 +22,7 @@ class DefaultLayout extends React.Component{
     let heroClass = thumbnail ? "hero_thumbnail" : "hero"
 
     return(
-      <div>
+    	<Page>
         <div styleName={heroClass} style={bg}>
 					<div styleName="wrapper tight">
             <h2 styleName="title">{post_title}</h2>
@@ -29,9 +34,33 @@ class DefaultLayout extends React.Component{
 						<PostContent post_content={post_content}/>
 					</div>
 				</div>
-      </div>
+      </Page>
     )
   }
 }
 
-export default DefaultLayout;
+export default Relay.createContainer(DefaultLayout, {
+
+  initialVariables:{
+    page: null
+  },
+
+  fragments: {
+    viewer: () => Relay.QL`
+      fragment on User {
+        page(post_name:$page){
+          id,
+          post_title
+          post_content
+          thumbnail
+        },
+        settings{
+          id
+          uploads
+          amazonS3
+        }
+      }
+    `
+  }
+
+});
