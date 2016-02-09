@@ -41,7 +41,7 @@
 }
 
 .link{
-  composes: sans from '../../App.scss';
+  composes: sans from '../../styles.scss';
   color: white;
 	display: block;
 	height: 100%;

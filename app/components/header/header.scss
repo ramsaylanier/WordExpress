@@ -1,5 +1,5 @@
 .base{
-  composes: dark_background from "../../styles/colors.scss";
+  composes: dark_background from "../../styles.scss";
   position: fixed;
   top: 0;
   left: 0;
@@ -9,8 +9,8 @@
 }
 
 .wrapper{
-  composes: main from "../../App.scss";
-  composes: container align_center items_center space_between from "../../styles/flexbox.scss";
+  composes: main from "../../styles.scss";
+  composes: container align_center items_center space_between from "../../styles.scss";
 }
 
 .brand{

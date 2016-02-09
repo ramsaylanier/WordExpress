@@ -1,7 +1,7 @@
 import React from 'react';
 import Relay from 'react-relay'
 
-import styles from './App.scss';
+import styles from './styles.scss';
 import Head from './components/head/head';
 import Header from './components/header/header';
 

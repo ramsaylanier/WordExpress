@@ -8,11 +8,7 @@
 }
 
 .wrapper{
-	position: relative;
-	width: 95%;
-	max-width: 1200px;
-	margin-left: auto;
-	margin-right: auto;
+	composes: main from '../../styles.scss';
 	z-index: 2;
 
 	&.tight{
@@ -21,8 +17,8 @@
 }
 
 .hero{
-	composes: primary_background from '../../styles/colors.scss';
-	composes: cover center from '../../styles/background.scss';
+	composes: primary_background from '../../styles.scss';
+	composes: cover center from '../../styles.scss';
 	padding: 4rem 0rem;
   position: relative;
 
@@ -31,16 +27,16 @@
 
 .hero_thumbnail{
 	composes: hero;
+}
 
-	&:after{
-		content: '';
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background-color: fade-out($secondary, .1);
-	}
+.hero_thumbnail::after{
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: fade-out($secondary, .1);
 }
 
 .title{
@@ -54,7 +50,7 @@
 }
 
 .thumbnail{
-	composes: cover from '../../styles/background.scss';
+	composes: cover from '../../styles.scss';
 	position: absolute;
 	top: 0;
 	left: 0;
