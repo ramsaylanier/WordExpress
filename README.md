@@ -109,10 +109,10 @@ export default Layouts;
 In the above example, I have a WordPress page called 'articles'. On this page, I want it to use a PostList component and show posts of the 'post' type, with a limit of 10 posts per page.
 
 ## Playing With GraphiQL
-GraphiQL is the in-browser IDE for testing GraphQL queries. For experimentation purposes, I've kept the GraphiQL IDE publically available so you can play aroud with querying the WordExpress database. [Check it out here](http://wordexpress.io:8080).
+GraphiQL is the in-browser IDE for testing GraphQL queries. For experimentation purposes, I've kept the GraphiQL IDE publically available so you can play around with querying the WordExpress database. [Check it out here](http://wordexpress.io:8080).
 
 ## Roadmap
-This projexct started out as just an expirement, but it seems like a lot of other developers have this paintpoint while developing in WordPress, so I've started builing out a road map of features. I'll try to prioritize them.
+This project started out as just an experiment, but it seems like a lot of other developers have this pain point while developing in WordPress, so I've started building out a road map of features. I'll try to prioritize them.
 
 1) Make Server Side Rendering work. It's weird using Relay, and Facebook doesn't have official support for it, though it seems like it might be coming soon. We need SSR to handle SEO, meta tags, and all that.
 
