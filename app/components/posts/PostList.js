@@ -3,8 +3,14 @@ import Relay from 'react-relay';
 
 import Page from '../pages/page.js';
 import PostExcerpt from './PostExcerpt.js';
+import Button from '../button/button.js';
 
 class PostList extends React.Component{
+
+  constructor(){
+    super();
+    this._loadMorePosts = this._loadMorePosts.bind(this);
+  }
 
   componentWillMount(){
     const { limit, postType } = this.props.route.layout;
@@ -18,6 +24,7 @@ class PostList extends React.Component{
 
   render(){
     const { posts } = this.props.viewer;
+    const { hasNextPage, hasPreviousPage } = posts.pageInfo;
 
     if (posts){
       return(
@@ -27,6 +34,11 @@ class PostList extends React.Component{
               <PostExcerpt index={index} key={post.node.id} viewer={this.props.viewer} {...post.node} />
             )
           })}
+
+          { hasNextPage &&
+            <Button type="primary center" onClick={this._loadMorePosts}>Load More</Button>
+          }
+
         </Page>
       )
     } else {
@@ -35,6 +47,15 @@ class PostList extends React.Component{
       )
     }
   }
+
+  _loadMorePosts(){
+    const { limit, postType } = this.props.relay.variables;
+
+    this.props.relay.setVariables({
+      limit: limit * 2,
+      postType: postType
+    })
+  }
 }
 
 export default Relay.createContainer(PostList, {
@@ -42,13 +63,6 @@ export default Relay.createContainer(PostList, {
   initialVariables: {
     limit: 20,
     postType: 'post'
-  },
-
-  prepareVariables(prevVars){
-    console.log(prevVars);
-    return {
-      ...prevVars
-    }
   },
 
   fragments: {
@@ -60,6 +74,7 @@ export default Relay.createContainer(PostList, {
 				},
         posts(post_type: $postType first: $limit){
 					edges{
+            cursor
 						node{
 							id
 							post_title
@@ -67,7 +82,11 @@ export default Relay.createContainer(PostList, {
 							post_excerpt
               thumbnail
 						}
-					}
+					},
+          pageInfo{
+            hasNextPage,
+            hasPreviousPage
+          }
 				},
         settings{
           id

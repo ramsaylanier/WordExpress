@@ -1,0 +1,26 @@
+@import '../../styles/vars';
+
+.base{
+  border: 0;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: .5rem 1rem;
+}
+
+.primary{
+  composes: base;
+  background-color: $primary;
+  color: white;
+  transition: all 300ms ease-out;
+
+  &:hover{
+    background-color: darken($primary, 10%);
+  }
+}
+
+.center{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

@@ -12,7 +12,7 @@ const Layouts = {
   'articles': {
     Component: PostList,
     postType: 'post',
-    limit: 1
+    limit: 10
   }
 };
 
