@@ -1,6 +1,5 @@
 /* eslint no-console: 0 */
 import path from 'path';
-import browserSync from 'browser-sync';
 import express from 'express';
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';

@@ -57,8 +57,5 @@ module.exports = {
   },
   node: {
     fs: 'empty'
-  },
-  postcss: [
-    require('autoprefixer')
-  ]
+  }
 };

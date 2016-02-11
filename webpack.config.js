@@ -5,7 +5,6 @@ var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var WriteFilePlugin = require('write-file-webpack-plugin');
-var BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
 const devServer = {
     contentBase: path.resolve(__dirname, './app'),
@@ -56,8 +55,12 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]!sass'),
-        exclude: /node_modules|lib/,
+        loaders: [
+          'style?sourceMap',
+          'css?modules&importLoaders=1&localIdentName=[path]___[name]__[local]',
+          'sass?sourceMap'
+        ],
+        exclude: /node_modules|lib/
       },
     ],
   },
@@ -70,11 +73,6 @@ module.exports = {
       template: 'app/index.tpl.html',
       inject: 'body',
       filename: 'index.html'
-    }),
-    new BrowserSyncPlugin({
-      host: 'localhost',
-      port: 3000,
-      proxy: 'http://localhost:3100/'
     }),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),

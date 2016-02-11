@@ -38,7 +38,6 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.3.14",
-    "browser-sync": "^2.11.1",
     "dotenv": "^1.2.0",
     "ejs": "^2.4.1",
     "engine.io-client": "^1.6.7",
@@ -49,7 +48,6 @@
     "graphql": "^0.4.14",
     "history": "^1.17.0",
     "htmlparser2": "^3.9.0",
-    "install": "^0.4.1",
     "isomorphic-relay": "^0.4.2",
     "isomorphic-relay-router": "^0.5.1",
     "lodash": "^3.10.1",
@@ -90,7 +88,6 @@
     "eslint": "^1.5.0",
     "eslint-plugin-react": "^3.4.2",
     "express": "^4.13.3",
-    "extract-text-webpack-plugin": "^0.8.2",
     "graphql-relay": "^0.3.6",
     "gsap": "^1.18.2",
     "html-webpack-plugin": "^1.6.1",
