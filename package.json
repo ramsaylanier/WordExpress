@@ -24,17 +24,58 @@
   "homepage": "https://github.com/ramsaylanier/WordpressExpress",
   "scripts": {
     "test": "",
-    "start": "NODE_ENV=production node ./dist/server.js",
-    "startdev": "NODE_ENV=dev babel-node --debug ./dev.js",
-    "startdevprod": "NODE_ENV=production babel-node --debug ./server.js",
-    "build-server": "babel -d ./dist ./server.js ./webpack.config.js",
-    "build-schema": "npm run updateschema && babel -d ./dist/schema ./schema",
-    "build-settings": "cp -R ./settings ./dist/ && babel -d ./dist/settings ./settings",
-    "build": "rimraf dist && NODE_ENV=production webpack --config ./webpack.production.config.js --progress --profile --colors && npm run build-server && npm run build-schema && npm run build-settings",
+    "start": "better-npm-run start",
+    "startdev": "better-npm-run startdev",
+    "startdevprod": "better-npm-run startdevprod",
+    "build-server": "better-npm-run build-server",
+    "build-schema": "better-npm-run build-schema",
+    "build-settings": "better-npm-run build-settings",
+    "build": "better-npm-run build",
     "deploy": "bash scripts/deploy.sh",
     "eslint": "eslint .",
     "jscs": "jscs .",
-    "updateschema": "NODE_ENV=dev babel-node scripts/updateSchema"
+    "updateschema": "better-npm-run updateschema"
+  },
+  "betterScripts": {
+    "start": {
+      "command": "node ./dist/server.js",
+      "env": {
+        "NODE_ENV": "production"
+      }
+    },
+    "startdev": {
+      "command": "babel-node --debug ./dev.js",
+      "env": {
+        "NODE_ENV": "dev"
+      }
+    },
+    "startdevprod": {
+      "command": "babel-node --debug ./server.js",
+      "env": {
+        "NODE_ENV": "production"
+      }
+    },
+    "build-server": {
+      "command": "babel -d ./dist ./server.js ./webpack.config.js"
+    },
+    "build-schema": {
+      "command": "npm run updateschema && babel -d ./dist/schema ./schema"
+    },
+    "build-settings": {
+      "command": "cp -R ./settings ./dist/ && babel -d ./dist/settings ./settings"
+    },
+    "build": {
+      "command": "rimraf dist webpack --config ./webpack.production.config.js --progress --profile --colors && npm run build-server && npm run build-schema && npm run build-settings",
+      "env": {
+        "NODE_ENV": "production"
+      }
+    },
+    "updateschema": {
+      "command": "babel-node scripts/updateSchema",
+      "env": {
+        "NODE_ENV": "dev"
+      }
+    }
   },
   "dependencies": {
     "babel-polyfill": "^6.3.14",
@@ -82,6 +123,7 @@
     "babel-preset-stage-0": "^6.3.13",
     "babel-relay-plugin": "^0.6.1",
     "babel-runtime": "^6.3.19",
+    "better-npm-run": "0.0.7",
     "browser-sync-webpack-plugin": "^1.0.1",
     "chai": "^3.2.0",
     "css-loader": "^0.19.0",
