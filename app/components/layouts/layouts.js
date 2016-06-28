@@ -12,7 +12,8 @@ const Layouts = {
   'PostList': {
     Component: PostList,
     postType: 'post',
-    limit: 1
+    limit: 10,
+    skip: 0
   }
 };
 

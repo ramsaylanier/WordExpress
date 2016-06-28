@@ -97,12 +97,17 @@ TermTaxonomy: Conn.define(prefix + 'term_taxonomy', {
       getViewer(){
         return viewer
       },
-      getPosts(postType){
+      getPosts(args){
+
+        const { post_type, limit = 10, skip = 0 } = args;
+
         return Post.findAll({
           where: {
-            post_type: postType,
+            post_type: post_type,
             post_status: 'publish',
-          }
+          },
+          limit: limit,
+          offset: skip
         })
       },
       getPostById(postId){

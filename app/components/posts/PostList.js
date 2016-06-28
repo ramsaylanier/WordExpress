@@ -55,8 +55,8 @@ const PostListWithData = connect({
     return {
       page: {
         query: gql`
-          query getPosts($postType: String){
-            posts(post_type: $postType){
+          query getPosts($postType: String, $limit: Int, $skip: Int){
+            posts(post_type: $postType, limit: $limit, skip: $skip ){
 							id
 							post_title
 							post_name
@@ -70,7 +70,9 @@ const PostListWithData = connect({
           }
         `,
         variables: {
-          postType: ownProps.route.layout.postType || 'post'
+          postType: ownProps.route.layout.postType || 'post',
+          limit: ownProps.route.layout.limit || 10,
+          skip: ownProps.route.layout.skip || 0
         }
       }
     }

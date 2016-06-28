@@ -3,7 +3,6 @@
   "env":{
     "production":{
       "plugins": [
-        "./build/babelRelayPlugin",
         "transform-react-display-name",
         "transform-runtime",
         "transform-decorators-legacy"
@@ -11,7 +10,6 @@
     },
     "dev":{
       "plugins": [
-        "./build/babelRelayPlugin",
         "transform-react-display-name",
         "transform-runtime",
         "transform-decorators-legacy",

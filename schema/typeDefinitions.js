@@ -57,7 +57,7 @@ const typeDefinitions = `
 
   type Query {
     settings: Setting
-    posts(post_type: String = "post"): [Post]
+    posts(post_type: String = "post", limit: Int, skip: Int): [Post]
     menus(name: String): Menu
     page(name: String): Post
     postmeta(post_id: Int, after: String, first: Int, before: String, last: Int): Postmeta

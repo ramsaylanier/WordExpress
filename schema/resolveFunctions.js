@@ -6,8 +6,8 @@ const resolveFunctions = {
     settings(){
       return publicSettings
     },
-    posts(_, {post_type}){
-      return Connectors.getPosts(post_type).then( res=> {
+    posts(_, args){
+      return Connectors.getPosts(args).then( res=> {
         return res;
       });
     },
