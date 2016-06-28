@@ -57,7 +57,7 @@ module.exports = {
         test: /\.scss$/,
         loaders: [
           'style?sourceMap',
-          'css?modules&importLoaders=1&localIdentName=[path]___[name]__[local]',
+          'css?modules&importLoaders=1&localIdentName=[name]--[local]',
           'sass?sourceMap'
         ],
         exclude: /node_modules|lib/
