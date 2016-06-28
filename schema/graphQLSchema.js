@@ -13,12 +13,12 @@ import {
   GraphQLList
 } from 'graphql';
 
-import {
-  connectionArgs,
-  connectionDefinitions,
-  connectionFromPromisedArray,
-  globalIdField
-} from 'graphql-relay';
+// import {
+//   connectionArgs,
+//   connectionDefinitions,
+//   connectionFromPromisedArray,
+//   globalIdField
+// } from 'graphql-relay';
 
 function WordExpressGraphQLSchema(ConnQueries, publicSettings){
 

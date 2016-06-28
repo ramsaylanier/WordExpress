@@ -49,8 +49,9 @@ class PostExcerpt extends React.Component{
   }
 
   render(){
-    const { post_title, post_name, thumbnail } = this.props;
-    const { uploads, amazonS3 } = this.props.viewer.settings;
+    console.log(this.props);
+    const { post_title, post_name, thumbnail } = this.props.post;
+    const { uploads, amazonS3 } = this.props.settings;
     const bg = {
       backgroundImage: "url('" + thumbnail + "')"
     }

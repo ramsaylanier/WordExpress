@@ -1,7 +1,6 @@
 import React from 'react';
-
 import PageAnimations from './PageAnimations.js';
-import { AnimateItem } from '../../animations.js'
+import { AnimateItem } from '../../animations.js';
 
 import CSSModules from 'react-css-modules';
 import styles from './page.scss';
@@ -14,17 +13,12 @@ class Page extends React.Component{
 	}
 
 	render(){
-		const {className, children, withWrapper} = this.props;
-
-		return(
-			<div ref={ (c) => this._page = c } className={styles.base + ' ' + className}>
-
-				{ withWrapper ?
-					<div styleName="wrapper">{children}</div> : children
-				}
-
-			</div>
-		)
+    const { children } = this.props;
+    return (
+      <div ref={ (c) => this._page = c } styleName="base">
+        {children}
+      </div>
+    )
 	}
 }
 

@@ -9,10 +9,10 @@ const Layouts = {
   'FrontPage': {
     Component: FrontPageLayout
   },
-  'articles': {
+  'PostList': {
     Component: PostList,
     postType: 'post',
-    limit: 10
+    limit: 1
   }
 };
 

@@ -97,11 +97,10 @@ TermTaxonomy: Conn.define(prefix + 'term_taxonomy', {
       getViewer(){
         return viewer
       },
-      getPosts(args){
-        const {post_type} = args;
+      getPosts(postType){
         return Post.findAll({
           where: {
-            post_type: post_type,
+            post_type: postType,
             post_status: 'publish',
           }
         })
