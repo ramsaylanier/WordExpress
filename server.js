@@ -25,12 +25,12 @@ graphQLServer.listen(GRAPHQL_PORT, () => console.log(
 
 app.use(require('prerender-node').set('prerenderToken', privateSettings.prerenderToken ));
 app.use(express.static('./dist'));
-app.use('/graphql', graphqlHTTP(request => ({
-    graphiql: true,
-    pretty: true,
-    schema: Schema,
-  })
-));
+app.use('/graphql', apolloServer({
+  graphiql: true,
+  pretty: true,
+  schema: Schema,
+  resolvers: Resolvers
+}));
 app.get('*', function response(req, res, next) {
   res.sendFile(path.join(__dirname, '/index.html'));
 });
