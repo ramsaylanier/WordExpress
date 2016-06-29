@@ -59,13 +59,13 @@
       "command": "babel -d ./dist ./server.js ./webpack.config.js"
     },
     "build-schema": {
-      "command": "npm run updateschema && babel -d ./dist/schema ./schema"
+      "command": "babel -d ./dist/schema ./schema"
     },
     "build-settings": {
       "command": "cp -R ./settings ./dist/ && babel -d ./dist/settings ./settings"
     },
     "build": {
-      "command": "rimraf dist webpack --config ./webpack.production.config.js --progress --profile --colors && npm run build-server && npm run build-schema && npm run build-settings",
+      "command": "rimraf dist && webpack --config ./webpack.production.config.js --progress --profile --colors && npm run build-server && npm run build-schema && npm run build-settings",
       "env": {
         "NODE_ENV": "production"
       }
@@ -85,7 +85,7 @@
     "ejs": "^2.4.1",
     "engine.io-client": "^1.6.7",
     "express-expose": "^0.3.4",
-    "extract-text-webpack-plugin": "^0.8.2",
+    "extract-text-webpack-plugin": "^1.0.1",
     "graphiql": "^0.7.3",
     "graphql": "^0.6.0",
     "graphql-tag": "^0.1.7",
