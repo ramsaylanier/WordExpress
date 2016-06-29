@@ -42,7 +42,7 @@ class PostExcerpt extends React.Component{
   }
 
   _renderExcerpt(){
-    const { post_excerpt } = this.props;
+    const { post_excerpt } = this.props.post;
     return {
       __html: post_excerpt
     }
