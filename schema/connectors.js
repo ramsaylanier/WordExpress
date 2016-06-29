@@ -14,6 +14,6 @@ const connectionDetails = {
 }
 
 const Database = new WordExpressDatabase(connectionDetails);
-const Connectors = Database.queries;
+const Connectors = Database.connectors;
 
 export default Connectors;
