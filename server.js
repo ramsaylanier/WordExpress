@@ -1,9 +1,9 @@
 /* eslint no-console: 0 */
 import path from 'path';
 import express from 'express';
-import {graphql} from 'graphql';
-import graphqlHTTP from 'express-graphql';
-import Schema from './schema/schema';
+import { apolloServer } from 'apollo-server';
+import Schema from './schema/typeDefinitions';
+import Resolvers from './schema/resolveFunctions';
 import { privateSettings } from './settings/settings';
 
 const APP_PORT = process.env.PORT || 3000;
@@ -12,10 +12,11 @@ const graphQLServer = express();
 
 let app = express();
 
-graphQLServer.use('/', graphqlHTTP({
+graphQLServer.use('/', apolloServer({
   graphiql: true,
   pretty: true,
   schema: Schema,
+  resolvers: Resolvers
 }));
 
 graphQLServer.listen(GRAPHQL_PORT, () => console.log(
@@ -24,12 +25,12 @@ graphQLServer.listen(GRAPHQL_PORT, () => console.log(
 
 app.use(require('prerender-node').set('prerenderToken', privateSettings.prerenderToken ));
 app.use(express.static('./dist'));
-app.use('/graphql', graphqlHTTP(request => ({
-    graphiql: true,
-    pretty: true,
-    schema: Schema,
-  })
-));
+app.use('/graphql', apolloServer({
+  graphiql: true,
+  pretty: true,
+  schema: Schema,
+  resolvers: Resolvers
+}));
 app.get('*', function response(req, res, next) {
   res.sendFile(path.join(__dirname, '/index.html'));
 });

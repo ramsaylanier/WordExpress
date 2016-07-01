@@ -9,7 +9,7 @@ class AppNav extends  React.Component{
 
 	render(){
 
-		let { items } = this.props.viewer.menus;
+		let { items } = this.props.menus;
 		items = _.sortBy(items, 'order');
 
 		return(

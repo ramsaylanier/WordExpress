@@ -2,6 +2,7 @@
 
 .base{
   min-height: 100vh;
+  opacity: 0;
 }
 
 .header{
@@ -98,4 +99,10 @@
   position: relative;
   z-index: 2;
   box-shadow: 0px -100px 100px -30px fade-out($dark, .7);
+}
+
+.shortcode{
+  iframe{
+    height: 75vh;
+  }
 }

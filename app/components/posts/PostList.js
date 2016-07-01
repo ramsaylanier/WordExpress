@@ -1,9 +1,11 @@
 import React from 'react';
-import Relay from 'react-relay';
+import { connect } from 'react-apollo';
+import gql from 'graphql-tag';
 
 import Page from '../pages/page.js';
 import PostExcerpt from './PostExcerpt.js';
 import Button from '../button/button.js';
+
 
 class PostList extends React.Component{
 
@@ -12,88 +14,69 @@ class PostList extends React.Component{
     this._loadMorePosts = this._loadMorePosts.bind(this);
   }
 
-  componentWillMount(){
-    const { limit, postType } = this.props.route.layout;
-
-    this.props.relay.setVariables({
-      limit: limit,
-      postType: postType
-    })
-
-  }
-
   render(){
-    const { posts } = this.props.viewer;
-    const { hasNextPage, hasPreviousPage } = posts.pageInfo;
+    const { posts, settings } = this.props.page;
 
     if (posts){
+      let hasNextPage, hasPreviousPage;
+
+      if (posts.pageInfo){
+        let { hasNextPage, hasPreviousPage } = posts.pageInfo
+      }
+
       return(
         <Page>
-          {posts.edges.map( (post, index) => {
+          {posts.map( (post, index) => {
             return(
-              <PostExcerpt index={index} key={post.node.id} viewer={this.props.viewer} {...post.node} />
+              <PostExcerpt index={index} key={post.id} post={post} settings={settings} />
             )
           })}
 
           { hasNextPage &&
             <Button type="primary center" onClick={this._loadMorePosts}>Load More</Button>
           }
-
         </Page>
       )
-    } else {
+    } else{
       return(
-        <Page>Loading</Page>
+        <div>Loading...</div>
       )
     }
   }
 
   _loadMorePosts(){
-    const { limit, postType } = this.props.relay.variables;
-
-    this.props.relay.setVariables({
-      limit: limit * 2,
-      postType: postType
-    })
+    const limit = this.props.page.posts.edges.length;
+    this.props.page.refetch({limit: limit + 1});
   }
 }
 
-export default Relay.createContainer(PostList, {
-
-  initialVariables: {
-    limit: 20,
-    postType: 'post'
-  },
-
-  fragments: {
-    viewer: () => Relay.QL`
-      fragment on User {
-        page(post_name:"homepage"){
-					id,
-					thumbnail
-				},
-        posts(post_type: $postType first: $limit){
-					edges{
-            cursor
-						node{
+const PostListWithData = connect({
+  mapQueriesToProps({ ownProps, state}) {
+    return {
+      page: {
+        query: gql`
+          query getPosts($postType: String, $limit: Int, $skip: Int){
+            posts(post_type: $postType, limit: $limit, skip: $skip ){
 							id
 							post_title
 							post_name
 							post_excerpt
               thumbnail
-						}
-					},
-          pageInfo{
-            hasNextPage,
-            hasPreviousPage
+    				},
+            settings{
+              uploads
+              amazonS3
+            }
           }
-				},
-        settings{
-          id
-          uploads
-          amazonS3
+        `,
+        variables: {
+          postType: ownProps.route.layout.postType || 'post',
+          limit: ownProps.route.layout.limit || 10,
+          skip: ownProps.route.layout.skip || 0
         }
-			}
-    `
+      }
+    }
   }
-});
+})(PostList);
+
+export default PostListWithData;

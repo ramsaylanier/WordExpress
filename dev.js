@@ -5,9 +5,9 @@ import WebpackDevServer from 'webpack-dev-server';
 import webpackMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import config from './webpack.config.js';
-import {graphql} from 'graphql';
-import graphqlHTTP from 'express-graphql';
-import Schema from './schema/schema';
+import { apolloServer } from 'apollo-server';
+import Schema from './schema/typeDefinitions';
+import Resolvers from './schema/resolveFunctions';
 import { privateSettings } from './settings/settings';
 
 const APP_PORT = 3000;
@@ -16,10 +16,11 @@ const GRAPHQL_PORT = 8080;
 const graphQLServer = express();
 let app = express();
 
-graphQLServer.use('/', graphqlHTTP({
+graphQLServer.use('/', apolloServer({
   graphiql: true,
   pretty: true,
   schema: Schema,
+  resolvers: Resolvers
 }));
 
 graphQLServer.listen(GRAPHQL_PORT, () => console.log(
