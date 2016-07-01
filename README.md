@@ -1,10 +1,10 @@
 # WordPress Express
 
-## Update: I've since replaced Relay with [ApolloStack](http://www.apollostack.com/) for all the GraphQL data fetching stuff. I'll update the documentation, but in the mean time, check out the [Apollo branch](https://github.com/ramsaylanier/WordPressExpress/tree/apollo) of this project for how it works. All the below documentation and links to documentation reference usage with Relay. This will be updated soon. 
+## Update: I've since replaced Relay with [ApolloStack](http://www.apollostack.com/) for all the GraphQL data fetching stuff.
 
-This project aims to replace PHP with Javascript in WordPress development by using Node.js and Express to consume data from a WordPress database using GraphQL. It uses Relay to fetch the data and deliver it into React components. **This repo is the codebase for [wordexpress.io](http://wordexpress.io), where I will write articles and documentation explaining how it works**.
+This project aims to replace PHP with Javascript in WordPress development by using Node.js and Express to consume data from a WordPress database using GraphQL. It uses [Apollo](http://apollostack.com) to fetch the data and deliver it into React components. **This repo is the codebase for [wordexpress.io](http://wordexpress.io), where I will write articles and documentation explaining how it works**.
 
-The core of this project revolves around setting up a connection to a WordPress database using Sequelize, defining models from that connection, and then querying those models using GraphQL. **I've developed an NPM module, called [WordExpress Schema](https://github.com/ramsaylanier/wordexpress-schema), that takes care of all of this**. It's included in this project. I highly suggest you start by [reading the documentation](https://github.com/ramsaylanier/wordexpress-schema).
+The core of this project revolves around setting up a connection to a WordPress database using Sequelize, defining models from that connection, and then querying those models using GraphQL.
 
 Regarding building, this project using Webpack, and requires Node V 5.0.0. You might be able to get away with 4.0, but really just tighten up and use 5.0.
 
@@ -16,7 +16,7 @@ Regarding building, this project using Webpack, and requires Node V 5.0.0. You m
 [Part 3 - The Schema](https://medium.com/@verybadhello/wordpress-with-node-react-and-graphql-part-3-the-schema-8569a89016c#.w2dcbi5en)
 
 ## Getting Started
-Just run `npm install` and then `npm run startdev`, which will start a Webpack Dev Server wrapped in Browsersync. It should automatically open a browser window pointed at localhost:3000.
+Just run `npm install` and then `npm run startdev`, which will start a Webpack Dev Server. It should automatically open a browser window pointed at localhost:3000.
 
 To build for production, run `npm run build`, which creates a `dist` folder in the root directory that contains production-ready code to be deployed to a node server. You can run `npm start` which will start the express server using code in the `dist` folder. There is an `npm run deploy` script that will call a deploy.sh shell script located in the /scripts folder. Mine is not included in this repo, since it contains production server information, and it's specific to my setup.
 
@@ -29,55 +29,30 @@ This project uses Amazon AWS with an S3 bucket. If you are hosting your media fi
 #### Database Settings
 This should be pretty self-explanatory: simply enter in the name of your database, username and password, and host. Make sure these are inside of "private", or else they'll be available on the client (WHICH IS BAD).
 
-## Connecting Your WordPress Database
-This project uses [WordExpress Schema](https://github.com/ramsaylanier/wordexpress-schema), an NPM package I wrote specifically for this project. WordExpress schema allows you to quickly connect to a WordPress database using your database settings. It provides some out-of-the-box WordPress models (like Post, Postmeta, Terms, etc.) and some queries. For more details, [read the documentation](https://github.com/ramsaylanier/wordexpress-schema).  Here is how it's being used in this project.
-
-```es6
-import { WordExpressDatabase, WordExpressGraphQLSchema } from 'wordexpress-schema';
-import { publicSettings, privateSettings } from '../settings/settings';
-
-const { name, username, password, host } = privateSettings.database;
-const { amazonS3, uploads } = publicSettings;
-
-const connectionDetails = {
-  name: name,
-  username: username,
-  password: password,
-  host: host,
-  amazonS3: amazonS3,
-  uploadDirectory: uploads
-}
-
-const Database = new WordExpressDatabase(connectionDetails);
-const ConnQueries = Database.queries;
-const Schema = WordExpressGraphQLSchema(ConnQueries, publicSettings);
-
-export default Schema;
-```
-
 ## Setting the Front Page
 When you run `npm startdev` for the first time, you'll probably get an error saying "cannot find page-title of undefined." This is probably because you haven't set a landing page in WordPress. By default, the [FrontPageLayout](https://github.com/ramsaylanier/WordPressExpress/blob/master/app/components/layouts/FrontPageLayout.js) component queries a post with the post-name (AKA slug) of "homepage". If you are using a fresh WordPress installation, simply create a page and give it a slug of "homepage." If you are working with an existing WordPress database, you can change which page that gets loaded by changing the page query in the `FrontPageLayout` component. See below:
 
 ```es6
-export default Relay.createContainer(FrontPageLayout, {
-  fragments: {
-    viewer: () => Relay.QL`
-      fragment on User {
-        page(post_name:"homepage"){
-					id,
-					post_title
-					post_content
-					thumbnail
-				},
-				settings{
-					id
-					uploads
-					amazonS3
-				}
+const FrontPageWithData = connect({
+  mapQueriesToProps({ ownProps, state}) {
+    return {
+      page: {
+        query: `
+          query getPage{
+            viewer{
+              page(post_name: "homepage"){
+                id,
+      		post_title
+      		post_content
+      		thumbnail
+              }
+            }
+          }
+        `
       }
-    `,
-  },
-});
+    }
+  }
+})(FrontPageLayout);
 ```
 
 Simply change "homepage" to anything you want. Keep in mind that it queries the post-name (AKA slug), not the post-title.
@@ -97,13 +72,13 @@ const Layouts = {
   'FrontPage': {
     Component: FrontPageLayout
   },
-  'articles': {
+  'PostList': {
     Component: PostList,
     postType: 'post',
-    limit: 10
+    limit: 10,
+    skip: 0
   }
 };
-
 
 export default Layouts;
 ```
@@ -122,4 +97,4 @@ This project started out as just an experiment, but it seems like a lot of other
 
 3) Work on developing more complex queries. The WordExpressDatabase object is currently expandable, meaning after importing the default from `wordexpress-schema` you can add Sequel models and queries to it before passing it into WordExpressGraphQLSchema. However, WordExpressGraphQLSchema is **not** expandable. This should be a thing.
 
-4) Figuring out how to get WordPress shortcodes to work. I'd only expect that built in WordPress shortcodes would work (i.e `[caption]`, but they don't currently. It would require parsing the post_content field and then recognizing short codes and then probably building a unique React component for each shortcode.
+4) ~~Figuring out how to get WordPress shortcodes to work. I'd only expect that built in WordPress shortcodes would work (i.e `[caption]`, but they don't currently. It would require parsing the post_content field and then recognizing short codes and then probably building a unique React component for each shortcode.~~ Currently only a few shortcodes work. I've got Caption working, as well as the ability to embed Github Gists. 
