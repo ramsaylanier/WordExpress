@@ -6,7 +6,7 @@ import { browserHistory } from 'react-router';
 
 import CSSModules from 'react-css-modules';
 import styles from './post.scss';
-import Shortcodes from '../shortcodes/shortcodes';
+import Shortcodes  from '../shortcodes/shortcodes';
 
 @CSSModules(styles, {allowMultiple: true})
 class PostContent extends React.Component{
@@ -15,6 +15,8 @@ class PostContent extends React.Component{
     const content = this._content;
     const anchors = content.getElementsByTagName('a');
     const r = new RegExp('^(?:[a-z]+:)?//', 'i');
+
+    //add transitions to all internal links
     _.map(anchors, anchor => {
       const target = anchor.getAttribute("href");
 
@@ -31,6 +33,14 @@ class PostContent extends React.Component{
         });
       }
     });
+
+    //render embed shortcodes
+    const shortcodes = document.getElementsByClassName('post--shortcode');
+    _.map(shortcodes, (shortcode) => {
+      return Shortcodes.renderEmbed(shortcode)
+    })
+
+
   }
 
   _parseContent(){
@@ -38,16 +48,18 @@ class PostContent extends React.Component{
     const trimmed = post_content.trim();
     const content = trimmed.split('\n');
     const voidTags = ["p","h1", "h2", "h3", "h4", "h5", "code", "pre", "img"];
-    const shortcodes = ["caption", "embed"];
+    const shortcodes = ["caption", "embed", "gist"];
 
 
     _.map(content, (line, index) => {
+        //check if line is a shortcode
       if (line[0] === '['){
         let shortcode = line.match(/([[])\w+/g).toString().substr(1);
         if (shortcodes.indexOf(shortcode) >= 0){
           line = Shortcodes[shortcode](line);
         }
       } else {
+        // wrap lines without voidTags in paragraph tags
         let tag = line.match(/^<\w+/g);
         tag = tag ? tag[0].slice(1) : '';
         if (voidTags.indexOf(tag) === -1 && line.length > 1){
@@ -66,6 +78,7 @@ class PostContent extends React.Component{
   render(){
     return(
       <div ref={ (c)=> this._content = c } styleName="content" dangerouslySetInnerHTML = {this._parseContent()}></div>
+
     )
   }
 }

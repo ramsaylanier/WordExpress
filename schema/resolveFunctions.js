@@ -7,9 +7,7 @@ const resolveFunctions = {
       return publicSettings
     },
     posts(_, args){
-      return Connectors.getPosts(args).then( res=> {
-        return res;
-      });
+      return Connectors.getPosts(args);
     },
     menus(_, {name}){
       return Connectors.getMenu(name);
