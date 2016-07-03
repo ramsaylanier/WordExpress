@@ -17,6 +17,7 @@ function setLayout(nextState, replaceState, cb){
     query: gql`
       query getPage($pageName: String!){
         page(name: $pageName){
+          post_name,
           layout{
             id,
             meta_value
@@ -30,7 +31,12 @@ function setLayout(nextState, replaceState, cb){
   }).then((graphQLResult) => {
     const { errors, data } = graphQLResult;
     if (data) {
-      const Layout = Layouts[data.page.layout.meta_value] || Layouts['Default'];
+      let Layout;
+      if (data.page){
+        Layout = Layouts[data.page.layout.meta_value] || Layouts['Default'];
+      } else {
+        Layout = Layouts['NotFound'];
+      }
       this.layout = Layout;
       this.component = Layout.Component;
       cb();
