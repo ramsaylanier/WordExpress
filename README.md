@@ -101,7 +101,7 @@ This project started out as just an experiment, but it seems like a lot of other
 
 1) Make Server Side Rendering work. It's weird using Relay, and Facebook doesn't have official support for it, though it seems like it might be coming soon. We need SSR to handle SEO, meta tags, and all that.
 
-2) Need to make layouts work better. Currently, you create a custom field in wordpress for each page called 'react_layout" and just type the name of a React component that will server as the pages "layout." It could be better. Ideally, I'd write a companion WordPress plugin that comes complete with some standard custom fields that work directly with this project.
+2) ~~Need to make layouts work better. Currently, you create a custom field in wordpress for each page called 'react_layout" and just type the name of a React component that will server as the pages "layout." It could be better. Ideally, I'd write a companion WordPress plugin that comes complete with some standard custom fields that work directly with this project.~~ The companion plugin exists!
 
 3) Work on developing more complex queries. The WordExpressDatabase object is currently expandable, meaning after importing the default from `wordexpress-schema` you can add Sequel models and queries to it before passing it into WordExpressGraphQLSchema. However, WordExpressGraphQLSchema is **not** expandable. This should be a thing.
 
