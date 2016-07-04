@@ -1,10 +1,6 @@
 import React from 'react';
-import { connect } from 'react-apollo';
-
-import styles from './styles.scss';
 import Head from './components/head/head';
 import Header from './components/header/header';
-import Page from './components/pages/page';
 
 class App extends React.Component {
 
