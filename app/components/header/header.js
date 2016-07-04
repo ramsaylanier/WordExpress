@@ -16,7 +16,7 @@ class Header extends React.Component{
 		return (
 			<header styleName="base">
 				<div styleName="wrapper">
-          <WordExpressMenu styleName="menu" menu="primary-navigation">
+          <WordExpressMenu menu="primary-navigation">
   					<AppNav/>
           </WordExpressMenu>
 					<a href="https://github.com/ramsaylanier/WordpressExpress" target="_blank">
