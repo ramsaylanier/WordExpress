@@ -1,10 +1,10 @@
 # WordPress Express
 
-## Update: I've since replaced Relay with [ApolloStack](http://www.apollostack.com/) for all the GraphQL data fetching stuff.
-
 This project aims to replace PHP with Javascript in WordPress development by using Node.js and Express to consume data from a WordPress database using GraphQL. It uses [Apollo](http://apollostack.com) to fetch the data and deliver it into React components. **This repo is the codebase for [wordexpress.io](http://wordexpress.io), where I will write articles and documentation explaining how it works**.
 
 The core of this project revolves around setting up a connection to a WordPress database using Sequelize, defining models from that connection, and then querying those models using GraphQL. It's delivered through an npm package called WordExpress Schema. [Read the documentation](https://github.com/ramsaylanier/wordexpress-schema) for implementation details and information on how to extend it. 
+
+I've also started creating a set of [WordExpress Components](https://github.com/ramsaylanier/WordExpressComponents) that contain GraphQL qeuries based on the WordExpress Schema package. Refer to that repo for documentation.  
 
 Regarding building, this project using Webpack, and requires Node V 5.0.0. You might be able to get away with 4.0, but really just tighten up and use 5.0.
 
@@ -25,7 +25,6 @@ Just run `npm install` and then `npm run startdev`, which will start a Webpack D
 
 ### Building For Production
 Run `npm run build`, which creates a `dist` folder in the root directory that contains production-ready code to be deployed to a node server. You can run `npm start` which will start the express server using code in the `dist` folder. There is an `npm run deploy` script that will call a deploy.sh shell script located in the /scripts folder. Mine is not included in this repo, since it contains production server information, and it's specific to my setup.
-
 
 ## Defining Your Application Settings
 You'll notice a [settings](https://github.com/ramsaylanier/WordpressExpress/tree/master/settings) folder, which contains JSON files for development. This is where you can define settings for uploads, WP database connection, and some other things. Change accordingly. **For production, create a prod.json file in the same format as dev.json**.
