@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router';
 import styles from './navs.scss';
-import {NavList, NavItem} from './navs.js';
+import { NavList, NavItem } from './navs.js';
 import Logo from '../icons/logo.js';
-import lodash from 'lodash';
+import _ from 'lodash';
 
 class AppNav extends  React.Component{
 
