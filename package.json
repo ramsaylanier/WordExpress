@@ -92,12 +92,12 @@
     "graphql-tools": "^0.6.0",
     "history": "^1.17.0",
     "htmlparser2": "^3.9.0",
-    "lodash": "^3.10.1",
+    "lodash": "^4.13.1",
     "mysql": "^2.10.0",
     "npm": "^3.5.3",
     "php-unserialize": "0.0.1",
     "prerender-node": "^2.2.0",
-    "react": "^15.1.0",
+    "react": "^15.2.0",
     "react-apollo": "^0.3.10",
     "react-css-modules": "^3.6.4",
     "react-dom": "^15.1.0",
@@ -105,7 +105,7 @@
     "react-router": "^2.5.1",
     "request-promise": "^3.0.0",
     "sequelize": "^3.15.1",
-    "wordexpress-schema": "^0.3.0"
+    "wordexpress-schema": "file:///Users/ramsaylanier/Sites/wordexpress-schema"
   },
   "devDependencies": {
     "autoprefixer": "^6.0.3",

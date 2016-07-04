@@ -11,8 +11,9 @@ import Layouts from './components/layouts/layouts.js';
 import { client } from './apollo';
 
 function setLayout(nextState, replaceState, cb){
-
   const { page } = nextState.params;
+  const { Layouts } = nextState.routes[0];
+
   return client.query({
     query: gql`
       query getPage($pageName: String!){
@@ -30,17 +31,21 @@ function setLayout(nextState, replaceState, cb){
     }
   }).then((graphQLResult) => {
     const { errors, data } = graphQLResult;
-    if (data) {
-      let Layout;
-      if (data.page){
+    let Layout;
+
+    if (data.page) {
+      if (data.page.layout){
         Layout = Layouts[data.page.layout.meta_value] || Layouts['Default'];
       } else {
-        Layout = Layouts['NotFound'];
+        Layout = Layouts['Default'];
       }
-      this.layout = Layout;
-      this.component = Layout.Component;
-      cb();
+    } else {
+      Layout = Layouts['NotFound'];
     }
+
+    this.layout = Layout;
+    this.component = Layout.Component;
+    cb();
 
     if (errors) {
       console.log('got some GraphQL execution errors', errors);
@@ -51,7 +56,7 @@ function setLayout(nextState, replaceState, cb){
 }
 
 let routes = (
-  <Route path="/" component={App}>
+  <Route path="/" component={App} Layouts={Layouts}>
     <IndexRoute onEnter={setLayout}/>
     <Route path=":page" onEnter={setLayout} />
     <Route path="post/:post" component={PostSingle} />

@@ -2,8 +2,7 @@
 import path from 'path';
 import express from 'express';
 import { apolloServer } from 'apollo-server';
-import Schema from './schema/typeDefinitions';
-import Resolvers from './schema/resolveFunctions';
+import { Definitions, Resolvers } from './schema/schema';
 import { privateSettings } from './settings/settings';
 
 const APP_PORT = process.env.PORT || 3000;
@@ -15,7 +14,7 @@ let app = express();
 graphQLServer.use('/', apolloServer({
   graphiql: true,
   pretty: true,
-  schema: Schema,
+  schema: Definitions,
   resolvers: Resolvers
 }));
 

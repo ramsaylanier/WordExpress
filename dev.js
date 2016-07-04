@@ -6,8 +6,7 @@ import webpackMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import config from './webpack.config.js';
 import { apolloServer } from 'apollo-server';
-import Schema from './schema/typeDefinitions';
-import Resolvers from './schema/resolveFunctions';
+import { Definitions, Resolvers } from './schema/schema';
 import { privateSettings } from './settings/settings';
 
 const APP_PORT = 3000;
@@ -19,7 +18,7 @@ let app = express();
 graphQLServer.use('/', apolloServer({
   graphiql: true,
   pretty: true,
-  schema: Schema,
+  schema: Definitions,
   resolvers: Resolvers
 }));
 
