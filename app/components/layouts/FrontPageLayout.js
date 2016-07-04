@@ -14,7 +14,7 @@ class FrontPageLayout extends React.Component{
         <div>Loading...</div>
       )
     } else {
-      const { post_title, post_content, thumbnail} = this.props.page.viewer.page;
+      const { post_title, post_content, thumbnail} = this.props.page.page;
   		let bg = {
   			backgroundImage: "url('" + thumbnail + "')"
   		}
@@ -48,13 +48,11 @@ const FrontPageWithData = connect({
       page: {
         query: `
           query getPage{
-            viewer{
-              page(post_name: "homepage"){
-                id,
-      					post_title
-      					post_content
-      					thumbnail
-              }
+            page(post_name: "homepage"){
+              id,
+    					post_title
+    					post_content
+    					thumbnail
             }
           }
         `

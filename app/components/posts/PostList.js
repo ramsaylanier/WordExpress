@@ -70,9 +70,9 @@ const PostListWithData = connect({
           }
         `,
         variables: {
-          postType: ownProps.route.layout.postType || 'post',
-          limit: ownProps.route.layout.limit || 10,
-          skip: ownProps.route.layout.skip || 0
+          postType: ownProps.layout.postType || 'post',
+          limit: ownProps.layout.limit || 10,
+          skip: ownProps.layout.skip || 0
         }
       }
     }

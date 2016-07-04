@@ -20,7 +20,7 @@ class DefaultLayout extends React.Component{
       )
     } else {
 
-      const { post_title, post_content, thumbnail } = this.props.page.page;
+      const { post_title, post_content, thumbnail } = this.props.page;
 
       let bg = {
         backgroundImage: "url('" + thumbnail + "')"
@@ -47,26 +47,27 @@ class DefaultLayout extends React.Component{
   }
 }
 
-const DefaultLayoutWithData = connect({
-  mapQueriesToProps({ ownProps, state}) {
-    return {
-      page: {
-        query:gql`
-          query getPage($page: String){
-            page(name: $page){
-              id,
-    					post_title
-    					post_content
-    					thumbnail
-            }
-          }
-        `,
-        variables: {
-          page: ownProps.params.page || 'homepage'
-        }
-      }
-    }
-  }
-})(DefaultLayout);
+// const DefaultLayoutWithData = connect({
+//   mapQueriesToProps({ ownProps, state}) {
+//     console.log(ownProps)
+//     return {
+//       page: {
+//         query:gql`
+//           query getPage($page: String){
+//             page(name: $page){
+//               id,
+//     					post_title
+//     					post_content
+//     					thumbnail
+//             }
+//           }
+//         `,
+//         variables: {
+//           page: ownProps.params.page || 'homepage'
+//         }
+//       }
+//     }
+//   }
+// })(DefaultLayout);
 
-export default DefaultLayoutWithData;
+export default DefaultLayout;
