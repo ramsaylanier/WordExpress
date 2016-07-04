@@ -34,9 +34,9 @@ class FrontPageLayout extends React.Component{
             </div>
           </div>
         </div>
-  		)
+      )
     }
-	}
+  }
 }
 
 
