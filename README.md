@@ -16,9 +16,16 @@ Regarding building, this project using Webpack, and requires Node V 5.0.0. You m
 [Part 3 - The Schema](https://medium.com/@verybadhello/wordpress-with-node-react-and-graphql-part-3-the-schema-8569a89016c#.w2dcbi5en)
 
 ## Getting Started
+
+### Add the WordExpress Companion Plugin
+You'll need to install the [WordExpress Companion Plugin](https://github.com/ramsaylanier/WordExpress-Plugin) into your WordPress plugins directory. Currently, the plugin simply adds a custom field to all WordPress pages that lets you set a React component as a page layout. See the layouts section below for details.
+
+### Install NPM modules and running Locally
 Just run `npm install` and then `npm run startdev`, which will start a Webpack Dev Server. It should automatically open a browser window pointed at localhost:3000.
 
-To build for production, run `npm run build`, which creates a `dist` folder in the root directory that contains production-ready code to be deployed to a node server. You can run `npm start` which will start the express server using code in the `dist` folder. There is an `npm run deploy` script that will call a deploy.sh shell script located in the /scripts folder. Mine is not included in this repo, since it contains production server information, and it's specific to my setup.
+### Building For Production
+Run `npm run build`, which creates a `dist` folder in the root directory that contains production-ready code to be deployed to a node server. You can run `npm start` which will start the express server using code in the `dist` folder. There is an `npm run deploy` script that will call a deploy.sh shell script located in the /scripts folder. Mine is not included in this repo, since it contains production server information, and it's specific to my setup.
+
 
 ## Defining Your Application Settings
 You'll notice a [settings](https://github.com/ramsaylanier/WordpressExpress/tree/master/settings) folder, which contains JSON files for development. This is where you can define settings for uploads, WP database connection, and some other things. Change accordingly. **For production, create a prod.json file in the same format as dev.json**.
@@ -58,7 +65,8 @@ const FrontPageWithData = connect({
 Simply change "homepage" to anything you want. Keep in mind that it queries the post-name (AKA slug), not the post-title.
 
 ## Using React Components as Layouts
-Layouts can be matched by page name, with a default if no layouts match. Refer to the `Layouts` object in the [layouts directory](https://github.com/ramsaylanier/WordpressExpress/blob/master/app/components/layouts/layouts.js). The `Layouts` object stores some basic parameters that the `WordpressPage` component will read. It looks like this:
+
+As mentioned above, make sure you have first installed the [WordExpress Companion Plugin](https://github.com/ramsaylanier/WordExpress-Plugin) into your WordPress plugins directory. The plugin will add a custom WordPress meta box to all your WordPress pages. There is a text input field in the meta box called `Page Layout Component`. The value you put in there should match one of the objects in the `Layouts` object in the [layouts directory](https://github.com/ramsaylanier/WordpressExpress/blob/master/app/components/layouts/layouts.js). The `Layouts` object stores some basic parameters that the `WordpressPage` component will read. It looks like this:
 
 ```es6
 import PostList from '../posts/PostList.js';
@@ -83,7 +91,7 @@ const Layouts = {
 export default Layouts;
 ```
 
-In the above example, I have a WordPress page called 'articles'. On this page, I want it to use a PostList component and show posts of the 'post' type, with a limit of 10 posts per page.
+In the above example, I have a WordPress page called 'articles'. On this page, I want it to use a PostList component and show posts of the 'post' type, with a limit of 10 posts per page. In the `Page Layout Component` field on the Articles page in the WordPress admin backend, I enter "PostList" and publish the page.
 
 ## Playing With GraphiQL
 GraphiQL is the in-browser IDE for testing GraphQL queries. For experimentation purposes, I've kept the GraphiQL IDE publically available so you can play around with querying the WordExpress database. [Check it out here](http://wordexpress.io:8080).
@@ -93,7 +101,7 @@ This project started out as just an experiment, but it seems like a lot of other
 
 1) Make Server Side Rendering work. It's weird using Relay, and Facebook doesn't have official support for it, though it seems like it might be coming soon. We need SSR to handle SEO, meta tags, and all that.
 
-2) Need to make layouts work better. Currently, you create a custom field in wordpress for each page called 'react_layout" and just type the name of a React component that will server as the pages "layout." It could be better. Ideally, I'd write a companion WordPress plugin that comes complete with some standard custom fields that work directly with this project.
+2) ~~Need to make layouts work better. Currently, you create a custom field in wordpress for each page called 'react_layout" and just type the name of a React component that will server as the pages "layout." It could be better. Ideally, I'd write a companion WordPress plugin that comes complete with some standard custom fields that work directly with this project.~~ The companion plugin exists!
 
 3) Work on developing more complex queries. The WordExpressDatabase object is currently expandable, meaning after importing the default from `wordexpress-schema` you can add Sequel models and queries to it before passing it into WordExpressGraphQLSchema. However, WordExpressGraphQLSchema is **not** expandable. This should be a thing.
 
