@@ -50,8 +50,8 @@ const FrontPageWithData = connect({
           query getPage{
             page(post_name: "homepage"){
               id,
-    					post_title
-    					post_content
+              post_title,
+              post_content,
     					thumbnail
             }
           }
