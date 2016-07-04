@@ -4,7 +4,7 @@
 
 This project aims to replace PHP with Javascript in WordPress development by using Node.js and Express to consume data from a WordPress database using GraphQL. It uses [Apollo](http://apollostack.com) to fetch the data and deliver it into React components. **This repo is the codebase for [wordexpress.io](http://wordexpress.io), where I will write articles and documentation explaining how it works**.
 
-The core of this project revolves around setting up a connection to a WordPress database using Sequelize, defining models from that connection, and then querying those models using GraphQL.
+The core of this project revolves around setting up a connection to a WordPress database using Sequelize, defining models from that connection, and then querying those models using GraphQL. It's delivered through an npm package called WordExpress Schema. [Read the documentation](https://github.com/ramsaylanier/wordexpress-schema) for implementation details and information on how to extend it. 
 
 Regarding building, this project using Webpack, and requires Node V 5.0.0. You might be able to get away with 4.0, but really just tighten up and use 5.0.
 
