@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import React from 'react';
-import makeAsyncScriptLoader from "react-async-script";
 import PostContent from '../posts/PostContent';
 
 function GetShortCode(line){
