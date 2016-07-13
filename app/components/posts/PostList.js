@@ -8,33 +8,18 @@ import Button from '../button/button.js';
 
 
 class PostList extends React.Component{
-
-  constructor(){
-    super();
-    this._loadMorePosts = this._loadMorePosts.bind(this);
-  }
-
   render(){
     const { posts, settings } = this.props.page;
+    const { Excerpt } = this.props.layout;
 
     if (posts){
-      let hasNextPage, hasPreviousPage;
-
-      if (posts.pageInfo){
-        let { hasNextPage, hasPreviousPage } = posts.pageInfo
-      }
-
       return(
         <Page>
           {posts.map( (post, index) => {
             return(
-              <PostExcerpt index={index} key={post.id} post={post} settings={settings} />
+              <Excerpt index={index} key={post.id} post={post} settings={settings} />
             )
           })}
-
-          { hasNextPage &&
-            <Button type="primary center" onClick={this._loadMorePosts}>Load More</Button>
-          }
         </Page>
       )
     } else{
@@ -42,11 +27,6 @@ class PostList extends React.Component{
         <div>Loading...</div>
       )
     }
-  }
-
-  _loadMorePosts(){
-    const limit = this.props.page.posts.edges.length;
-    this.props.page.refetch({limit: limit + 1});
   }
 }
 
