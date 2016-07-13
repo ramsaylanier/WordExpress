@@ -1,7 +1,9 @@
-import PostList from '../posts/PostList.js';
-import DefaultLayout from './DefaultLayout.js';
-import FrontPageLayout from './FrontPageLayout.js';
-import NotFoundLayout from './NotFoundLayout.js';
+import PostList from '../posts/PostList';
+import DocumentationList from '../documentation/DocumentationList';
+import PostExcerpt from '../posts/PostExcerpt';
+import DefaultLayout from './DefaultLayout';
+import FrontPageLayout from './FrontPageLayout';
+import NotFoundLayout from './NotFoundLayout';
 
 const Layouts = {
   'Default': {
@@ -12,8 +14,16 @@ const Layouts = {
   },
   'PostList': {
     Component: PostList,
+    Excerpt: PostExcerpt,
     postType: 'post',
     limit: 10,
+    skip: 0
+  },
+  'DocumentationList': {
+    Component: DocumentationList,
+    Excerpt: PostExcerpt,
+    postType: 'documentation',
+    limit: 100,
     skip: 0
   },
   'NotFound': {
