@@ -12,10 +12,18 @@ class Page extends React.Component{
 		AnimateItem(this._page, PageAnimations.animateIn);
 	}
 
+  componentDidUpdate(){
+    let animation = this.props.animation || PageAnimations.animateIn;
+		AnimateItem(this._page, PageAnimations.animateIn);
+  }
+
 	render(){
-    const { children } = this.props;
+    const { children, classes } = this.props;
+
+    const style = classes ? "base " + classes : "base";
+
     return (
-      <div ref={ (c) => this._page = c } styleName="base">
+      <div ref={ (c) => this._page = c } styleName={style}>
         {children}
       </div>
     )
