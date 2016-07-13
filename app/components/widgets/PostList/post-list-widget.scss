@@ -1,0 +1,37 @@
+@import '../../../styles/vars';
+@import '../../../styles/typography';
+
+.base{
+  margin-bottom: 1rem;
+}
+
+.post-list{
+  font-size: 1rem;
+  font-family: $heading;
+
+  & > li{
+    border-bottom: 1px solid $primary;
+    padding: .5rem 0;
+  }
+
+  ul{
+
+  }
+}
+
+.post-title{
+  font-size: 1em;
+}
+
+.post-item{
+  list-style: none;
+}
+
+.sublist{
+  & > li {
+    a{
+      color: $secondary;
+      font-size: .8em;
+    }
+  }
+}
