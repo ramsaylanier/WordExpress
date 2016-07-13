@@ -14,13 +14,17 @@ class AppNav extends  React.Component{
 		return(
 			<NavList type="primary">
 				<NavItem>
-					<Link to='/' styleName="brand"><Logo/></Link>
+					<Link to='/'><Logo/></Link>
 				</NavItem>
 				{items.map( item => {
-					const { children } = item;
+					const { children, object_type, post_title, navitem } = item;
+
+          let linkText = post_title.length > 0 ? post_title : item.navitem.post_title
+          let pathname = object_type === "page" ? `/${item.navitem.post_name}` : `/${object_type}/${item.navitem.post_name}`;
+
 					return(
 						<NavItem key={item.id}>
-							<Link to={{ pathname: `/${item.navitem.post_name}` }} className={styles.link}>{item.navitem.post_title}</Link>
+							<Link to={{ pathname: pathname }} className={styles.link}>{linkText}</Link>
 							{children.length > 0 &&
 								<NavList type="subnav">
 									{children.map( child => {
