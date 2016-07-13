@@ -5,6 +5,27 @@
   opacity: 0;
 }
 
+.with-sidebar{
+  position: relative;
+  left: $sidebarWidth;
+  width: 100vw - $sidebarWidth;
+
+  .title{
+    box-shadow: 0px 0px 0px transparent;
+  }
+}
+
+.with-header{
+  .title{
+    box-shadow: 0px -100px 100px -30px fade-out($dark, .7);
+    background-color: white;
+  }
+
+  .wrapper{
+    top: -10rem;
+  }
+}
+
 .header{
   composes: cover center from "../../styles/background.scss";
   position: relative;
@@ -89,8 +110,11 @@
   composes: main from "../../styles/wrapper.scss";
   position: relative;
   background-color: white;
-  top: -10rem;
-  z-index: 20;
+
+  &.with-header{
+    top: -10rem;
+    z-index: 20;
+  }
 }
 
 .title{
@@ -98,7 +122,6 @@
   font-size: 3em;
   position: relative;
   z-index: 2;
-  box-shadow: 0px -100px 100px -30px fade-out($dark, .7);
 }
 
 .shortcode{

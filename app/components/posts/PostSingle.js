@@ -39,7 +39,7 @@ class PostSingle extends React.Component{
       }
 
       return(
-        <div ref={(c) => this._post = c} styleName="base">
+        <div ref={(c) => this._post = c} styleName="base with-header">
           <div styleName="header" style={bg}>
 
           </div>

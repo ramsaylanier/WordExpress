@@ -7,6 +7,10 @@
 	padding-top: 4rem;
 }
 
+.with-sidebar{
+  min-height: 100vh;
+}
+
 .wrapper{
 	composes: main from '../../styles.scss';
 	z-index: 2;

@@ -40,6 +40,7 @@ hr {
 
 p {
   margin-bottom: 1.3em;
+  font-family: $copy;
 }
 
 b, strong, em, small, code {
@@ -59,7 +60,9 @@ pre{
   padding: 1rem;
   border: 1px solid darken(white, 5%);
   background-color: darken(white, 10%);
+  font-size: .8rem;
   overflow: auto;
+  margin-bottom: 1.5rem;
 
   p{
     font-size: 1rem;
