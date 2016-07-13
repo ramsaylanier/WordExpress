@@ -1,0 +1,84 @@
+@import "../../styles/vars";
+
+.base{
+  background-color: white;
+  opacity: 0;
+  left: $sidebarWidth;
+  min-height: 100vh;
+  padding: 2rem 2rem;
+  position: relative;
+  width: 100vw - $sidebarWidth;
+}
+
+.item{
+  padding: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid $primary;
+
+  &:target{
+    padding-top:6rem;
+  }
+}
+
+.item-child{
+  padding: 1rem 0;
+}
+
+.content{
+
+  p{
+    font-size: 1.2rem;
+  }
+
+  a{
+    color: $secondary;
+    border-bottom: 1px solid currentColor;
+    line-height: 0;
+    transition: color 150ms ease-out;
+
+    &:hover{
+      color: $primary;
+    }
+  }
+
+  .alignleft{
+    float: left;
+    margin-right: 1.5rem;
+  }
+
+  img{
+    max-width: 100%;
+    height: auto;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  figure{
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    img{
+      margin: 0;
+    }
+  }
+}
+
+.wrapper{
+  composes: main from "../../styles/wrapper.scss";
+  position: relative;
+  background-color: white;
+}
+
+.title{
+  // font-size: 2em;
+  margin: 0 0 .5rem;
+}
+
+.title__child{
+  margin: 0 0 .5rem;
+}
+
+.shortcode{
+  iframe{
+    height: 75vh;
+  }
+}
