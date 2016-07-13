@@ -1,0 +1,19 @@
+@import '../../styles/vars';
+
+.base{
+  background-color: darken(white, 2%);
+  border-right: 1px solid $primary;
+  position: fixed;
+  width: $sidebarWidth;
+  height: 100%;
+  top: 0;
+  left: 0;
+  padding: 5rem 1rem 1rem;
+  overflow-y: auto;
+}
+
+.toggle{
+  position: absolute;
+  top: 5rem;
+  right: 1rem;
+}
