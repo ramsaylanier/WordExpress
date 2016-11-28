@@ -35,4 +35,4 @@ const NavItem = (props) =>{
 let Navs = [];
 
 
-export { NavList, NavList, NavItem, Navs}
+export { NavList, NavItem, Navs}
