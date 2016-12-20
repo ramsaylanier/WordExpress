@@ -8,6 +8,9 @@ import _ from 'lodash';
 class AppNav extends  React.Component{
 
 	render(){
+		if (!this.props.menu)
+			return null;
+		
 		let { items } = this.props.menu;
 		items = _.sortBy(items, 'order');
 
