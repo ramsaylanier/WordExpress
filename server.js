@@ -27,7 +27,7 @@ app.use(express.static('./dist'));
 app.use('/graphql', apolloServer({
   graphiql: true,
   pretty: true,
-  schema: Schema,
+  schema: Definitions,
   resolvers: Resolvers
 }));
 app.get('*', function response(req, res, next) {
