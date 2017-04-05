@@ -1,15 +1,13 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Page from '../pages/page.js';
-import PostContent from '../posts/PostContent';
 
 import CSSModules from 'react-css-modules';
 import styles from '../pages/page.scss';
 
 @CSSModules(styles, {allowMultiple: true})
-class NotFoundLayout extends React.Component{
-
-  render(){
-    return(
+class NotFoundLayout extends Component {
+  render() {
+    return (
       <Page>
         <div styleName="hero">
   				<div styleName="wrapper tight">
@@ -23,7 +21,7 @@ class NotFoundLayout extends React.Component{
   				</div>
   			</div>
       </Page>
-    )
+    );
   }
 }
 

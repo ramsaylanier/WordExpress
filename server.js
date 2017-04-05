@@ -4,14 +4,14 @@ import express from 'express';
 import { apolloServer } from 'apollo-server';
 import { Definitions, Resolvers } from './schema/schema';
 import { privateSettings } from './settings/settings';
+import bodyParser from 'body-parser';
 
 const APP_PORT = process.env.PORT || 3000;
 const GRAPHQL_PORT = 8080;
 const graphQLServer = express();
+const app = express();
 
-let app = express();
-
-graphQLServer.use('/', apolloServer({
+graphQLServer.use('/', bodyParser.json(), apolloServer({
   graphiql: true,
   pretty: true,
   schema: Definitions,
@@ -30,7 +30,7 @@ app.use('/graphql', apolloServer({
   schema: Definitions,
   resolvers: Resolvers
 }));
-app.get('*', function response(req, res, next) {
+app.get('*', function response(req, res) {
   res.sendFile(path.join(__dirname, '/index.html'));
 });
 

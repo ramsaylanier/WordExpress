@@ -15,11 +15,6 @@ const devServer = {
     publicPath: '/',
     historyApiFallback: false,
     host: '127.0.0.1',
-    proxy:{
-      '/graphql': {
-        target: 'http://localhost:8080'
-      }
-    },
     port: 3000,
     hot: true
 };

@@ -1,73 +1,43 @@
-import React from 'react';
-import { connect } from 'react-apollo';
+import React, {Component, PropTypes} from 'react';
 import Page from '../pages/page.js';
 import PostContent from '../posts/PostContent';
-import gql from 'graphql-tag';
-
 import CSSModules from 'react-css-modules';
 import styles from '../pages/page.scss';
 
 @CSSModules(styles, {allowMultiple: true})
-class DefaultLayout extends React.Component{
+class DefaultLayout extends Component {
 
-  render(){
-    console.log(this.props);
+  static propTypes = {
+    page: PropTypes.object
+  }
+
+  render() {
     const { loading } = this.props.page;
 
-    if (loading){
+    if (!loading) {
+      const { post_title: title, post_content: content, thumbnail } = this.props.page;
+      const bg = {backgroundImage: `url("${thumbnail}")`};
+      const heroClass = thumbnail ? 'hero_thumbnail' : 'hero';
+
       return (
-        <div></div>
-      )
-    } else {
-
-      const { post_title, post_content, thumbnail } = this.props.page;
-
-      let bg = {
-        backgroundImage: "url('" + thumbnail + "')"
-      }
-
-      let heroClass = thumbnail ? "hero_thumbnail" : "hero"
-
-      return(
         <Page>
           <div styleName={heroClass} style={bg}>
     				<div styleName="wrapper tight">
-              <h2 styleName="title">{post_title}</h2>
+              <h2 styleName="title">{title}</h2>
     				</div>
     			</div>
 
     			<div styleName="content">
     				<div styleName="wrapper tight">
-    					<PostContent post_content={post_content}/>
+    					<PostContent content={content}/>
     				</div>
     			</div>
         </Page>
-      )
+      );
     }
+
+    return <div></div>;
   }
 }
-
-// const DefaultLayoutWithData = connect({
-//   mapQueriesToProps({ ownProps, state}) {
-//     console.log(ownProps)
-//     return {
-//       page: {
-//         query:gql`
-//           query getPage($page: String){
-//             page(name: $page){
-//               id,
-//     					post_title
-//     					post_content
-//     					thumbnail
-//             }
-//           }
-//         `,
-//         variables: {
-//           page: ownProps.params.page || 'homepage'
-//         }
-//       }
-//     }
-//   }
-// })(DefaultLayout);
 
 export default DefaultLayout;

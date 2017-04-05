@@ -1,32 +1,34 @@
-import React from 'react';
-import _ from 'lodash';
-import htmlparser from 'htmlparser2';
-
+import React, {Component, PropTypes} from 'react';
+import {map} from 'lodash';
 import { browserHistory } from 'react-router';
-
 import CSSModules from 'react-css-modules';
 import styles from './post.scss';
 import Shortcodes  from '../shortcodes/shortcodes';
+import {TweenMax, Power4} from 'gsap';
 
 @CSSModules(styles, {allowMultiple: true})
-class PostContent extends React.Component{
+class PostContent extends Component {
 
-  componentDidMount(){
+  static propTypes = {
+    content: PropTypes.string
+  }
+
+  componentDidMount() {
     const content = this._content;
     const anchors = content.getElementsByTagName('a');
     const r = new RegExp('^(?:[a-z]+:)?//', 'i');
 
-    //add transitions to all internal links
-    _.map(anchors, anchor => {
-      const target = anchor.getAttribute("href");
+    // add transitions to all internal links
+    map(anchors, anchor => {
+      const target = anchor.getAttribute('href');
 
-      if (!r.test(target)){
+      if (!r.test(target)) {
         anchor.addEventListener('click', (e)=>{
           e.preventDefault();
           browserHistory.push(target);
           TweenMax.to(window, 0.5, {
-            scrollTo:{
-              y:0
+            scrollTo: {
+              y: 0
             },
             ease: Power4.easeInOut
           });
@@ -34,52 +36,48 @@ class PostContent extends React.Component{
       }
     });
 
-    //render embed shortcodes
+    // render embed shortcodes
     const shortcodes = document.getElementsByClassName('post--shortcode');
-    _.map(shortcodes, (shortcode) => {
-      return Shortcodes.renderEmbed(shortcode)
-    })
-
-
+    map(shortcodes, (shortcode) => Shortcodes.renderEmbed(shortcode));
   }
 
-  _parseContent(){
-    const { post_content } = this.props;
-    const trimmed = post_content.trim();
-    const content = trimmed.split('\n');
-    const voidTags = ["p","h1", "h2", "h3", "h4", "h5", "code", "pre", "img"];
-    const shortcodes = ["caption", "embed", "gist"];
+  _parseContent() {
+    const { content } = this.props;
+    const trimmed = content.trim();
+    const splitContent = trimmed.split('\n');
+    const voidTags = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'code', 'pre', 'img'];
+    const shortcodes = ['caption', 'embed', 'gist'];
 
+    map(splitContent, (line, index) => {
+      let newline = line;
 
-    _.map(content, (line, index) => {
-        //check if line is a shortcode
-      if (line[0] === '['){
-        let shortcode = line.match(/([[])\w+/g).toString().substr(1);
-        if (shortcodes.indexOf(shortcode) >= 0){
-          line = Shortcodes[shortcode](line);
+      // check if line is a shortcode
+      if (newline[0] === '[') {
+        const shortcode = line.match(/([[])\w+/g).toString().substr(1);
+        if (shortcodes.indexOf(shortcode) >= 0) {
+          newline = Shortcodes[shortcode](line);
         }
       } else {
         // wrap lines without voidTags in paragraph tags
         let tag = line.match(/^<\w+/g);
         tag = tag ? tag[0].slice(1) : '';
-        if (voidTags.indexOf(tag) === -1 && line.length > 1){
-          line = '<p>' + line + '</p>';
+        if (voidTags.indexOf(tag) === -1 && line.length > 1) {
+          newline = '<p>' + line + '</p>';
         }
       }
 
-      content[index] = line;
+      splitContent[index] = newline;
     });
 
     return {
-      __html: content.join('')
-    }
+      __html: splitContent.join('')
+    };
   }
 
-  render(){
-    return(
+  render() {
+    return (
       <div ref={ (c)=> this._content = c } styleName="content" dangerouslySetInnerHTML = {this._parseContent()}></div>
-
-    )
+    );
   }
 }
 

@@ -1,62 +1,41 @@
-import React from 'react';
-import Page from '../pages/page.js';
+import React, {Component, PropTypes} from 'react';
 import PostContent from '../posts/PostContent';
-import { connect } from 'react-apollo';
+import Page from '../pages/page.js';
 
-class FrontPageLayout extends React.Component{
-  render(){
-    const { loading } = this.props.page;
+class FrontPageLayout extends Component {
 
-    if (loading){
-      return (
-        <div>Loading...</div>
-      )
-    } else {
-      const { post_title, post_content, thumbnail} = this.props.page.page;
-      let bg = {
-        backgroundImage: "url('" + thumbnail + "')"
-      }
+  static propTypes = {
+    page: PropTypes.object
+  }
 
-      let heroClass = thumbnail ? "hero_thumbnail" : "hero"
+  render() {
+    const {loading} = this.props.page;
+
+    if (!loading) {
+      const {post_content: content, thumbnail} = this.props.page;
+      const bg = {backgroundImage: `url("${thumbnail}")`};
+      const heroClass = thumbnail ? 'hero_thumbnail' : 'hero';
 
       return (
-        <div>
+        <Page>
           <div styleName={heroClass} style={bg}>
             <div styleName="wrapper tight">
               <h1 styleName="title">WordExpress</h1>
               <h4 styleName="subtitle">WordPress using Node, Express, and React.</h4>
             </div>
-          </div>
+    			</div>
 
-          <div styleName="content">
-            <div styleName="wrapper tight">
-              <PostContent post_content={post_content}/>
-            </div>
-          </div>
-        </div>
-      )
+    			<div styleName="content">
+    				<div styleName="wrapper tight">
+    					<PostContent content={content}/>
+    				</div>
+    			</div>
+        </Page>
+      );
     }
+
+    return <div>Loading...</div>;
   }
 }
 
-
-const FrontPageWithData = connect({
-  mapQueriesToProps({ ownProps, state}) {
-    return {
-      page: {
-        query: `
-          query getPage{
-            page(post_name: "homepage"){
-              id,
-              post_title,
-              post_content,
-              thumbnail
-            }
-          }
-        `
-      }
-    }
-  }
-})(FrontPageLayout);
-
-export default FrontPageWithData;
+export default FrontPageLayout;

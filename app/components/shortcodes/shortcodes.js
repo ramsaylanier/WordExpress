@@ -1,33 +1,32 @@
-import _ from 'lodash';
+import {map} from 'lodash';
 import React from 'react';
-import PostContent from '../posts/PostContent';
 
-function GetShortCode(line){
-  let shortcodeObj = {
+function GetShortCode(line) {
+  const shortcodeObj = {
     shortcode: '',
     content: '',
     params: {}
   };
 
-  //get shortcode from line (gets everything in between the first set of square brackets)
+  // get shortcode from line (gets everything in between the first set of square brackets)
   shortcodeObj.shortcode = line.match(/\[([^\]]*)\]/g)[0].toString();
 
-  //get content between the opening and closing shortcode tags
+  // get content between the opening and closing shortcode tags
   shortcodeObj.content = line.match(/\](.*?)\[/g).toString().slice(1, -1);
 
-  //get array of shortcode parameters
+  // get array of shortcode parameters
   const params = shortcodeObj.shortcode.match(/[\w-]+="[^"]*"/g);
 
-  //turn params into key/value pairs
-  _.map(params, param => {
+  // turn params into key/value pairs
+  map(params, param => {
     const arr = param.split('=');
-    shortcodeObj.params[arr[0]] = arr[1].slice(1,-1);
-  })
+    shortcodeObj.params[arr[0]] = arr[1].slice(1, -1);
+  });
 
   return shortcodeObj;
 }
 
-function RenderCaptionShortCode(line){
+function RenderCaptionShortCode(line) {
   const shortcode = GetShortCode(line);
   const { params, content } = shortcode;
   const { id, align, width} = params;
@@ -40,58 +39,62 @@ function RenderCaptionShortCode(line){
   );
 }
 
-function RenderGistShortCode(line){
+function RenderGistShortCode(line) {
   const shortcode = GetShortCode(line);
   const { content } = shortcode;
   return (
     '<div class="post--shortcode" data-type="gist" data-source="' + content + '"></div>'
-  )
+  );
 }
 
-function RenderGistEmbed(shortcode){
+function RenderGistEmbed(shortcode) {
   const source = shortcode.dataset.source;
-  let gistFrame = document.createElement("iframe");
-	gistFrame.setAttribute("width", "100%");
-	gistFrame.id = "gist-frame";
+  const gistFrame = document.createElement('iframe');
+  gistFrame.setAttribute('width', '100%');
+  gistFrame.id = 'gist-frame';
 
-  let container = document.createElement("div");
-  container.id = "gist--container";
+  const container = document.createElement('div');
+  container.id = 'gist--container';
 
-	let zone = shortcode.appendChild(container);
-	zone.innerHTML = "";
-	zone.appendChild(gistFrame);
+  const zone = shortcode.appendChild(container);
+  zone.innerHTML = '';
+  zone.appendChild(gistFrame);
 
 	// Create the iframe's document
-  let gistFrameHTML =
-  '<html><body">' +
-  '<script type="text/javascript" src="' + source + '"></script></body></html>';
+  const gistFrameHTML =
+  `
+    <html>
+      <body">
+        <script type="text/javascript" src="${source}"></script>
+      </body>
+    </html>
+  `;
 
-	let gistFrameDoc = gistFrame.document;
+  let gistFrameDoc = gistFrame.document;
 
-	if (gistFrame.contentDocument) {
-		gistFrameDoc = gistFrame.contentDocument;
-	} else if (gistFrame.contentWindow) {
-		gistFrameDoc = gistFrame.contentWindow.document;
-	}
+  if (gistFrame.contentDocument) {
+    gistFrameDoc = gistFrame.contentDocument;
+  } else if (gistFrame.contentWindow) {
+    gistFrameDoc = gistFrame.contentWindow.document;
+  }
 
-  //opens the iframe document and writes the embed script, which then gets executed
-	gistFrameDoc.open();
-	gistFrameDoc.writeln(gistFrameHTML);
-	gistFrameDoc.close();
+  // opens the iframe document and writes the embed script, which then gets executed
+  gistFrameDoc.open();
+  gistFrameDoc.writeln(gistFrameHTML);
+  gistFrameDoc.close();
 
   return gistFrameHTML;
 }
 
-function RenderEmbed(shortcode){
+function RenderEmbed(shortcode) {
   const type = shortcode.dataset.type;
-  switch(type){
-    case "gist":
-      return RenderGistEmbed(shortcode);
-      break;
+  switch (type) {
+  case 'gist':
+    return RenderGistEmbed(shortcode);
+    break;
 
-    default:
-      break;
-
+  default:
+    break;
   }
 }
 
@@ -99,6 +102,6 @@ const Shortcodes = {
   caption: RenderCaptionShortCode,
   gist: RenderGistShortCode,
   renderEmbed: RenderEmbed
-}
+};
 
 export default Shortcodes;
