@@ -104,11 +104,12 @@
     "react-css-modules": "^3.7.7",
     "react-dom": "^15.4.2",
     "react-helmet": "^2.3.1",
+    "react-redux": "^5.0.3",
     "react-router": "^2.5.1",
     "react-router-redux": "^4.0.5",
     "request-promise": "^3.0.0",
     "sequelize": "^3.15.1",
-    "wordexpress-components": "^2.0.0",
+    "wordexpress-components": "^2.0.1",
     "wordexpress-schema": "^2.0.0"
   },
   "devDependencies": {
