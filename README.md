@@ -2,7 +2,7 @@
 
 This project aims to replace PHP with Javascript in WordPress development by using Node.js and Express to consume data from a WordPress database using GraphQL. It uses [Apollo](http://apollostack.com) to fetch the data and deliver it into React components. **This repo is the codebase for [wordexpress.io](http://wordexpress.io), where I will write articles and documentation explaining how it works**.
 
-The core of this project revolves around setting up a connection to a WordPress database using Sequelize, defining models from that connection, and then querying those models using GraphQL. It's delivered through an npm package called WordExpress Schema. [Read the documentation](https://github.com/ramsaylanier/wordexpress-schema) for implementation details and information on how to extend it. 
+The core of this project revolves around setting up a connection to a WordPress database using Sequelize, defining models from that connection, and then querying those models using GraphQL. It's delivered through an npm package called WordExpress Schema. [Read the documentation](https://github.com/ramsaylanier/wordexpress-schema) for implementation details and information on how to extend it.
 
 I've also started creating a set of [WordExpress Components](https://github.com/ramsaylanier/WordExpressComponents) that contain GraphQL qeuries based on the WordExpress Schema package. Refer to that repo for documentation.  
 
@@ -34,34 +34,6 @@ This project uses Amazon AWS with an S3 bucket. If you are hosting your media fi
 
 #### Database Settings
 This should be pretty self-explanatory: simply enter in the name of your database, username and password, and host. Make sure these are inside of "private", or else they'll be available on the client (WHICH IS BAD).
-
-## Setting the Front Page
-When you run `npm startdev` for the first time, you'll probably get an error saying "cannot find page-title of undefined." This is probably because you haven't set a landing page in WordPress. By default, the [FrontPageLayout](https://github.com/ramsaylanier/WordPressExpress/blob/master/app/components/layouts/FrontPageLayout.js) component queries a post with the post-name (AKA slug) of "homepage". If you are using a fresh WordPress installation, simply create a page and give it a slug of "homepage." If you are working with an existing WordPress database, you can change which page that gets loaded by changing the page query in the `FrontPageLayout` component. See below:
-
-```es6
-const FrontPageWithData = connect({
-  mapQueriesToProps({ ownProps, state}) {
-    return {
-      page: {
-        query: `
-          query getPage{
-            viewer{
-              page(post_name: "homepage"){
-                id,
-      		post_title
-      		post_content
-      		thumbnail
-              }
-            }
-          }
-        `
-      }
-    }
-  }
-})(FrontPageLayout);
-```
-
-Simply change "homepage" to anything you want. Keep in mind that it queries the post-name (AKA slug), not the post-title.
 
 ## Using React Components as Layouts
 
@@ -104,4 +76,4 @@ This project started out as just an experiment, but it seems like a lot of other
 
 3) Work on developing more complex queries. The WordExpressDatabase object is currently expandable, meaning after importing the default from `wordexpress-schema` you can add Sequel models and queries to it before passing it into WordExpressGraphQLSchema. However, WordExpressGraphQLSchema is **not** expandable. This should be a thing.
 
-4) ~~Figuring out how to get WordPress shortcodes to work. I'd only expect that built in WordPress shortcodes would work (i.e `[caption]`, but they don't currently. It would require parsing the post_content field and then recognizing short codes and then probably building a unique React component for each shortcode.~~ Currently only a few shortcodes work. I've got Caption working, as well as the ability to embed Github Gists. 
+4) ~~Figuring out how to get WordPress shortcodes to work. I'd only expect that built in WordPress shortcodes would work (i.e `[caption]`, but they don't currently. It would require parsing the post_content field and then recognizing short codes and then probably building a unique React component for each shortcode.~~ Currently only a few shortcodes work. I've got Caption working, as well as the ability to embed Github Gists.
