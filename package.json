@@ -108,8 +108,8 @@
     "react-router-redux": "^4.0.5",
     "request-promise": "^3.0.0",
     "sequelize": "^3.15.1",
-    "wordexpress-components": "^1.0.0",
-    "wordexpress-schema": "^1.0.0"
+    "wordexpress-components": "^2.0.0",
+    "wordexpress-schema": "^2.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.0.3",
