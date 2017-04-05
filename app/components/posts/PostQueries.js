@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-export function PostListQuery({ownProps, state}){
+export function PostListQuery({ownProps}) {
   return {
     getPosts: {
       query: gql`
@@ -18,10 +18,10 @@ export function PostListQuery({ownProps, state}){
         post_type: ownProps.layout.postType
       }
     }
-  }
+  };
 }
 
-export function PostQuery({ownProps, state}){
+export function PostQuery({ownProps}) {
   return {
     getPost: {
       query: gql`
@@ -39,5 +39,5 @@ export function PostQuery({ownProps, state}){
         id: ownProps.id
       }
     }
-  }
+  };
 }

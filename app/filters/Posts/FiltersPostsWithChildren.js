@@ -1,39 +1,35 @@
-import _ from 'lodash';
+import {filter, map, remove} from 'lodash';
 
-
-//takes unsorted posts and reduces them to top levels posts with a nested array of children
-export default function FilterPostsWithChildren(posts){
-
-  function getChildren(post){
-
+// takes unsorted posts and reduces them to top levels posts with a nested array of children
+export default function FilterPostsWithChildren(posts) {
+  function getChildren(post) {
     const { id } = post;
-    const children = _.filter(posts, post => {
-      return post.post_parent == id
-    })
+    const children = filter(posts, childPost => {
+      return childPost.post_parent === id;
+    });
 
-    if (children.length > 0){
-      _.map(children, child => {
-        child = getChildren(child);
-        if (!post.children){
-           post.children = [];
+    if (children.length > 0) {
+      map(children, child => {
+        const childWithChildren = getChildren(child);
+        if (!post.children) {
+          post.children = [];
         }
 
-        post.children.push(child);
-      })
+        post.children.push(childWithChildren);
+      });
     }
 
     return post;
   }
 
-  const topLevelPosts = _.remove( posts, post => {
+  const topLevelPosts = remove( posts, post => {
     return post.post_parent === 0;
-  })
+  });
 
-  _.map(topLevelPosts, topLevelPost => {
+  map(topLevelPosts, topLevelPost => {
     topLevelPost.children = [];
-    let post = getChildren(topLevelPost);
-    return post
-  })
+    return getChildren(topLevelPost);
+  });
 
   return topLevelPosts;
 }

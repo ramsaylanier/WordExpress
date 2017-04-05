@@ -1,11 +1,14 @@
-import React from 'react';
+import React, {Component, PropTypes} from 'react';
 import Head from './components/head/head';
 import Header from './components/header/header';
 
-class App extends React.Component {
+class App extends Component {
+
+  static propTypes = {
+    children: PropTypes.object
+  }
 
   render() {
-    console.log(this.props);
     const { children } = this.props;
     return (
       <div className="application">
@@ -13,7 +16,7 @@ class App extends React.Component {
         <Header/>
         {children}
       </div>
-    )
+    );
   }
 }
 

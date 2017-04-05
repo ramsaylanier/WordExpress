@@ -1,36 +1,41 @@
-import React from 'react';
+import React, {Component, PropTypes} from 'react';
 import CSSModules from 'react-css-modules';
 import styles from './post-list-widget.scss';
-import { Link } from 'react-router';
+import {map} from 'lodash';
 
 @CSSModules(styles, {allowMultiple: true})
-class PostListWidgetItem extends React.Component{
-  render(){
-    const { post } = this.props;
-    return(
-      <li>
-        <a href={"#" + post.post_name}>
-          {post.post_title}
-        </a>
+class PostListWidgetItem extends Component {
 
-        {this._renderChildren(post.children)}
-      </li>
-    )
+  static propTypes = {
+    post: PropTypes.object
   }
 
-  _renderChildren(children){
-    if (children && children.length > 0){
-      return(
+  _renderChildren(children) {
+    if (children && children.length > 0) {
+      return (
         <ul styleName="sublist">
-          {_.map(children, child => {
-            return(
+          {map(children, child => {
+            return (
               <PostListWidgetItem key={child.id} post={child}/>
-            )
+            );
           })}
         </ul>
-      )
+      );
     }
   }
+
+  render() {
+    const { post } = this.props;
+    return (
+      <li>
+        <a href={`#${post.post_name}`}>
+          {post.post_title}
+        </a>
+        {this._renderChildren(post.children)}
+      </li>
+    );
+  }
+
 }
 
 export default PostListWidgetItem;

@@ -1,62 +1,60 @@
-import React from 'react';
-import { connect } from 'react-apollo';
-import gql from 'graphql-tag';
-
+import React, {Component, PropTypes} from 'react';
+import { gql, graphql } from 'react-apollo';
 import Page from '../pages/page.js';
-import PostExcerpt from './PostExcerpt.js';
-import Button from '../button/button.js';
 
+class PostList extends Component {
 
-class PostList extends React.Component{
-  render(){
-    const { posts, settings } = this.props.page;
+  static propTypes = {
+    data: PropTypes.object,
+    layout: PropTypes.object
+  }
+
+  render() {
+    const { posts, settings } = this.props.data;
     const { Excerpt } = this.props.layout;
 
-    if (posts){
-      return(
+    if (posts) {
+      return (
         <Page>
           {posts.map( (post, index) => {
-            return(
+            return (
               <Excerpt index={index} key={post.id} post={post} settings={settings} />
-            )
+            );
           })}
         </Page>
-      )
-    } else{
-      return(
-        <div>Loading...</div>
-      )
+      );
     }
+
+    return (
+      <div>Loading...</div>
+    );
   }
 }
 
-const PostListWithData = connect({
-  mapQueriesToProps({ ownProps, state}) {
-    return {
-      page: {
-        query: gql`
-          query getPosts($postType: String, $limit: Int, $skip: Int){
-            posts(post_type: $postType, limit: $limit, skip: $skip ){
-							id
-							post_title
-							post_name
-							post_excerpt
-              thumbnail
-    				},
-            settings{
-              uploads
-              amazonS3
-            }
-          }
-        `,
-        variables: {
-          postType: ownProps.layout.postType || 'post',
-          limit: ownProps.layout.limit || 10,
-          skip: ownProps.layout.skip || 0
-        }
-      }
+const PostListQuery = gql`
+  query getPosts($postType: String, $limit: Int, $skip: Int){
+    posts(post_type: $postType, limit: $limit, skip: $skip ){
+      id
+      post_title
+      post_name
+      post_excerpt
+      thumbnail
+    },
+    settings{
+      uploads
+      amazonS3
     }
   }
+`;
+
+const PostListWithData = graphql(PostListQuery, {
+  options: ({layout}) => ({
+    variables: {
+      postType: layout.postType || 'post',
+      limit: layout.limit || 10,
+      skip: layout.skip || 0
+    }
+  })
 })(PostList);
 
 export default PostListWithData;
