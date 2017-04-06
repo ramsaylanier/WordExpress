@@ -1,24 +1,26 @@
-import gql from 'graphql-tag';
+import { gql, graphql } from 'react-apollo'
 
-export function PostListQuery({ownProps}) {
-  return {
-    getPosts: {
-      query: gql`
-        query getPosts($post_type: String){
-          posts(post_type: $post_type){
-            id
-            post_title
-            post_name
-            post_content
-            post_parent
-          }
-        }
-      `,
-      variables: {
-        post_type: ownProps.layout.postType
-      }
+const PostListQuery = gql`
+  query getPosts($post_type: String){
+    posts(post_type: $post_type){
+      id
+      post_title
+      post_name
+      post_content
+      post_parent
+      thumbnail
     }
-  };
+  }
+`
+
+export function GetPostListQuery() {
+  return graphql(PostListQuery, {
+    options: (props) => ({
+      variables: {
+        post_type: props.layout.type
+      }
+    })
+  })
 }
 
 export function PostQuery({ownProps}) {
