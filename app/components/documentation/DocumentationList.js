@@ -1,35 +1,35 @@
-import React, {Component, PropTypes} from 'react';
-import { gql, graphql, createFragment } from 'react-apollo';
-import {connect} from 'react-redux';
-import Page from '../pages/page';
-import PostContent from '../posts/PostContent';
-import Sidebar from '../sidebar/sidebar';
-import PostListWidget from '../widgets/PostList/PostListWidget';
-import { PostListQuery } from '../posts/PostQueries';
-import { FilterPostsWithChildren } from '../../filters';
-import CSSModules from 'react-css-modules';
-import styles from './documentation.scss';
+import React, {Component, PropTypes} from 'react'
+import {connect} from 'react-redux'
+import { gql, graphql } from 'react-apollo'
+import Page from '../pages/page'
+import Sidebar from '../sidebar/sidebar'
+import PostContent from '../posts/PostContent'
+import PostListWidget from '../widgets/PostList/PostListWidget'
+import { FilterPostsWithChildren } from '../../filters'
+import CSSModules from 'react-css-modules'
+import styles from './documentation.scss'
+import {TweenMax} from 'gsap'
 
 @CSSModules(styles, {allowMultiple: true})
 class DocumentationList extends Component {
 
   static propTypes = {
-    getPosts: PropTypes.func,
+    posts: PropTypes.array,
     uiState: PropTypes.object,
     dispatch: PropTypes.func
   }
 
   constructor() {
-    super();
-    this._animatePostIn = this._animatePostIn.bind(this);
+    super()
+    this._animatePostIn = this._animatePostIn.bind(this)
   }
 
   componentDidMount() {
-    this._animatePostIn();
+    this._animatePostIn()
   }
 
   componentDidUpdate() {
-    this._animatePostIn();
+    this._animatePostIn()
   }
 
   _renderChildren(children) {
@@ -39,31 +39,31 @@ class DocumentationList extends Component {
           return (
             <div key={child.id} id={child.post_name} styleName="item-child">
               <h3 styleName="title__child">{child.post_title}</h3>
-              <PostContent post_content={child.post_content}/>
+              <PostContent content={child.post_content}/>
 
               {this._renderChildren(child.children)}
             </div>
-          );
+          )
         })
-      );
+      )
     }
   }
 
   _animatePostIn() {
-    const post = this._post;
+    const post = this._post
     if (post) {
       TweenMax.to(post, 0.5, {
         opacity: 1
-      });
+      })
     }
   }
 
   render() {
-    const { posts } = this.props.getPosts;
-    const { uiState } = this.props;
+    const { posts } = this.props.data
+    const { uiState } = this.props
 
     if (posts && !posts.loading) {
-      const filteredPosts = FilterPostsWithChildren(posts);
+      const filteredPosts = FilterPostsWithChildren(posts)
 
       return (
         <Page classes="with-sidebar">
@@ -73,39 +73,54 @@ class DocumentationList extends Component {
 
           <div ref={(c) => this._post = c} styleName="base">
             {filteredPosts.map( post =>{
+              const {post_name: name, post_title: title, post_content: content} = post
               return (
-                <div key={post.id} id={post.post_name} styleName="item">
-                  <h2 styleName="title">{post.post_title}</h2>
-                  <PostContent post_content={post.post_content}/>
+                <div key={post.id} id={name} styleName="item">
+                  <h2 styleName="title">{title}</h2>
+                  <PostContent content={content}/>
 
                   {this._renderChildren(post.children)}
                 </div>
-              );
+              )
             })}
           </div>
         </Page>
-      );
+      )
     }
 
     return (
       <div>Loading...</div>
-    );
+    )
   }
 }
 
-function mapQueriesToProps(args) {
-  return PostListQuery(args);
-}
+const DocumentListQuery = gql`
+  query getPosts($post_type: String, $order: OrderInput){
+    posts(post_type: $post_type, order: $order){
+      id
+      post_title
+      post_name
+      post_content
+      post_parent
+      thumbnail
+    }
+  }
+`
 
-function mapStateToProps(state) {
-  return {
-    uiState: state.ui
-  };
-}
+const DocumentationListWithData = graphql(DocumentListQuery, {
+  options: () => ({
+    variables: {
+      post_type: 'documentation',
+      order: {
+        orderBy: 'order',
+        direction: 'ASC'
+      }
+    }
+  })
+})(DocumentationList)
 
-const DocumentationListWithData = connect({
-  mapQueriesToProps,
-  mapStateToProps
-})(DocumentationList);
+const DocumentationListWithDataAndState = connect(
+  (state) => ({uiState: state.ui})
+)(DocumentationListWithData)
 
-export default DocumentationListWithData;
+export default DocumentationListWithDataAndState
