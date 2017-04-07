@@ -1,82 +1,80 @@
-'use strict';
+'use strict'
 
-var path = require('path');
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var WriteFilePlugin = require('write-file-webpack-plugin');
-
-const devServer = {
-    contentBase: path.resolve(__dirname, './app'),
-    outputPath: path.join(__dirname, './dist'),
-    colors: true,
-    quiet: false,
-    noInfo: false,
-    publicPath: '/',
-    historyApiFallback: false,
-    host: '127.0.0.1',
-    port: 3000,
-    hot: true
-};
+var path = require('path')
+var webpack = require('webpack')
+var HtmlWebpackPlugin = require('html-webpack-plugin')
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
+var WriteFilePlugin = require('write-file-webpack-plugin')
 
 module.exports = {
   devtool: 'eval-source-map',
-  debug: true,
-  devServer: devServer,
   entry: [
-    'webpack/hot/dev-server',
-    'webpack-hot-middleware/client?reload=true',
+    'react-hot-loader/patch',
+    'webpack-hot-middleware/client',
     path.join(__dirname, 'app/main.js')
   ],
   output: {
     path: path.join(__dirname, '/dist/'),
     filename: '[name].js',
-    publicPath: devServer.publicPath
+    publicPath: '/'
+  },
+  resolve: {
+    extensions: ['.js', '.jsx'],
+    modules: [path.resolve('./src'), 'node_modules']
   },
   module: {
-    loaders: [
+    rules: [
       {
-        test: /\.js?$/,
-        loader: 'babel',
-        exclude: /node_modules|lib/,
+        test: /\.(js|jsx)$/,
+        use: 'babel-loader',
+        include: [path.resolve(__dirname)],
+        exclude: /node_modules/
       },
       {
         test: /\.json?$/,
         loader: 'json'
       },
       {
-        test: /\.css$/,
-        loader: 'style!css?modules&localIdentName=[name]---[local]---[hash:base64:5]'
+        test: [/\.css$/],
+        loader: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]',
+            'postcss-loader'
+          ]
+        }),
+        exclude: /node_modules/
       },
       {
-        test: /\.scss$/,
-        loaders: [
-          'style?sourceMap',
-          'css?modules&importLoaders=1&localIdentName=[name]--[local]',
-          'sass?sourceMap'
-        ],
-        exclude: /node_modules|lib/
-      },
+        test: [/\.scss$/],
+        loader: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]',
+            'sass-loader?sourceMap'
+          ]
+        }),
+        exclude: /node_modules/
+      }
     ],
   },
   plugins: [
-    new WriteFilePlugin(),
-    new ExtractTextPlugin('app.css', {
-      allChunks: true
+    new webpack.LoaderOptionsPlugin({
+      debug: true
     }),
     new HtmlWebpackPlugin({
       template: 'app/index.tpl.html',
       inject: 'body',
       filename: 'index.html'
     }),
-    new webpack.optimize.OccurenceOrderPlugin(),
+    new WriteFilePlugin(),
+    new ExtractTextPlugin({
+      filename: 'app.css',
+      allChunks: true
+    }),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('dev')
+      'NODE_ENV': JSON.stringify('dev')
     })
-  ],
-  node: {
-    fs: 'empty'
-  }
-};
+  ]
+}

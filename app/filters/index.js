@@ -1,1 +1,1 @@
-export FilterPostsWithChildren from './Posts/FiltersPostsWithChildren';
+export {FilterPostsWithChildren} from './Posts/FiltersPostsWithChildren'

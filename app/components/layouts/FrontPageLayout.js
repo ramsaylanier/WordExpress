@@ -1,20 +1,15 @@
-import React, {Component, PropTypes} from 'react';
-import PostContent from '../posts/PostContent';
-import Page from '../pages/page.js';
+import React, {Component, PropTypes} from 'react'
+import PostContent from '../posts/PostContent'
+import Page from '../pages/page.js'
 
 class FrontPageLayout extends Component {
-
-  static propTypes = {
-    page: PropTypes.object
-  }
-
   render() {
-    const {loading} = this.props.page;
+    const {loading} = this.props.page
 
     if (!loading) {
-      const {post_content: content, thumbnail} = this.props.page;
-      const bg = {backgroundImage: `url("${thumbnail}")`};
-      const heroClass = thumbnail ? 'hero_thumbnail' : 'hero';
+      const {post_content: content, thumbnail} = this.props.page
+      const bg = {backgroundImage: `url("${thumbnail}")`}
+      const heroClass = thumbnail ? 'hero_thumbnail' : 'hero'
 
       return (
         <Page>
@@ -23,19 +18,23 @@ class FrontPageLayout extends Component {
               <h1 styleName="title">WordExpress</h1>
               <h4 styleName="subtitle">WordPress using Node, Express, and React.</h4>
             </div>
-    			</div>
+          </div>
 
-    			<div styleName="content">
-    				<div styleName="wrapper tight">
-    					<PostContent content={content}/>
-    				</div>
-    			</div>
+          <div styleName="content">
+            <div styleName="wrapper tight">
+              <PostContent content={content}/>
+            </div>
+          </div>
         </Page>
-      );
+      )
     }
 
-    return <div>Loading...</div>;
+    return <div>Loading...</div>
   }
 }
 
-export default FrontPageLayout;
+FrontPageLayout.propTypes = {
+  page: PropTypes.object
+}
+
+export default FrontPageLayout

@@ -1,24 +1,19 @@
-import React, {Component, PropTypes} from 'react';
-import { Link } from 'react-router';
-import styles from './navs.scss';
-import NavItem from './navItem';
-import NavList from './navList';
-import Logo from '../icons/logo.js';
-import {sortBy} from 'lodash';
+import React, {Component, PropTypes} from 'react'
+import { Link } from 'react-router'
+import styles from './navs.scss'
+import NavItem from './navItem'
+import NavList from './navList'
+import Logo from '../icons/logo.js'
+import {sortBy} from 'lodash'
 
 class AppNav extends Component {
-
-  static propTypes = {
-    menu: PropTypes.object
-  }
-
   render() {
     if (!this.props.menu) {
-      return null;
+      return null
     }
 
-    let { items } = this.props.menu;
-    items = sortBy(items, 'order');
+    let { items } = this.props.menu
+    items = sortBy(items, 'order')
 
     return (
       <NavList type="primary">
@@ -26,9 +21,9 @@ class AppNav extends Component {
           <Link to="/"><Logo/></Link>
         </NavItem>
         {items.map( item => {
-          const {children, object_type: type, post_title: title} = item;
-          const linkText = title.length > 0 ? title : item.navitem.post_title;
-          const pathname = type === 'page' ? `/${item.navitem.post_name}` : `/${type}/${item.navitem.post_name}`;
+          const {children, object_type: type, post_title: title} = item
+          const linkText = title.length > 0 ? title : item.navitem.post_title
+          const pathname = type === 'page' ? `/${item.navitem.post_name}` : `/${type}/${item.navitem.post_name}`
 
           return (
             <NavItem key={item.id}>
@@ -38,16 +33,21 @@ class AppNav extends Component {
                   {children.map( child => {
                     return (
                       <NavItem type="link" href="{child.navitem.post_name}">{child.navitem.post_title}</NavItem>
-                    );
+                    )
                   })}
                 </NavList>
               }
             </NavItem>
-          );
+          )
         })}
       </NavList>
-    );
+    )
   }
 }
 
-export default AppNav;
+AppNav.propTypes = {
+  menu: PropTypes.object
+}
+
+
+export default AppNav

@@ -1,5 +1,5 @@
-import React from 'react';
-import Helmet from 'react-helmet';
+import React from 'react'
+import Helmet from 'react-helmet'
 
 class Head extends React.Component {
   render() {
@@ -19,8 +19,8 @@ class Head extends React.Component {
           ]}
           onChangeClientState={(newState) => console.log(newState)}
       />
-    );
+    )
   }
 }
 
-export default Head;
+export default Head

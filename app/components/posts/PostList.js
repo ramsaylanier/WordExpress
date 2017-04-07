@@ -1,17 +1,11 @@
-import React, {Component, PropTypes} from 'react';
-import { gql, graphql } from 'react-apollo';
-import Page from '../pages/page.js';
+import React, {Component, PropTypes} from 'react'
+import { gql, graphql } from 'react-apollo'
+import Page from '../pages/page.js'
 
 class PostList extends Component {
-
-  static propTypes = {
-    data: PropTypes.object,
-    layout: PropTypes.object
-  }
-
   render() {
-    const { posts, settings } = this.props.data;
-    const { Excerpt } = this.props.layout;
+    const { posts, settings } = this.props.data
+    const { Excerpt } = this.props.layout
 
     if (posts) {
       return (
@@ -19,16 +13,21 @@ class PostList extends Component {
           {posts.map( (post, index) => {
             return (
               <Excerpt index={index} key={post.id} post={post} settings={settings} />
-            );
+            )
           })}
         </Page>
-      );
+      )
     }
 
     return (
       <div>Loading...</div>
-    );
+    )
   }
+}
+
+PostList.propTypes = {
+  data: PropTypes.object,
+  layout: PropTypes.object
 }
 
 const PostListQuery = gql`
@@ -45,7 +44,7 @@ const PostListQuery = gql`
       amazonS3
     }
   }
-`;
+`
 
 const PostListWithData = graphql(PostListQuery, {
   options: ({layout}) => ({
@@ -55,6 +54,6 @@ const PostListWithData = graphql(PostListQuery, {
       skip: layout.skip || 0
     }
   })
-})(PostList);
+})(PostList)
 
-export default PostListWithData;
+export default PostListWithData

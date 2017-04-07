@@ -1,18 +1,24 @@
-import 'babel-polyfill';
-import '../scripts/scrollToPlugin.js';
-import React from 'react';
-import { render } from 'react-dom';
-import { ApolloProvider } from 'react-apollo';
-import { client, store } from './apollo';
-import { Router, browserHistory } from 'react-router';
-import { syncHistoryWithStore } from 'react-router-redux';
-import routes from './routes';
+import React from 'react'
+import { render } from 'react-dom'
+import { AppContainer } from 'react-hot-loader'
 
-const history = syncHistoryWithStore(browserHistory, store);
+import Root from './root'
 
 render(
-  <ApolloProvider client={client} store={store}>
-    <Router history={history} routes={routes}/>
-  </ApolloProvider>,
+  <AppContainer>
+    <Root/>
+  </AppContainer>,
   document.getElementById('root')
-);
+)
+
+if (module.hot) {
+  module.hot.accept('./root', () => {
+    const NextRoot = require('./root').default
+    render(
+      <AppContainer>
+        <NextRoot/>
+      </AppContainer>,
+      document.getElementById('root')
+    )
+  })
+}
