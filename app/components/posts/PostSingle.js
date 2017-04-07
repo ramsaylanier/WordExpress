@@ -1,49 +1,44 @@
-import React, {Component, PropTypes} from 'react';
-import { gql, graphql } from 'react-apollo';
-import PostContent from './PostContent.js';
-import CSSModules from 'react-css-modules';
-import styles from './post.scss';
-import {TweenMax} from 'gsap';
+import React, {Component, PropTypes} from 'react'
+import { gql, graphql } from 'react-apollo'
+import PostContent from './PostContent.js'
+import CSSModules from 'react-css-modules'
+import styles from './post.scss'
+import {TweenMax} from 'gsap'
 
 @CSSModules(styles, {allowMultiple: true})
 class PostSingle extends Component {
-
-  static propTypes = {
-    data: PropTypes.object
-  }
-
   constructor() {
-    super();
-    this._animatePostIn = this._animatePostIn.bind(this);
+    super()
+    this._animatePostIn = this._animatePostIn.bind(this)
   }
 
   componentDidMount() {
-    this._animatePostIn();
+    this._animatePostIn()
   }
 
   componentDidUpdate() {
-    this._animatePostIn();
+    this._animatePostIn()
   }
 
   _animatePostIn() {
-    const post = this._post;
+    const post = this._post
     if (post) {
       TweenMax.fromTo(post, 0.5, {
         opacity: 0
       }, {
         opacity: 1
-      });
+      })
     }
   }
 
   render() {
-    const { loading } = this.props.data;
+    const { loading } = this.props.data
 
     if (!loading) {
-      const { post_title: title, post_content: content, thumbnail } = this.props.data.post;
+      const { post_title: title, post_content: content, thumbnail } = this.props.data.post
       const bg = {
         backgroundImage: `url("${thumbnail}")`
-      };
+      }
 
       return (
         <div ref={(c) => this._post = c} styleName="base with-header">
@@ -57,11 +52,15 @@ class PostSingle extends Component {
             </div>
           </div>
         </div>
-      );
+      )
     }
 
-    return <div></div>;
+    return <div></div>
   }
+}
+
+PostSingle.propTypes = {
+  data: PropTypes.object
 }
 
 const PostSingleQuery = gql`
@@ -77,7 +76,7 @@ const PostSingleQuery = gql`
       amazonS3
     }
   }
-`;
+`
 
 const PostSingleWithData = graphql(PostSingleQuery, {
   options: ({params}) => ({
@@ -85,6 +84,6 @@ const PostSingleWithData = graphql(PostSingleQuery, {
       post: params.post
     }
   })
-})(PostSingle);
+})(PostSingle)
 
-export default PostSingleWithData;
+export default PostSingleWithData

@@ -1,7 +1,7 @@
-import {filter, map, remove} from 'lodash'
+import {filter, map, remove, orderBy, clone} from 'lodash'
 
 // takes unsorted posts and reduces them to top levels posts with a nested array of children
-export default function FilterPostsWithChildren(posts) {
+export function FilterPostsWithChildren(posts) {
   function getChildren(post) {
     const { id } = post
     const children = filter(posts, childPost => {
@@ -22,8 +22,15 @@ export default function FilterPostsWithChildren(posts) {
     return post
   }
 
-  const topLevelPosts = remove( posts, post => {
-    return post.post_parent === 0
+  const topLevelPosts = []
+
+  map( posts, post => {
+    if (post.post_parent === 0) {
+      let topLevelPost = clone(post)
+      topLevelPost.children = []
+      topLevelPosts.push(topLevelPost)
+      return getChildren(topLevelPost)
+    }
   })
 
   map(topLevelPosts, topLevelPost => {

@@ -1,5 +1,5 @@
-import {TweenMax} from 'gsap';
+import {TweenMax} from 'gsap'
 
 export function AnimateItem(item, animation) {
-  TweenMax.to(item, animation.duration, animation.properties);
+  TweenMax.to(item, animation.duration, animation.properties)
 }

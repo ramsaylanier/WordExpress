@@ -12,13 +12,6 @@ import {TweenMax} from 'gsap'
 
 @CSSModules(styles, {allowMultiple: true})
 class DocumentationList extends Component {
-
-  static propTypes = {
-    posts: PropTypes.array,
-    uiState: PropTypes.object,
-    dispatch: PropTypes.func
-  }
-
   constructor() {
     super()
     this._animatePostIn = this._animatePostIn.bind(this)
@@ -63,7 +56,9 @@ class DocumentationList extends Component {
     const { uiState } = this.props
 
     if (posts && !posts.loading) {
+      console.log(posts)
       const filteredPosts = FilterPostsWithChildren(posts)
+      console.log(filteredPosts)
 
       return (
         <Page classes="with-sidebar">
@@ -94,6 +89,12 @@ class DocumentationList extends Component {
   }
 }
 
+DocumentationList.propTypes = {
+  posts: PropTypes.array,
+  uiState: PropTypes.object,
+  dispatch: PropTypes.func
+}
+
 const DocumentListQuery = gql`
   query getPosts($post_type: String, $order: OrderInput){
     posts(post_type: $post_type, order: $order){
@@ -103,6 +104,9 @@ const DocumentListQuery = gql`
       post_content
       post_parent
       thumbnail
+      post_meta(keys: [order]) {
+        meta_value
+      }
     }
   }
 `
