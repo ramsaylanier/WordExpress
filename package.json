@@ -92,6 +92,7 @@
     "graphql-tag": "^0.1.7",
     "graphql-tools": "^0.11.0",
     "gsap": "^1.19.1",
+    "highlightjs": "^9.10.0",
     "history": "^1.17.0",
     "htmlparser2": "^3.9.0",
     "lodash": "^4.13.1",

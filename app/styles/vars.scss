@@ -18,3 +18,9 @@ $mobile-landscape: 	"only screen and (min-device-width: 320px) and (max-device-w
 $tablet:      		"only screen and (min-width: 569px) and (max-width: 980px)";
 $desktop:     		"only screen and (min-width: 981px) and (max-width: 1200px)";
 $desktop-xl:  		"only screen and (min-width: 1201px)";
+
+
+// Typography
+$heading: "jaf-facitweb", Helvetica, sans-serif;
+$copy: "freight-text-pro", serif;
+$mono: "source-code-pro", sans-serif;
